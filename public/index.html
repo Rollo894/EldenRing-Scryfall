@@ -10,7 +10,69 @@
 
 <title>EldenRing-Scryfall</title>
 
-<style> /* ========================================================= BASE ========================================================= */ body { margin: 0; font-family: Arial, sans-serif; background: #171717; color: #eee; } header { background: #0d0d0d; padding: 25px; text-align: center; border-bottom: 1px solid #444; } h1 { margin: 0; font-size: 32px; letter-spacing: 3px; } /* ========================================================= INTERFACCIA RICERCA ========================================================= */ .search-section { width: calc(100% - 40px); max-width: 1200px; margin: 30px auto; } /* --------------------------------------------------------- SEARCH BOX --------------------------------------------------------- */ .search-container { width: 100%; margin: 0 auto; padding: 0; } .search-box { position: relative; display: flex; width: 100%; align-items: stretch; } .search-box input { flex: 1; min-width: 0; padding: 16px 55px 16px 20px; font-size: 17px; border: 1px solid rgba(255,255,255,0.15); border-right: none; border-radius: 8px 0 0 8px; background: rgba(20,20,20,0.9); color: white; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; } .search-box input:focus { border-color: rgba(255,255,255,0.4); box-shadow: 0 0 0 2px rgba(255,255,255,0.06); } .search-box input::placeholder { color: rgba(255,255,255,0.45); } .search-button { padding: 0 24px; border: 1px solid rgba(255,255,255,0.15); border-radius: 0 8px 8px 0; background: rgba(255,255,255,0.12); color: white; font-weight: 600; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease; } .search-button:hover { background: rgba(255,255,255,0.2); } .search-button:active { transform: scale(0.98); } .clear-search { position: absolute; right: 105px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; display: none; align-items: center; justify-content: center; border: none; border-radius: 50%; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-size: 20px; cursor: pointer; padding: 0; } .clear-search:hover { background: rgba(255,255,255,0.2); color: white; } .search-hint { margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.4); text-align: left; } .search-hint strong { color: rgba(255,255,255,0.65); } /* ========================================================= QUICK FILTERS ========================================================= */ .quick-filters { display: flex; align-items: center; gap: 8px; margin-top: 18px; flex-wrap: wrap; } .filter-title { margin-right: 5px; font-size: 11px; letter-spacing: 1px; color: rgba(255,255,255,0.4); } .filter-divider { width: 1px; height: 28px; background: #444; margin: 0 8px; } .color-filter, .multicolor-filter { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; background: rgba(255,255,255,0.05); font-size: 18px; cursor: pointer; padding: 0; transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; } .color-filter:hover, .multicolor-filter:hover { transform: translateY(-2px); background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.3); } .color-filter.active, .multicolor-filter.active { background: rgba(214,180,119,0.22); border-color: #d6b477; box-shadow: 0 0 0 2px rgba(214,180,119,0.15), 0 0 12px rgba(214,180,119,0.18); transform: translateY(-1px); } .text-filter { padding: 7px 12px; background: #292929; border: 1px solid #4a4a4a; border-radius: 6px; color: #ccc; font-size: 13px; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; } .text-filter:hover { background: #3a3a3a; color: #fff; border-color: #777; transform: translateY(-1px); } .text-filter:active { transform: translateY(1px); } .text-filter.active { background: rgba(214,180,119,0.18); color: #fff; border-color: #d6b477; box-shadow: 0 0 0 2px rgba(214,180,119,0.12), 0 0 10px rgba(214,180,119,0.15); } /* ========================================================= TOOLBAR ========================================================= */ .toolbar { display: flex; align-items: center; gap: 18px; margin-top: 18px; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.025); flex-wrap: wrap; } .toolbar-group { display: flex; align-items: center; gap: 8px; } .toolbar-group label { font-size: 12px; color: rgba(255,255,255,0.5); } .toolbar select { padding: 7px 10px; border: 1px solid rgba(255,255,255,0.12); border-radius: 5px; background: rgba(20,20,20,0.9); color: white; cursor: pointer; outline: none; } .toolbar select:hover { border-color: rgba(255,255,255,0.25); } .reset-button { margin-left: auto; padding: 7px 12px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; background: transparent; color: rgba(255,255,255,0.55); cursor: pointer; transition: background 0.2s ease, color 0.2s ease; } .reset-button:hover { background: rgba(255,255,255,0.08); color: white; } .search-status { margin-top: 18px; font-size: 13px; color: rgba(255,255,255,0.45); text-align: left; } /* ========================================================= CARTE ========================================================= */ #cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 20px 40px 50px; } .card { position: relative; background: #222; border: 1px solid #444; border-radius: 10px; padding: 20px; cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease; } .card:hover { transform: translateY(-5px); border-color: #666; } .card h2 { margin-top: 0; color: #d6b477; padding-right: 75px; } .card-image { width: 100%; border-radius: 8px; display: block; margin-bottom: 15px; } .mana { color: #aaa; margin-bottom: 10px; } .type { font-style: italic; color: #bbb; margin-bottom: 15px; } .oracle { white-space: pre-line; line-height: 1.5; } .loading { text-align: center; color: #aaa; padding: 40px; } /* ========================================================= CONTROLLI CARTA / DECK BUILDER ========================================================= */ .card-deck-controls { position: absolute; top: 12px; right: 12px; display: flex; gap: 5px; z-index: 3; } .card-deck-button { width: 34px; height: 34px; padding: 0; border: 1px solid rgba(255,255,255,0.18); border-radius: 7px; background: rgba(15,15,15,0.9); color: #ddd; cursor: pointer; font-size: 16px; transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease; } .card-deck-button:hover { background: #3a3a3a; border-color: #d6b477; transform: translateY(-1px); } .card-deck-button.commander { color: #d6b477; } .card-deck-quantity { position: absolute; top: 52px; right: 12px; z-index: 3; padding: 4px 8px; border: 1px solid rgba(214,180,119,0.35); border-radius: 5px; background: rgba(15,15,15,0.92); color: #d6b477; font-size: 10px; font-weight: bold; letter-spacing: 0.5px; pointer-events: none; box-shadow: 0 3px 10px rgba(0,0,0,0.45); } /* ========================================================= PULSANTE MAZZO FISSO ========================================================= */ .deck-toggle { position: fixed; right: 22px; bottom: 22px; z-index: 900; padding: 13px 18px; border: 1px solid #80683f; border-radius: 10px; background: linear-gradient( 145deg, #302818, #1d1810 ); color: #eee; font-size: 14px; font-weight: bold; cursor: pointer; box-shadow: 0 8px 30px rgba(0,0,0,0.55); transition: transform 0.15s ease, background 0.2s ease; } .deck-toggle:hover { transform: translateY(-2px); background: linear-gradient( 145deg, #40351f, #282015 ); } /* ========================================================= PANNELLO DECK BUILDER ========================================================= */ .deck-overlay { display: none; position: fixed; inset: 0; z-index: 950; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); } .deck-overlay.active { display: block; } .deck-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 960; width: min(430px, 92vw); display: flex; flex-direction: column; background: linear-gradient( 145deg, #242424, #141414 ); border-left: 1px solid #555; box-shadow: -15px 0 50px rgba(0,0,0,0.65); transform: translateX(100%); transition: transform 0.25s ease; } .deck-panel.active { transform: translateX(0); } .deck-header { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 18px 20px; border-bottom: 1px solid #444; background: rgba(0,0,0,0.25); } .deck-header h2 { margin: 0; color: #d6b477; font-size: 19px; letter-spacing: 1px; } .deck-close { width: 36px; height: 36px; border: none; border-radius: 50%; background: #333; color: #ccc; font-size: 24px; cursor: pointer; } .deck-close:hover { background: #555; color: white; } .deck-settings { padding: 15px 20px; border-bottom: 1px solid #3d3d3d; } .deck-format-label { display: block; margin-bottom: 7px; font-size: 11px; letter-spacing: 1px; color: #888; } .deck-format { width: 100%; padding: 10px; border: 1px solid #555; border-radius: 7px; background: #1c1c1c; color: white; font-size: 14px; outline: none; } .deck-status { margin-top: 12px; padding: 12px; border: 1px solid #444; border-radius: 8px; background: #1c1c1c; } .deck-count { font-size: 17px; font-weight: bold; color: #eee; } .deck-validity { margin-top: 5px; font-size: 12px; color: #999; } .deck-validity.valid { color: #9ccc8c; } .deck-validity.invalid { color: #d89a78; } .deck-commander { padding: 15px 20px; border-bottom: 1px solid #3d3d3d; } .deck-section-title { margin-bottom: 9px; font-size: 11px; letter-spacing: 1px; color: #888; } .commander-empty { padding: 12px; border: 1px dashed #555; border-radius: 7px; color: #777; font-size: 13px; text-align: center; } .commander-card { display: flex; align-items: center; gap: 10px; padding: 9px; border: 1px solid #6b5734; border-radius: 8px; background: rgba(214,180,119,0.08); } .commander-card-image { width: 48px; height: 67px; object-fit: cover; border-radius: 5px; } .commander-card-info { flex: 1; min-width: 0; } .commander-card-name { color: #d6b477; font-weight: bold; font-size: 14px; } .commander-card-type { margin-top: 4px; color: #999; font-size: 11px; } .commander-remove { border: none; background: transparent; color: #999; font-size: 18px; cursor: pointer; } .commander-remove:hover { color: #fff; } .deck-list { flex: 1; overflow-y: auto; padding: 15px 20px; } .deck-list-title { display: flex; justify-content: space-between; margin-bottom: 10px; color: #888; font-size: 11px; letter-spacing: 1px; } .deck-empty { padding: 35px 15px; color: #666; text-align: center; font-size: 13px; line-height: 1.6; } .deck-item { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; padding: 8px; border: 1px solid #363636; border-radius: 7px; background: #1d1d1d; } .deck-item-image { width: 38px; height: 53px; object-fit: cover; border-radius: 4px; flex-shrink: 0; } .deck-item-name { flex: 1; min-width: 0; color: #ddd; font-size: 13px; line-height: 1.25; } .deck-item-controls { display: flex; align-items: center; gap: 4px; } .deck-quantity-button { width: 26px; height: 26px; padding: 0; border: 1px solid #555; border-radius: 5px; background: #292929; color: #ddd; cursor: pointer; font-size: 15px; } .deck-quantity-button:hover { background: #3b3b3b; border-color: #777; } .deck-quantity { min-width: 20px; text-align: center; color: #d6b477; font-weight: bold; font-size: 13px; } .deck-footer { padding: 15px 20px; border-top: 1px solid #444; background: rgba(0,0,0,0.25); } .clear-deck-button { width: 100%; padding: 10px; border: 1px solid #633d32; border-radius: 7px; background: rgba(120,60,40,0.15); color: #c99580; cursor: pointer; font-weight: bold; } .clear-deck-button:hover { background: rgba(120,60,40,0.28); color: #e3b09a; } /* ========================================================= DETTAGLIO CARTA / MODALE ========================================================= */ .card-modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0, 0, 0, 0.88); justify-content: center; align-items: center; padding: 30px; backdrop-filter: blur(6px); } .card-modal.active { display: flex; } .modal-content { position: relative; display: flex; gap: 40px; width: min(1100px, 95vw); max-height: 90vh; padding: 35px; background: linear-gradient( 145deg, #252525, #151515 ); border: 1px solid #555; border-radius: 16px; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9); overflow: auto; } .modal-image { width: 440px; max-width: 45%; height: auto; object-fit: contain; align-self: flex-start; border-radius: 12px; box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7); } .modal-details { flex: 1; min-width: 0; padding-top: 5px; } .modal-details h2 { margin: 0 45px 12px 0; color: #d6b477; font-size: 34px; line-height: 1.15; } .modal-mana { color: #ddd; font-size: 19px; margin-bottom: 12px; } .mana-symbol { width: 22px; height: 22px; vertical-align: middle; margin-right: 3px; } .modal-type { color: #aaa; font-style: italic; font-size: 17px; padding-bottom: 18px; border-bottom: 1px solid #444; margin-bottom: 20px; } .modal-oracle { white-space: pre-line; line-height: 1.65; font-size: 17px; color: #eee; } .modal-flavor { margin-top: 28px; padding-top: 20px; border-top: 1px solid #444; color: #999; font-style: italic; line-height: 1.5; } .modal-stats { margin-top: 25px; display: inline-block; padding: 8px 16px; border: 1px solid #555; border-radius: 8px; color: #d6b477; font-size: 21px; font-weight: bold; } .modal-close { position: absolute; top: 12px; right: 15px; z-index: 5; width: 42px; height: 42px; padding: 0; border: none; border-radius: 50%; background: #333; color: #ddd; font-size: 28px; line-height: 42px; cursor: pointer; transition: background 0.2s ease; } .modal-close:hover { background: #555; color: white; } .modal-navigation { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px; } .modal-navigation button { flex: 1; padding: 10px 15px; background: #292929; border: 1px solid #555; border-radius: 7px; color: #ccc; font-size: 14px; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease; } .modal-navigation button:hover:not(:disabled) { background: #3a3a3a; color: #fff; border-color: #777; } .modal-navigation button:disabled { opacity: 0.3; cursor: default; } .modal-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 22px; padding-bottom: 20px; border-bottom: 1px solid #444; } .modal-review { grid-column: 1 / -1; padding: 10px 12px; background: rgba(120, 70, 30, 0.18); border: 1px solid #6b4d2a; border-radius: 6px; color: #d6b477; font-size: 13px; font-weight: bold; letter-spacing: 0.5px; } .meta-item { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; background: #202020; border: 1px solid #383838; border-radius: 6px; } .meta-label { font-size: 10px; letter-spacing: 1px; color: #777; } .meta-item span { color: #ccc; font-size: 14px; } /* ========================================================= MOBILE ========================================================= */ @media (max-width: 800px) { .card-modal { padding: 15px; } .modal-content { flex-direction: column; align-items: center; gap: 25px; padding: 25px; } .modal-image { width: 400px; max-width: 90%; } .modal-details { width: 100%; } .modal-details h2 { font-size: 27px; } } @media (max-width: 700px) { .search-section { width: calc(100% - 30px); margin-top: 20px; } .search-box { flex-direction: column; gap: 8px; } .search-box input { border-right: 1px solid rgba(255,255,255,0.15); border-radius: 8px; } .search-button { padding: 12px; border-radius: 8px; } .clear-search { right: 12px; } .quick-filters { gap: 7px; } .filter-divider { display: none; } .toolbar { align-items: stretch; flex-direction: column; } .toolbar-group { justify-content: space-between; } .toolbar-group select { flex: 1; } .reset-button { margin-left: 0; } #cards { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); padding-left: 15px; padding-right: 15px; gap: 15px; } .deck-toggle { right: 12px; bottom: 12px; padding: 11px 14px; } } </style>
+<style> /* ========================================================= BASE ========================================================= */ body { margin: 0; font-family: Arial, sans-serif; background: #171717; color: #eee; } header { background: #0d0d0d; padding: 25px; text-align: center; border-bottom: 1px solid #444; } h1 { margin: 0; font-size: 32px; letter-spacing: 3px; } /* ========================================================= INTERFACCIA RICERCA ========================================================= */ .search-section { width: calc(100% - 40px); max-width: 1200px; margin: 30px auto; } /* --------------------------------------------------------- SEARCH BOX --------------------------------------------------------- */ .search-container { width: 100%; margin: 0 auto; padding: 0; } .search-box { position: relative; display: flex; width: 100%; align-items: stretch; } .search-box input { flex: 1; min-width: 0; padding: 16px 55px 16px 20px; font-size: 17px; border: 1px solid rgba(255,255,255,0.15); border-right: none; border-radius: 8px 0 0 8px; background: rgba(20,20,20,0.9); color: white; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; } .search-box input:focus { border-color: rgba(255,255,255,0.4); box-shadow: 0 0 0 2px rgba(255,255,255,0.06); } .search-box input::placeholder { color: rgba(255,255,255,0.45); } .search-button { padding: 0 24px; border: 1px solid rgba(255,255,255,0.15); border-radius: 0 8px 8px 0; background: rgba(255,255,255,0.12); color: white; font-weight: 600; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease; } .search-button:hover { background: rgba(255,255,255,0.2); } .search-button:active { transform: scale(0.98); } .clear-search { position: absolute; right: 105px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; display: none; align-items: center; justify-content: center; border: none; border-radius: 50%; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-size: 20px; cursor: pointer; padding: 0; } .clear-search:hover { background: rgba(255,255,255,0.2); color: white; } .search-hint { margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.4); text-align: left; } .search-hint strong { color: rgba(255,255,255,0.65); } /* ========================================================= QUICK FILTERS ========================================================= */ .quick-filters { display: flex; align-items: center; gap: 8px; margin-top: 18px; flex-wrap: wrap; } .filter-title { margin-right: 5px; font-size: 11px; letter-spacing: 1px; color: rgba(255,255,255,0.4); } .filter-divider { width: 1px; height: 28px; background: #444; margin: 0 8px; } .color-filter, .multicolor-filter { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; background: rgba(255,255,255,0.05); font-size: 18px; cursor: pointer; padding: 0; transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; } .color-filter:hover, .multicolor-filter:hover { transform: translateY(-2px); background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.3); } .color-filter.active, .multicolor-filter.active { background: rgba(214,180,119,0.22); border-color: #d6b477; box-shadow: 0 0 0 2px rgba(214,180,119,0.15), 0 0 12px rgba(214,180,119,0.18); transform: translateY(-1px); } .text-filter { padding: 7px 12px; background: #292929; border: 1px solid #4a4a4a; border-radius: 6px; color: #ccc; font-size: 13px; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; } .text-filter:hover { background: #3a3a3a; color: #fff; border-color: #777; transform: translateY(-1px); } .text-filter:active { transform: translateY(1px); } .text-filter.active { background: rgba(214,180,119,0.18); color: #fff; border-color: #d6b477; box-shadow: 0 0 0 2px rgba(214,180,119,0.12), 0 0 10px rgba(214,180,119,0.15); } /* ========================================================= TOOLBAR ========================================================= */ .toolbar { display: flex; align-items: center; gap: 18px; margin-top: 18px; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.025); flex-wrap: wrap; } .toolbar-group { display: flex; align-items: center; gap: 8px; } .toolbar-group label { font-size: 12px; color: rgba(255,255,255,0.5); } .toolbar select { padding: 7px 10px; border: 1px solid rgba(255,255,255,0.12); border-radius: 5px; background: rgba(20,20,20,0.9); color: white; cursor: pointer; outline: none; } .toolbar select:hover { border-color: rgba(255,255,255,0.25); } .reset-button { margin-left: auto; padding: 7px 12px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; background: transparent; color: rgba(255,255,255,0.55); cursor: pointer; transition: background 0.2s ease, color 0.2s ease; } .reset-button:hover { background: rgba(255,255,255,0.08); color: white; } .search-status { margin-top: 18px; font-size: 13px; color: rgba(255,255,255,0.45); text-align: left; } /* ========================================================= CARTE ========================================================= */ #cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 20px 40px 50px; } .card { position: relative; background: #222; border: 1px solid #444; border-radius: 10px; padding: 20px; cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease; } .card:hover { transform: translateY(-5px); border-color: #666; } .card h2 { margin-top: 0; color: #d6b477; padding-right: 75px; } .card-image { width: 100%; border-radius: 8px; display: block; margin-bottom: 15px; } .mana { color: #aaa; margin-bottom: 10px; } .type { font-style: italic; color: #bbb; margin-bottom: 15px; } .oracle { white-space: pre-line; line-height: 1.5; } .loading { text-align: center; color: #aaa; padding: 40px; } 
+/* =========================================================
+   PAGINAZIONE
+   ========================================================= */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 10px 40px 40px;
+}
+
+.pagination-button {
+    min-width: 38px;
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    color: #ccc;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease,
+                transform 0.15s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border-color: rgba(255,255,255,0.3);
+    transform: translateY(-1px);
+}
+
+.pagination-button.active {
+    background: rgba(214,180,119,0.18);
+    color: #fff;
+    border-color: #d6b477;
+    box-shadow: 0 0 0 2px rgba(214,180,119,0.10);
+}
+
+.pagination-button:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.pagination-info {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 8px;
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+}
+
+.pagination-ellipsis {
+    min-width: 25px;
+    text-align: center;
+    color: #777;
+}
+/* ========================================================= CONTROLLI CARTA / DECK BUILDER ========================================================= */ .card-deck-controls { position: absolute; top: 12px; right: 12px; display: flex; gap: 5px; z-index: 3; } .card-deck-button { width: 34px; height: 34px; padding: 0; border: 1px solid rgba(255,255,255,0.18); border-radius: 7px; background: rgba(15,15,15,0.9); color: #ddd; cursor: pointer; font-size: 16px; transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease; } .card-deck-button:hover { background: #3a3a3a; border-color: #d6b477; transform: translateY(-1px); } .card-deck-button.commander { color: #d6b477; } .card-deck-quantity { position: absolute; top: 52px; right: 12px; z-index: 3; padding: 4px 8px; border: 1px solid rgba(214,180,119,0.35); border-radius: 5px; background: rgba(15,15,15,0.92); color: #d6b477; font-size: 10px; font-weight: bold; letter-spacing: 0.5px; pointer-events: none; box-shadow: 0 3px 10px rgba(0,0,0,0.45); } /* ========================================================= PULSANTE MAZZO FISSO ========================================================= */ .deck-toggle { position: fixed; right: 22px; bottom: 22px; z-index: 900; padding: 13px 18px; border: 1px solid #80683f; border-radius: 10px; background: linear-gradient( 145deg, #302818, #1d1810 ); color: #eee; font-size: 14px; font-weight: bold; cursor: pointer; box-shadow: 0 8px 30px rgba(0,0,0,0.55); transition: transform 0.15s ease, background 0.2s ease; } .deck-toggle:hover { transform: translateY(-2px); background: linear-gradient( 145deg, #40351f, #282015 ); } /* ========================================================= PANNELLO DECK BUILDER ========================================================= */ .deck-overlay { display: none; position: fixed; inset: 0; z-index: 950; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); } .deck-overlay.active { display: block; } .deck-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 960; width: min(430px, 92vw); display: flex; flex-direction: column; background: linear-gradient( 145deg, #242424, #141414 ); border-left: 1px solid #555; box-shadow: -15px 0 50px rgba(0,0,0,0.65); transform: translateX(100%); transition: transform 0.25s ease; } .deck-panel.active { transform: translateX(0); } .deck-header { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 18px 20px; border-bottom: 1px solid #444; background: rgba(0,0,0,0.25); } .deck-header h2 { margin: 0; color: #d6b477; font-size: 19px; letter-spacing: 1px; } .deck-close { width: 36px; height: 36px; border: none; border-radius: 50%; background: #333; color: #ccc; font-size: 24px; cursor: pointer; } .deck-close:hover { background: #555; color: white; } .deck-settings { padding: 15px 20px; border-bottom: 1px solid #3d3d3d; } .deck-format-label { display: block; margin-bottom: 7px; font-size: 11px; letter-spacing: 1px; color: #888; } .deck-format { width: 100%; padding: 10px; border: 1px solid #555; border-radius: 7px; background: #1c1c1c; color: white; font-size: 14px; outline: none; } .deck-status { margin-top: 12px; padding: 12px; border: 1px solid #444; border-radius: 8px; background: #1c1c1c; } .deck-count { font-size: 17px; font-weight: bold; color: #eee; } .deck-validity { margin-top: 5px; font-size: 12px; color: #999; } .deck-validity.valid { color: #9ccc8c; } .deck-validity.invalid { color: #d89a78; } .deck-commander { padding: 15px 20px; border-bottom: 1px solid #3d3d3d; } .deck-section-title { margin-bottom: 9px; font-size: 11px; letter-spacing: 1px; color: #888; } .commander-empty { padding: 12px; border: 1px dashed #555; border-radius: 7px; color: #777; font-size: 13px; text-align: center; } .commander-card { display: flex; align-items: center; gap: 10px; padding: 9px; border: 1px solid #6b5734; border-radius: 8px; background: rgba(214,180,119,0.08); } .commander-card-image { width: 48px; height: 67px; object-fit: cover; border-radius: 5px; } .commander-card-info { flex: 1; min-width: 0; } .commander-card-name { color: #d6b477; font-weight: bold; font-size: 14px; } .commander-card-type { margin-top: 4px; color: #999; font-size: 11px; } .commander-remove { border: none; background: transparent; color: #999; font-size: 18px; cursor: pointer; } .commander-remove:hover { color: #fff; } .deck-list { flex: 1; overflow-y: auto; padding: 15px 20px; } .deck-list-title { display: flex; justify-content: space-between; margin-bottom: 10px; color: #888; font-size: 11px; letter-spacing: 1px; } .deck-empty { padding: 35px 15px; color: #666; text-align: center; font-size: 13px; line-height: 1.6; } .deck-item { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; padding: 8px; border: 1px solid #363636; border-radius: 7px; background: #1d1d1d; } .deck-item-image { width: 38px; height: 53px; object-fit: cover; border-radius: 4px; flex-shrink: 0; } .deck-item-name { flex: 1; min-width: 0; color: #ddd; font-size: 13px; line-height: 1.25; } .deck-item-controls { display: flex; align-items: center; gap: 4px; } .deck-quantity-button { width: 26px; height: 26px; padding: 0; border: 1px solid #555; border-radius: 5px; background: #292929; color: #ddd; cursor: pointer; font-size: 15px; } .deck-quantity-button:hover { background: #3b3b3b; border-color: #777; } .deck-quantity { min-width: 20px; text-align: center; color: #d6b477; font-weight: bold; font-size: 13px; } .deck-footer { padding: 15px 20px; border-top: 1px solid #444; background: rgba(0,0,0,0.25); } .clear-deck-button { width: 100%; padding: 10px; border: 1px solid #633d32; border-radius: 7px; background: rgba(120,60,40,0.15); color: #c99580; cursor: pointer; font-weight: bold; } .clear-deck-button:hover { background: rgba(120,60,40,0.28); color: #e3b09a; } /* ========================================================= DETTAGLIO CARTA / MODALE ========================================================= */ .card-modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0, 0, 0, 0.88); justify-content: center; align-items: center; padding: 30px; backdrop-filter: blur(6px); } .card-modal.active { display: flex; } .modal-content { position: relative; display: flex; gap: 40px; width: min(1100px, 95vw); max-height: 90vh; padding: 35px; background: linear-gradient( 145deg, #252525, #151515 ); border: 1px solid #555; border-radius: 16px; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9); overflow: auto; } .modal-image { width: 440px; max-width: 45%; height: auto; object-fit: contain; align-self: flex-start; border-radius: 12px; box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7); } .modal-details { flex: 1; min-width: 0; padding-top: 5px; } .modal-details h2 { margin: 0 45px 12px 0; color: #d6b477; font-size: 34px; line-height: 1.15; } .modal-mana { color: #ddd; font-size: 19px; margin-bottom: 12px; } .mana-symbol { width: 22px; height: 22px; vertical-align: middle; margin-right: 3px; } .modal-type { color: #aaa; font-style: italic; font-size: 17px; padding-bottom: 18px; border-bottom: 1px solid #444; margin-bottom: 20px; } .modal-oracle { white-space: pre-line; line-height: 1.65; font-size: 17px; color: #eee; } .modal-flavor { margin-top: 28px; padding-top: 20px; border-top: 1px solid #444; color: #999; font-style: italic; line-height: 1.5; } .modal-stats { margin-top: 25px; display: inline-block; padding: 8px 16px; border: 1px solid #555; border-radius: 8px; color: #d6b477; font-size: 21px; font-weight: bold; } .modal-close { position: absolute; top: 12px; right: 15px; z-index: 5; width: 42px; height: 42px; padding: 0; border: none; border-radius: 50%; background: #333; color: #ddd; font-size: 28px; line-height: 42px; cursor: pointer; transition: background 0.2s ease; } .modal-close:hover { background: #555; color: white; } .modal-navigation { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px; } .modal-navigation button { flex: 1; padding: 10px 15px; background: #292929; border: 1px solid #555; border-radius: 7px; color: #ccc; font-size: 14px; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease; } .modal-navigation button:hover:not(:disabled) { background: #3a3a3a; color: #fff; border-color: #777; } .modal-navigation button:disabled { opacity: 0.3; cursor: default; } .modal-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 22px; padding-bottom: 20px; border-bottom: 1px solid #444; } .modal-review { grid-column: 1 / -1; padding: 10px 12px; background: rgba(120, 70, 30, 0.18); border: 1px solid #6b4d2a; border-radius: 6px; color: #d6b477; font-size: 13px; font-weight: bold; letter-spacing: 0.5px; } .meta-item { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; background: #202020; border: 1px solid #383838; border-radius: 6px; } .meta-label { font-size: 10px; letter-spacing: 1px; color: #777; } .meta-item span { color: #ccc; font-size: 14px; } /* ========================================================= MOBILE ========================================================= */ @media (max-width: 800px) { .card-modal { padding: 15px; } .modal-content { flex-direction: column; align-items: center; gap: 25px; padding: 25px; } .modal-image { width: 400px; max-width: 90%; } .modal-details { width: 100%; } .modal-details h2 { font-size: 27px; } } @media (max-width: 700px) { .search-section { width: calc(100% - 30px); margin-top: 20px; } .search-box { flex-direction: column; gap: 8px; } .search-box input { border-right: 1px solid rgba(255,255,255,0.15); border-radius: 8px; } .search-button { padding: 12px; border-radius: 8px; } .clear-search { right: 12px; } .quick-filters { gap: 7px; } .filter-divider { display: none; } .toolbar { align-items: stretch; flex-direction: column; } .toolbar-group { justify-content: space-between; } .toolbar-group select { flex: 1; } .reset-button { margin-left: 0; } #cards { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); padding-left: 15px; padding-right: 15px; gap: 15px; } .deck-toggle { right: 12px; bottom: 12px; padding: 11px 14px; } } </style>
 
 </head>
 
@@ -350,10 +412,13 @@
 
 <div id="cards">
 
-<div class="loading"> Caricamento carte... </div>
+    <div class="loading">
+        Caricamento carte...
+    </div>
 
 </div>
 
+<div id="pagination" class="pagination"></div>
 <!-- ========================================================= PULSANTE MAZZO ========================================================= -->
 
 <button
@@ -653,7 +718,17 @@ onclick="toggleDeckPanel()"
 
 </div>
 
-<script> /* ========================================================= DATI ========================================================= */ let allCards = []; /* ========================================================= STATO FILTRI RAPIDI ========================================================= */ let activeQuickFilters = { color: null, type: null }; /* ========================================================= DECK BUILDER ========================================================= */ const DECK_STORAGE_KEY = "eldenring-scryfall-deck"; let deck = { format: "standard", cards: {}, commander: null }; /* ========================================================= IDENTIFICATIVO CARTA ========================================================= */ function getCardKey(card) { if (card.id) { return String(card.id); } if ( card.set || card.collector_number ) { return ( String(card.set || "") + ":" + String(card.collector_number || "") ); } return String( card.name || "" ); } /* ========================================================= QUANTITÀ CARTA NEL DECK ========================================================= */ function getDeckQuantity(card) { const key = getCardKey(card); const entry = deck.cards[key]; return entry ? Number(entry.quantity || 0) : 0; } /* ========================================================= AGGIORNA BADGE CARTE ========================================================= */ function updateCardDeckBadges() { const cards = window.currentDisplayedCards || []; const cardElements = document.querySelectorAll("#cards .card"); cardElements.forEach((cardElement, index) => { const card = cards[index]; if (!card) { return; } const quantity = getDeckQuantity(card); let badge = cardElement.querySelector(".card-deck-quantity"); if (quantity > 0) { if (!badge) { badge = document.createElement("div"); badge.className = "card-deck-quantity"; cardElement.appendChild(badge); } badge.textContent = `NEL MAZZO: ${quantity}`; } else if (badge) { badge.remove(); } }); } /* ========================================================= SALVATAGGIO DECK ========================================================= */ function saveDeck() { try { sessionStorage.setItem( DECK_STORAGE_KEY, JSON.stringify(deck) ); } catch (error) { console.error( "Errore salvataggio mazzo:", error ); } } /* ========================================================= CARICAMENTO DECK ========================================================= */ function loadDeck() { try { const saved = sessionStorage.getItem( DECK_STORAGE_KEY ); if (!saved) { updateDeckUI(); return; } const parsed = JSON.parse(saved); if ( !parsed || typeof parsed !== "object" ) { updateDeckUI(); return; } deck = { format: parsed.format === "commander" ? "commander" : "standard", cards: parsed.cards && typeof parsed.cards === "object" ? parsed.cards : {}, commander: parsed.commander || null }; document.getElementById( "deckFormat" ).value = deck.format; updateDeckUI(); } catch (error) { console.error( "Errore caricamento mazzo:", error ); deck = { format: "standard", cards: {}, commander: null }; updateDeckUI(); } } /* ========================================================= CAMBIO FORMATO ========================================================= */ function changeDeckFormat() { const newFormat = document.getElementById( "deckFormat" ).value; if ( newFormat === deck.format ) { return; } const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (hasCards) { const confirmed = confirm( "Cambiare formato svuoterà il mazzo attuale. Continuare?" ); if (!confirmed) { document.getElementById( "deckFormat" ).value = deck.format; return; } } deck = { format: newFormat, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= AGGIUNGI CARTA ========================================================= */ function addCardToDeck(card) { 
+<script> /* ========================================================= DATI ========================================================= */ let allCards = [];
+
+/* =========================================================
+   STATO PAGINAZIONE
+   ========================================================= */
+
+const CARDS_PER_PAGE = 48;
+
+let currentPage = 1;
+
+let currentFilteredCards = []; /* ========================================================= STATO FILTRI RAPIDI ========================================================= */ let activeQuickFilters = { color: null, type: null }; /* ========================================================= DECK BUILDER ========================================================= */ const DECK_STORAGE_KEY = "eldenring-scryfall-deck"; let deck = { format: "standard", cards: {}, commander: null }; /* ========================================================= IDENTIFICATIVO CARTA ========================================================= */ function getCardKey(card) { if (card.id) { return String(card.id); } if ( card.set || card.collector_number ) { return ( String(card.set || "") + ":" + String(card.collector_number || "") ); } return String( card.name || "" ); } /* ========================================================= QUANTITÀ CARTA NEL DECK ========================================================= */ function getDeckQuantity(card) { const key = getCardKey(card); const entry = deck.cards[key]; return entry ? Number(entry.quantity || 0) : 0; } /* ========================================================= AGGIORNA BADGE CARTE ========================================================= */ function updateCardDeckBadges() { const cards = window.currentDisplayedCards || []; const cardElements = document.querySelectorAll("#cards .card"); cardElements.forEach((cardElement, index) => { const card = cards[index]; if (!card) { return; } const quantity = getDeckQuantity(card); let badge = cardElement.querySelector(".card-deck-quantity"); if (quantity > 0) { if (!badge) { badge = document.createElement("div"); badge.className = "card-deck-quantity"; cardElement.appendChild(badge); } badge.textContent = `NEL MAZZO: ${quantity}`; } else if (badge) { badge.remove(); } }); } /* ========================================================= SALVATAGGIO DECK ========================================================= */ function saveDeck() { try { sessionStorage.setItem( DECK_STORAGE_KEY, JSON.stringify(deck) ); } catch (error) { console.error( "Errore salvataggio mazzo:", error ); } } /* ========================================================= CARICAMENTO DECK ========================================================= */ function loadDeck() { try { const saved = sessionStorage.getItem( DECK_STORAGE_KEY ); if (!saved) { updateDeckUI(); return; } const parsed = JSON.parse(saved); if ( !parsed || typeof parsed !== "object" ) { updateDeckUI(); return; } deck = { format: parsed.format === "commander" ? "commander" : "standard", cards: parsed.cards && typeof parsed.cards === "object" ? parsed.cards : {}, commander: parsed.commander || null }; document.getElementById( "deckFormat" ).value = deck.format; updateDeckUI(); } catch (error) { console.error( "Errore caricamento mazzo:", error ); deck = { format: "standard", cards: {}, commander: null }; updateDeckUI(); } } /* ========================================================= CAMBIO FORMATO ========================================================= */ function changeDeckFormat() { const newFormat = document.getElementById( "deckFormat" ).value; if ( newFormat === deck.format ) { return; } const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (hasCards) { const confirmed = confirm( "Cambiare formato svuoterà il mazzo attuale. Continuare?" ); if (!confirmed) { document.getElementById( "deckFormat" ).value = deck.format; return; } } deck = { format: newFormat, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= AGGIUNGI CARTA ========================================================= */ function addCardToDeck(card) { 
     if (!card) { return; } 
     const key = getCardKey(card); 
 
@@ -710,7 +785,402 @@ onclick="toggleDeckPanel()"
     
     saveDeck(); 
     updateDeckUI(); 
-} /* ========================================================= RIMUOVI COPIA ========================================================= */ function removeCardFromDeck(key) { const entry = deck.cards[key]; if (!entry) { return; } entry.quantity--; if ( entry.quantity <= 0 ) { delete deck.cards[key]; } saveDeck(); updateDeckUI(); } /* ========================================================= RIMUOVI CARTA COMPLETAMENTE ========================================================= */ function removeAllCopies(key) { if ( deck.cards[key] ) { delete deck.cards[key]; } saveDeck(); updateDeckUI(); } /* ========================================================= IMPOSTA COMANDANTE ========================================================= */ function setCommander(card) { if ( deck.format !== "commander" ) { alert( "Il comandante è disponibile solamente nel formato Commander." ); return; } if (!card) { return; } const typeLine = String( card.type_line || "" ).toLowerCase(); /* * Deve essere Legendary. */ if ( !typeLine.includes("legendary") ) { alert( "Il comandante deve essere una carta Legendary." ); return; } const key = getCardKey(card); /* * Se la carta era già nel mazzo principale, * la rimuoviamo prima di impostarla come comandante. */ if ( deck.cards[key] ) { delete deck.cards[key]; } deck.commander = card; saveDeck(); updateDeckUI(); } /* ========================================================= RIMUOVI COMANDANTE ========================================================= */ function removeCommander() { deck.commander = null; saveDeck(); updateDeckUI(); } /* ========================================================= VALIDITÀ DECK ========================================================= */ function getDeckStats() { let mainCount = 0; let tooManyCopies = false; const entries = Object.values(deck.cards); entries.forEach(entry => { const quantity = Number(entry.quantity || 0); mainCount += quantity; if ( deck.format === "standard" && quantity > 4 ) { tooManyCopies = true; } if ( deck.format === "commander" && quantity > 1 ) { tooManyCopies = true; } }); let valid = true; let message = ""; if ( deck.format === "standard" ) { if ( mainCount < 60 ) { valid = false; message = `Servono almeno 60 carte. Mancano ${60 - mainCount}.`; } else if ( tooManyCopies ) { valid = false; message = "Una o più carte superano il limite di 4 copie."; } else { valid = true; message = "Mazzo Standard valido."; } } if ( deck.format === "commander" ) { if ( !deck.commander ) { valid = false; message = "Seleziona un comandante."; } else if ( mainCount !== 99 ) { valid = false; message = `Il mazzo principale deve avere esattamente 99 carte. Attualmente: ${mainCount}.`; } else if ( tooManyCopies ) { valid = false; message = "Commander permette una sola copia di ogni carta."; } else { valid = true; message = "Mazzo Commander valido: 99 + 1 comandante."; } } return { mainCount, valid, message }; } /* ========================================================= AGGIORNA INTERFACCIA DECK ========================================================= */ function updateDeckUI() { const stats = getDeckStats(); /* * Conteggio pulsante flottante. */ const totalVisible = stats.mainCount + ( deck.commander ? 1 : 0 ); const deckButtonCount = document.getElementById( "deckButtonCount" ); if (deckButtonCount) { deckButtonCount.textContent = totalVisible; } /* * Conteggio principale. */ const deckCount = document.getElementById( "deckCount" ); if ( deckCount ) { if ( deck.format === "standard" ) { deckCount.textContent = `${stats.mainCount} / 60 carte`; } else { deckCount.textContent = `${stats.mainCount} / 99 carte + ${deck.commander ? 1 : 0} comandante`; } } /* * Validità. */ const validity = document.getElementById( "deckValidity" ); if (validity) { validity.textContent = stats.message; validity.classList.remove( "valid", "invalid" ); validity.classList.add( stats.valid ? "valid" : "invalid" ); } /* * Sezione comandante. */ updateCommanderUI(); /* * Lista carte. */ updateDeckListUI(); /* * Aggiorna i badge direttamente sulle carte visibili. */ updateCardDeckBadges(); } /* ========================================================= AGGIORNA COMANDANTE ========================================================= */ function updateCommanderUI() { const container = document.getElementById( "commanderContainer" ); if (!container) { return; } if ( deck.format !== "commander" ) { container.innerHTML = ` <div class="commander-empty"> Disponibile solo in formato Commander. </div> `; return; } if ( !deck.commander ) { container.innerHTML = ` <div class="commander-empty"> Nessun comandante selezionato. <br> Usa il pulsante 👑 su una carta Legendary. </div> `; return; } const commander = deck.commander; container.innerHTML = ` <div class="commander-card"> <img class="commander-card-image" src="${commander.image || ""}" alt="${commander.name || ""}" onerror="this.style.display='none'" > <div class="commander-card-info"> <div class="commander-card-name"> ${commander.name || ""} </div> <div class="commander-card-type"> ${commander.type_line || ""} </div> </div> <button class="commander-remove" onclick="removeCommander()" title="Rimuovi comandante" > × </button> </div> `; } /* ========================================================= AGGIORNA LISTA DECK ========================================================= */ function updateDeckListUI() { const container = document.getElementById( "deckCards" ); const uniqueCount = document.getElementById( "deckUniqueCount" ); if ( !container ) { return; } const entries = Object.entries( deck.cards ); if ( uniqueCount ) { uniqueCount.textContent = `${entries.length} ${entries.length === 1 ? "carta" : "carte"}`; } if ( entries.length === 0 ) { container.innerHTML = ` <div class="deck-empty"> Il tuo mazzo è vuoto.<br> Usa il pulsante <strong>+</strong> sulle carte per aggiungerle. </div> `; return; } entries.sort( (a, b) => { const nameA = String( a[1].card.name || "" ); const nameB = String( b[1].card.name || "" ); return nameA.localeCompare( nameB, "it", { sensitivity: "base" } ); } ); container.innerHTML = entries.map( ([key, entry]) => ` <div class="deck-item"> <img class="deck-item-image" src="${entry.card.image || ""}" alt="${entry.card.name || ""}" onerror="this.style.display='none'" > <div class="deck-item-name"> ${entry.card.name || ""} </div> <div class="deck-item-controls"> <button class="deck-quantity-button" onclick="removeCardFromDeck('${escapeJsString(key)}')" > − </button> <span class="deck-quantity"> ${entry.quantity} </span> <button class="deck-quantity-button" onclick="addCardToDeckByKey('${escapeJsString(key)}')" > + </button> </div> </div> ` ).join(""); } /* ========================================================= ESCAPE CHIAVE JAVASCRIPT ========================================================= */ function escapeJsString(value) { return String(value) .replace(/\\/g, "\\\\") .replace(/'/g, "\\'"); } /* ========================================================= AGGIUNGI DA CHIAVE ========================================================= */ function addCardToDeckByKey(key) { const entry = deck.cards[key]; if (!entry) { return; } addCardToDeck( entry.card ); } /* ========================================================= SVUOTA MAZZO ========================================================= */ function clearDeck() { const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (!hasCards) { return; } const confirmed = confirm( "Vuoi davvero svuotare completamente il mazzo?" ); if (!confirmed) { return; } deck = { format: deck.format, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= APERTURA PANNELLO DECK ========================================================= */ function toggleDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.toggle( "active" ); overlay.classList.toggle( "active" ); } /* ========================================================= CHIUSURA PANNELLO DECK ========================================================= */ function closeDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.remove( "active" ); overlay.classList.remove( "active" ); } /* ========================================================= CARICAMENTO CARTE ========================================================= */ async function loadCards() { try { const response = await fetch("/cards"); if (!response.ok) { throw new Error( `Errore HTTP ${response.status}` ); } allCards = await response.json(); if (!Array.isArray(allCards)) { throw new Error( "Il server non ha restituito un array di carte." ); } displayCards( sortFilteredCards(allCards) ); } catch (error) { document.getElementById("cards").innerHTML = "<div class='loading'>Errore nel caricamento delle carte.</div>"; console.error( "Errore caricamento carte:", error ); } } /* ========================================================= VISUALIZZAZIONE CARTE ========================================================= */ function displayCards(cards) { const container = document.getElementById("cards"); updateSearchStatus( cards ? cards.length : 0 ); if (!cards || cards.length === 0) { container.innerHTML = "<div class='loading'>Nessuna carta trovata.</div>"; window.currentDisplayedCards = []; return; } container.innerHTML = cards.map((card, index) => { const key = escapeJsString( getCardKey(card) ); const deckQuantity = getDeckQuantity(card); return ` <div class="card" onclick="openCardModal(${index})" > <div class="card-deck-controls"> <button class="card-deck-button" onclick="event.stopPropagation(); addCardToDeckByCardIndex(${index})" title="Aggiungi al mazzo" > + </button> <button class="card-deck-button commander" onclick="event.stopPropagation(); setCommanderByCardIndex(${index})" title="Imposta come comandante" > 👑 </button> </div> ${deckQuantity > 0 ? `<div class="card-deck-quantity">NEL MAZZO: ${deckQuantity}</div>` : ""} <img src="${card.image || ""}" alt="${card.name || ""}" class="card-image" onerror="this.style.display='none'" > <h2> ${card.name || ""} </h2> <div class="mana"> ${renderManaCost(card.mana_cost)} </div> <div class="type"> ${card.type_line || ""} </div> <div class="oracle"> ${card.oracle_text || ""} </div> </div> `; }).join(""); window.currentDisplayedCards = cards; } /* ========================================================= AGGIUNGI CARTA DALLA GRIGLIA ========================================================= */ function addCardToDeckByCardIndex(index) { const cards = window.currentDisplayedCards || []; const card = cards[index]; if (!card) { return; } addCardToDeck(card); } /* ========================================================= IMPOSTA COMANDANTE DALLA GRIGLIA ========================================================= */ function setCommanderByCardIndex(index) { const cards = window.currentDisplayedCards || []; const card = cards[index]; if (!card) { return; } setCommander(card); } /* ========================================================= INTERFACCIA RICERCA ========================================================= */ function updateSearchUI() { const searchBox = document.getElementById("search"); const clearButton = document.getElementById("clearSearch"); if (!searchBox || !clearButton) { return; } clearButton.style.display = searchBox.value.trim() ? "flex" : "none"; } function handleSearchKey(event) { if (event.key === "Enter") { searchCards(); } } function updateSearchStatus(count) { const status = document.getElementById( "searchStatus" ); if (!status) { return; } if (count === allCards.length) { status.textContent = `${count} ${count === 1 ? "carta" : "carte"}`; return; } status.textContent = `${count} ${count === 1 ? "carta trovata" : "carte trovate"}`; } /* ========================================================= FILTRI RAPIDI — TOGGLE ========================================================= */ function toggleQuickFilter( category, filter, button ) { if ( activeQuickFilters[category] === filter ) { activeQuickFilters[category] = null; button.classList.remove("active"); } else { activeQuickFilters[category] = filter; const selector = category === "color" ? ".color-filter, .multicolor-filter" : ".text-filter"; document .querySelectorAll(selector) .forEach(otherButton => { otherButton.classList.remove( "active" ); }); button.classList.add("active"); } searchCards(); } /* ========================================================= APPLICA FILTRI RAPIDI ========================================================= */ function applyQuickFilters(filtered) { if ( activeQuickFilters.color ) { const filter = activeQuickFilters.color; if ( filter === "multicolor" ) { filtered = filtered.filter(card => { const colors = Array.isArray(card.colors) ? card.colors : []; return colors.length > 1; }); } else { const value = filter .substring(2) .toLowerCase(); const colorMap = { w: "W", u: "U", b: "B", r: "R", g: "G" }; const requestedColor = colorMap[value]; if (requestedColor) { const colorMode = document .getElementById( "colorMode" ) .value; filtered = filtered.filter(card => { const colors = Array.isArray(card.colors) ? card.colors : []; if ( colorMode === "exact" ) { return ( colors.length === 1 && colors.includes( requestedColor ) ); } return colors.includes( requestedColor ); }); } } } if ( activeQuickFilters.type ) { const filter = activeQuickFilters.type; const value = filter .substring(2) .toLowerCase(); filtered = filtered.filter(card => { const type = String( card.type_line || "" ).toLowerCase(); return type.includes(value); }); } return filtered; } /* ========================================================= FILTRI VISUALI ========================================================= */ function applyVisualFilters() { searchCards(); } /* ========================================================= CANCELLA FILTRI ========================================================= */ function clearFilters() { document.getElementById( "search" ).value = ""; document.getElementById( "cmcFilter" ).value = ""; document.getElementById( "rarityFilter" ).value = ""; activeQuickFilters.color = null; activeQuickFilters.type = null; document .querySelectorAll( ".color-filter, .multicolor-filter, .text-filter" ) .forEach(button => { button.classList.remove( "active" ); }); updateSearchUI(); displayCards( sortFilteredCards(allCards) ); } /* ========================================================= OTTIENE RISULTATI RICERCA ========================================================= */ function getSearchResults() { const searchBox = document.getElementById("search"); const query = searchBox.value .trim() .toLowerCase(); if (!query) { return [...allCards]; } const terms = query.match( /(?:[^\s"]+|"[^"]*")+/g ) || []; return allCards.filter(card => { const name = String(card.name || "") .toLowerCase(); const type = String(card.type_line || "") .toLowerCase(); const oracle = String(card.oracle_text || "") .toLowerCase(); const flavor = String(card.flavor_text || "") .toLowerCase(); const mana = String(card.mana_cost || "") .toLowerCase(); const rarity = String(card.rarity || "") .toLowerCase() .trim(); const set = String(card.set || "") .toLowerCase(); const artist = String(card.artist || "") .toLowerCase(); const collector = String(card.collector_number || "") .toLowerCase(); const cmc = Number(card.cmc ?? 0); const colors = Array.isArray(card.colors) ? card.colors : []; return terms.every(rawTerm => { let term = rawTerm.trim(); if ( term.startsWith('"') && term.endsWith('"') ) { term = term.slice(1, -1); } if (!term) { return true; } if (term.startsWith("name:")) { const value = term.substring(5).trim(); return name.includes(value); } if (term.startsWith("t:")) { const value = term.substring(2).trim(); return type.includes(value); } if (term.startsWith("o:")) { const value = term.substring(2).trim(); return oracle.includes(value); } if (term.startsWith("f:")) { const value = term.substring(2).trim(); return flavor.includes(value); } if (term.startsWith("artist:")) { const value = term.substring(7).trim(); return artist.includes(value); } if (term.startsWith("set:")) { const value = term.substring(4).trim(); return ( set === value || set.includes(value) ); } if (term.startsWith("number:")) { const value = term.substring(7).trim(); return collector === value; } if (term.startsWith("r:")) { const value = term.substring(2).trim(); const normalizedRarity = rarity === "mithyc" ? "mythic" : rarity; return ( normalizedRarity === value || normalizedRarity.includes(value) ); } if (term.startsWith("cmc:")) { const value = term.substring(4).trim(); if (value.endsWith("+")) { const number = Number( value.slice(0, -1) ); if ( Number.isNaN(number) ) { return false; } return cmc >= number; } const number = Number(value); if ( Number.isNaN(number) ) { return false; } return cmc === number; } if (term.startsWith("c:")) { const value = term.substring(2).trim(); if (value === "c") { return colors.length === 0; } if (value === "m") { return colors.length > 1; } const colorMap = { w: "W", u: "U", b: "B", r: "R", g: "G" }; const requestedColors = value .split("") .map( letter => colorMap[letter] ) .filter(Boolean); if ( requestedColors.length === 0 || requestedColors.length !== value.length ) { return false; } const colorMode = document .getElementById( "colorMode" ) .value; if ( colorMode === "exact" ) { return ( colors.length === requestedColors.length && requestedColors.every( color => colors.includes(color) ) ); } return requestedColors.every( color => colors.includes(color) ); } if ( term === "multicolor" ) { return colors.length > 1; } if ( term === "colorless" ) { return colors.length === 0; } return ( name.includes(term) || type.includes(term) || oracle.includes(term) || flavor.includes(term) || mana.includes(term) || rarity.includes(term) || set.includes(term) || artist.includes(term) || collector.includes(term) ); }); }); } /* ========================================================= RICERCA PRINCIPALE ========================================================= */ function searchCards() { let filtered = getSearchResults(); filtered = applyQuickFilters(filtered); const cmcFilter = document.getElementById( "cmcFilter" ).value; const rarityFilter = document.getElementById( "rarityFilter" ).value; if (cmcFilter) { if (cmcFilter === "7+") { filtered = filtered.filter(card => Number(card.cmc ?? 0) >= 7 ); } else { const cmc = Number(cmcFilter); filtered = filtered.filter(card => Number(card.cmc ?? 0) === cmc ); } } if (rarityFilter) { filtered = filtered.filter(card => { let rarity = String(card.rarity || "") .toLowerCase() .trim(); if ( rarity === "mithyc" ) { rarity = "mythic"; } return ( rarity === rarityFilter || rarity.includes(rarityFilter) ); }); } displayCards( sortFilteredCards(filtered) ); } /* ========================================================= MANA ========================================================= */ function renderManaCost(manaCost) { if (!manaCost) { return ""; } return manaCost.replace( /\{([^}]+)\}/g, (match, symbol) => { const fileName = symbol.replace("/", ""); return ` <img src="/mana/${fileName}.svg" class="mana-symbol" alt="${symbol}" > `; } ); } /* ========================================================= MODALE CARTA ========================================================= */ function openCardModal(index) { window.currentModalIndex = index; updateCardModal(); } function updateCardModal() { const cards = window.currentDisplayedCards || []; const index = window.currentModalIndex; const card = cards[index]; if (!card) { return; } document.getElementById( "modalImage" ).src = card.image || ""; document.getElementById( "modalImage" ).alt = card.name || ""; document.getElementById( "modalName" ).textContent = card.name || ""; document.getElementById( "modalMana" ).innerHTML = renderManaCost( card.mana_cost ); document.getElementById( "modalType" ).textContent = card.type_line || ""; document.getElementById( "modalOracle" ).textContent = card.oracle_text || ""; document.getElementById( "modalFlavor" ).textContent = card.flavor_text || ""; document.getElementById( "modalColors" ).textContent = card.color_identity && card.color_identity.length ? card.color_identity.join(" / ") : "Colorless"; document.getElementById( "modalRarity" ).textContent = card.rarity || "—"; document.getElementById( "modalSet" ).textContent = card.set || "—"; document.getElementById( "modalCollector" ).textContent = card.collector_number || "—"; document.getElementById( "modalArtist" ).textContent = card.artist || "—"; const reviewBox = document.getElementById( "modalReview" ); if ( card.needs_review === true ) { reviewBox.style.display = "block"; } else { reviewBox.style.display = "none"; } const stats = card.power != null && card.toughness != null ? `${card.power} / ${card.toughness}` : ""; document.getElementById( "modalStats" ).textContent = stats; document.getElementById( "cardModal" ).classList.add("active"); updateModalNavigation(); } /* ========================================================= NAVIGAZIONE MODALE ========================================================= */ function updateModalNavigation() { const cards = window.currentDisplayedCards || []; const index = window.currentModalIndex; const previousButton = document.getElementById( "prevCard" ); const nextButton = document.getElementById( "nextCard" ); if ( !previousButton || !nextButton ) { return; } previousButton.disabled = index <= 0; nextButton.disabled = index >= cards.length - 1; } function showPreviousCard() { if ( window.currentModalIndex > 0 ) { window.currentModalIndex--; updateCardModal(); } } function showNextCard() { const cards = window.currentDisplayedCards || []; if ( window.currentModalIndex < cards.length - 1 ) { window.currentModalIndex++; updateCardModal(); } } function closeCardModal() { document .getElementById("cardModal") .classList .remove("active"); } /* ========================================================= CHIUSURA MODALE CLICCANDO FUORI ========================================================= */ document .getElementById("cardModal").addEventListener( "click", event => { if ( event.target.id === "cardModal" ) { closeCardModal(); } } ); /* ========================================================= ORDINAMENTO ========================================================= */ function sortCards() { searchCards(); } function sortFilteredCards(cards) { const sortValue = document.getElementById( "sortSelect" ).value; return [...cards].sort( (a, b) => { if ( sortValue === "name" ) { return ( (a.name || "") .localeCompare( b.name || "", "it", { sensitivity: "base" } ) ); } if ( sortValue === "cmc" ) { return ( Number(a.cmc || 0) - Number(b.cmc || 0) ); } if ( sortValue === "type" ) { return ( (a.type_line || "") .localeCompare( b.type_line || "", "it", { sensitivity: "base" } ) ); } if ( sortValue === "power" ) { return ( Number(a.power || 0) - Number(b.power || 0) ); } if ( sortValue === "toughness" ) { return ( Number(a.toughness || 0) - Number(b.toughness || 0) ); } return 0; } ); } /* ========================================================= TASTIERA ========================================================= */ document.addEventListener( "keydown", event => { if ( event.key === "Escape" ) { closeCardModal(); closeDeckPanel(); return; } const modal = document.getElementById( "cardModal" ); if ( !modal.classList.contains( "active" ) ) { return; } if ( event.key === "ArrowLeft" ) { showPreviousCard(); } if ( event.key === "ArrowRight" ) { showNextCard(); } } ); /* ========================================================= AVVIO ========================================================= */ loadDeck(); loadCards();
+} /* ========================================================= RIMUOVI COPIA ========================================================= */ function removeCardFromDeck(key) { const entry = deck.cards[key]; if (!entry) { return; } entry.quantity--; if ( entry.quantity <= 0 ) { delete deck.cards[key]; } saveDeck(); updateDeckUI(); } /* ========================================================= RIMUOVI CARTA COMPLETAMENTE ========================================================= */ function removeAllCopies(key) { if ( deck.cards[key] ) { delete deck.cards[key]; } saveDeck(); updateDeckUI(); } /* ========================================================= IMPOSTA COMANDANTE ========================================================= */ function setCommander(card) { if ( deck.format !== "commander" ) { alert( "Il comandante è disponibile solamente nel formato Commander." ); return; } if (!card) { return; } const typeLine = String( card.type_line || "" ).toLowerCase(); /* * Deve essere Legendary. */ if ( !typeLine.includes("legendary") ) { alert( "Il comandante deve essere una carta Legendary." ); return; } const key = getCardKey(card); /* * Se la carta era già nel mazzo principale, * la rimuoviamo prima di impostarla come comandante. */ if ( deck.cards[key] ) { delete deck.cards[key]; } deck.commander = card; saveDeck(); updateDeckUI(); } /* ========================================================= RIMUOVI COMANDANTE ========================================================= */ function removeCommander() { deck.commander = null; saveDeck(); updateDeckUI(); } /* ========================================================= VALIDITÀ DECK ========================================================= */ function getDeckStats() { let mainCount = 0; let tooManyCopies = false; const entries = Object.values(deck.cards); entries.forEach(entry => { const quantity = Number(entry.quantity || 0); mainCount += quantity; if ( deck.format === "standard" && quantity > 4 ) { tooManyCopies = true; } if ( deck.format === "commander" && quantity > 1 ) { tooManyCopies = true; } }); let valid = true; let message = ""; if ( deck.format === "standard" ) { if ( mainCount < 60 ) { valid = false; message = `Servono almeno 60 carte. Mancano ${60 - mainCount}.`; } else if ( tooManyCopies ) { valid = false; message = "Una o più carte superano il limite di 4 copie."; } else { valid = true; message = "Mazzo Standard valido."; } } if ( deck.format === "commander" ) { if ( !deck.commander ) { valid = false; message = "Seleziona un comandante."; } else if ( mainCount !== 99 ) { valid = false; message = `Il mazzo principale deve avere esattamente 99 carte. Attualmente: ${mainCount}.`; } else if ( tooManyCopies ) { valid = false; message = "Commander permette una sola copia di ogni carta."; } else { valid = true; message = "Mazzo Commander valido: 99 + 1 comandante."; } } return { mainCount, valid, message }; } /* ========================================================= AGGIORNA INTERFACCIA DECK ========================================================= */ function updateDeckUI() { const stats = getDeckStats(); /* * Conteggio pulsante flottante. */ const totalVisible = stats.mainCount + ( deck.commander ? 1 : 0 ); const deckButtonCount = document.getElementById( "deckButtonCount" ); if (deckButtonCount) { deckButtonCount.textContent = totalVisible; } /* * Conteggio principale. */ const deckCount = document.getElementById( "deckCount" ); if ( deckCount ) { if ( deck.format === "standard" ) { deckCount.textContent = `${stats.mainCount} / 60 carte`; } else { deckCount.textContent = `${stats.mainCount} / 99 carte + ${deck.commander ? 1 : 0} comandante`; } } /* * Validità. */ const validity = document.getElementById( "deckValidity" ); if (validity) { validity.textContent = stats.message; validity.classList.remove( "valid", "invalid" ); validity.classList.add( stats.valid ? "valid" : "invalid" ); } /* * Sezione comandante. */ updateCommanderUI(); /* * Lista carte. */ updateDeckListUI(); /* * Aggiorna i badge direttamente sulle carte visibili. */ updateCardDeckBadges(); } /* ========================================================= AGGIORNA COMANDANTE ========================================================= */ function updateCommanderUI() { const container = document.getElementById( "commanderContainer" ); if (!container) { return; } if ( deck.format !== "commander" ) { container.innerHTML = ` <div class="commander-empty"> Disponibile solo in formato Commander. </div> `; return; } if ( !deck.commander ) { container.innerHTML = ` <div class="commander-empty"> Nessun comandante selezionato. <br> Usa il pulsante 👑 su una carta Legendary. </div> `; return; } const commander = deck.commander; container.innerHTML = ` <div class="commander-card"> <img class="commander-card-image" src="${commander.image || ""}" alt="${commander.name || ""}" onerror="this.style.display='none'" > <div class="commander-card-info"> <div class="commander-card-name"> ${commander.name || ""} </div> <div class="commander-card-type"> ${commander.type_line || ""} </div> </div> <button class="commander-remove" onclick="removeCommander()" title="Rimuovi comandante" > × </button> </div> `; } /* ========================================================= AGGIORNA LISTA DECK ========================================================= */ function updateDeckListUI() { const container = document.getElementById( "deckCards" ); const uniqueCount = document.getElementById( "deckUniqueCount" ); if ( !container ) { return; } const entries = Object.entries( deck.cards ); if ( uniqueCount ) { uniqueCount.textContent = `${entries.length} ${entries.length === 1 ? "carta" : "carte"}`; } if ( entries.length === 0 ) { container.innerHTML = ` <div class="deck-empty"> Il tuo mazzo è vuoto.<br> Usa il pulsante <strong>+</strong> sulle carte per aggiungerle. </div> `; return; } entries.sort( (a, b) => { const nameA = String( a[1].card.name || "" ); const nameB = String( b[1].card.name || "" ); return nameA.localeCompare( nameB, "it", { sensitivity: "base" } ); } ); container.innerHTML = entries.map( ([key, entry]) => ` <div class="deck-item"> <img class="deck-item-image" src="${entry.card.image || ""}" alt="${entry.card.name || ""}" onerror="this.style.display='none'" > <div class="deck-item-name"> ${entry.card.name || ""} </div> <div class="deck-item-controls"> <button class="deck-quantity-button" onclick="removeCardFromDeck('${escapeJsString(key)}')" > − </button> <span class="deck-quantity"> ${entry.quantity} </span> <button class="deck-quantity-button" onclick="addCardToDeckByKey('${escapeJsString(key)}')" > + </button> </div> </div> ` ).join(""); } /* ========================================================= ESCAPE CHIAVE JAVASCRIPT ========================================================= */ function escapeJsString(value) { return String(value) .replace(/\\/g, "\\\\") .replace(/'/g, "\\'"); } /* ========================================================= AGGIUNGI DA CHIAVE ========================================================= */ function addCardToDeckByKey(key) { const entry = deck.cards[key]; if (!entry) { return; } addCardToDeck( entry.card ); } /* ========================================================= SVUOTA MAZZO ========================================================= */ function clearDeck() { const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (!hasCards) { return; } const confirmed = confirm( "Vuoi davvero svuotare completamente il mazzo?" ); if (!confirmed) { return; } deck = { format: deck.format, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= APERTURA PANNELLO DECK ========================================================= */ function toggleDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.toggle( "active" ); overlay.classList.toggle( "active" ); } /* ========================================================= CHIUSURA PANNELLO DECK ========================================================= */ function closeDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.remove( "active" ); overlay.classList.remove( "active" ); } /* ========================================================= CARICAMENTO CARTE ========================================================= */ async function loadCards() { try { const response = await fetch("/cards"); if (!response.ok) { throw new Error( `Errore HTTP ${response.status}` ); } allCards = await response.json(); if (!Array.isArray(allCards)) { throw new Error( "Il server non ha restituito un array di carte." ); } displayCards( sortFilteredCards(allCards) ); } catch (error) { document.getElementById("cards").innerHTML = "<div class='loading'>Errore nel caricamento delle carte.</div>"; console.error( "Errore caricamento carte:", error ); } } /* ========================================================= VISUALIZZAZIONE CARTE ========================================================= */ /* =========================================================
+   VISUALIZZAZIONE CARTE
+========================================================= */
+
+function displayCards(cards, resetPage = true) {
+
+    const container = document.getElementById("cards");
+
+    /*
+     * Salviamo tutti i risultati filtrati.
+     */
+    currentFilteredCards = Array.isArray(cards) ? cards : [];
+
+    /*
+     * Quando cambia ricerca/filtro/ordinamento,
+     * torniamo alla prima pagina.
+     */
+    if (resetPage) {
+        currentPage = 1;
+    }
+
+    updateSearchStatus(currentFilteredCards.length);
+
+    /*
+     * Nessun risultato.
+     */
+    if (currentFilteredCards.length === 0) {
+
+        container.innerHTML =
+            "<div class='loading'>Nessuna carta trovata.</div>";
+
+        window.currentDisplayedCards = [];
+
+        renderPagination();
+
+        return;
+    }
+
+    /*
+     * Numero totale delle pagine.
+     */
+    const totalPages = Math.ceil(
+        currentFilteredCards.length / CARDS_PER_PAGE
+    );
+
+    /*
+     * Sicurezza nel caso la pagina corrente
+     * non esista più dopo un filtro.
+     */
+    if (currentPage > totalPages) {
+        currentPage = totalPages;
+    }
+
+    /*
+     * Calcolo delle carte da mostrare.
+     */
+    const startIndex =
+        (currentPage - 1) * CARDS_PER_PAGE;
+
+    const endIndex =
+        Math.min(
+            startIndex + CARDS_PER_PAGE,
+            currentFilteredCards.length
+        );
+
+    const visibleCards =
+        currentFilteredCards.slice(startIndex, endIndex);
+
+    /*
+     * Le funzioni del modal e del deck
+     * lavorano sulle carte attualmente visibili.
+     */
+    window.currentDisplayedCards = visibleCards;
+
+    /*
+     * Disegna solamente le carte della pagina corrente.
+     */
+    container.innerHTML = visibleCards.map((card, index) => {
+
+        const deckQuantity =
+            getDeckQuantity(card);
+
+        return `
+            <div
+                class="card"
+                onclick="openCardModal(${index})"
+            >
+
+                <div class="card-deck-controls">
+
+                    <button
+                        class="card-deck-button"
+                        onclick="event.stopPropagation(); addCardToDeckByCardIndex(${index})"
+                        title="Aggiungi al mazzo"
+                    >
+                        +
+                    </button>
+
+                    <button
+                        class="card-deck-button commander"
+                        onclick="event.stopPropagation(); setCommanderByCardIndex(${index})"
+                        title="Imposta come comandante"
+                    >
+                        👑
+                    </button>
+
+                </div>
+
+                ${
+                    deckQuantity > 0
+                    ? `<div class="card-deck-quantity">
+                        NEL MAZZO: ${deckQuantity}
+                       </div>`
+                    : ""
+                }
+
+                <img
+                    src="${card.image || ""}"
+                    alt="${card.name || ""}"
+                    class="card-image"
+                    loading="lazy"
+                    onerror="this.style.display='none'"
+                >
+
+                <h2>
+                    ${card.name || ""}
+                </h2>
+
+                <div class="mana">
+                    ${renderManaCost(card.mana_cost)}
+                </div>
+
+                <div class="type">
+                    ${card.type_line || ""}
+                </div>
+
+                <div class="oracle">
+                    ${card.oracle_text || ""}
+                </div>
+
+            </div>
+        `;
+
+    }).join("");
+
+    /*
+     * Disegna la paginazione.
+     */
+    renderPagination();
+}
+
+
+/* =========================================================
+   PAGINAZIONE
+========================================================= */
+
+function renderPagination() {
+
+    const container =
+        document.getElementById("pagination");
+
+    if (!container) {
+        return;
+    }
+
+    const totalCards =
+        currentFilteredCards.length;
+
+    /*
+     * Se non ci sono carte oppure
+     * c'è una sola pagina, non mostriamo i controlli.
+     */
+    if (
+        totalCards === 0 ||
+        totalCards <= CARDS_PER_PAGE
+    ) {
+
+        container.innerHTML = "";
+
+        return;
+    }
+
+    const totalPages =
+        Math.ceil(
+            totalCards / CARDS_PER_PAGE
+        );
+
+    const startCard =
+        (currentPage - 1) * CARDS_PER_PAGE + 1;
+
+    const endCard =
+        Math.min(
+            currentPage * CARDS_PER_PAGE,
+            totalCards
+        );
+
+    let html = "";
+
+    /*
+     * Informazione risultati.
+     */
+    html += `
+        <div class="pagination-info">
+            Mostrate ${startCard}–${endCard} di ${totalCards}
+        </div>
+    `;
+
+    /*
+     * PRECEDENTE
+     */
+    html += `
+        <button
+            class="pagination-button"
+            onclick="goToPage(${currentPage - 1})"
+            ${currentPage === 1 ? "disabled" : ""}
+        >
+            ←
+        </button>
+    `;
+
+    /*
+     * Numeri delle pagine.
+     */
+    const pages =
+        getPaginationPages(
+            currentPage,
+            totalPages
+        );
+
+    pages.forEach(page => {
+
+        if (page === "...") {
+
+            html += `
+                <span class="pagination-ellipsis">
+                    …
+                </span>
+            `;
+
+            return;
+        }
+
+        html += `
+            <button
+                class="pagination-button ${
+                    page === currentPage
+                        ? "active"
+                        : ""
+                }"
+                onclick="goToPage(${page})"
+            >
+                ${page}
+            </button>
+        `;
+    });
+
+    /*
+     * SUCCESSIVA
+     */
+    html += `
+        <button
+            class="pagination-button"
+            onclick="goToPage(${currentPage + 1})"
+            ${currentPage === totalPages ? "disabled" : ""}
+        >
+            →
+        </button>
+    `;
+
+    container.innerHTML = html;
+}
+
+
+/* =========================================================
+   NUMERI PAGINAZIONE
+========================================================= */
+
+function getPaginationPages(current, total) {
+
+    /*
+     * Se abbiamo poche pagine,
+     * le mostriamo tutte.
+     */
+    if (total <= 7) {
+
+        return Array.from(
+            { length: total },
+            (_, index) => index + 1
+        );
+    }
+
+    const pages = [];
+
+    /*
+     * Prima pagina.
+     */
+    pages.push(1);
+
+    /*
+     * Pagine vicine alla corrente.
+     */
+    const start = Math.max(
+        2,
+        current - 1
+    );
+
+    const end = Math.min(
+        total - 1,
+        current + 1
+    );
+
+    /*
+     * Puntini dopo la prima pagina.
+     */
+    if (start > 2) {
+        pages.push("...");
+    }
+
+    /*
+     * Pagine centrali.
+     */
+    for (
+        let page = start;
+        page <= end;
+        page++
+    ) {
+
+        pages.push(page);
+    }
+
+    /*
+     * Puntini prima dell'ultima pagina.
+     */
+    if (end < total - 1) {
+        pages.push("...");
+    }
+
+    /*
+     * Ultima pagina.
+     */
+    pages.push(total);
+
+    return pages;
+}
+
+
+/* =========================================================
+   CAMBIO PAGINA
+========================================================= */
+
+function goToPage(page) {
+
+    const totalPages =
+        Math.ceil(
+            currentFilteredCards.length /
+            CARDS_PER_PAGE
+        );
+
+    /*
+     * Impedisce di uscire dall'intervallo.
+     */
+    if (
+        page < 1 ||
+        page > totalPages
+    ) {
+        return;
+    }
+
+    /*
+     * Cambia la pagina corrente.
+     */
+    currentPage = page;
+
+    /*
+     * Ridisegna le carte senza
+     * tornare alla pagina 1.
+     */
+    displayCards(
+        currentFilteredCards,
+        false
+    );
+
+    /*
+     * Torna all'inizio della griglia.
+     */
+    const cardsContainer =
+        document.getElementById("cards");
+
+    if (cardsContainer) {
+
+        cardsContainer.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+} /* ========================================================= AGGIUNGI CARTA DALLA GRIGLIA ========================================================= */ function addCardToDeckByCardIndex(index) { const cards = window.currentDisplayedCards || []; const card = cards[index]; if (!card) { return; } addCardToDeck(card); } /* ========================================================= IMPOSTA COMANDANTE DALLA GRIGLIA ========================================================= */ function setCommanderByCardIndex(index) { const cards = window.currentDisplayedCards || []; const card = cards[index]; if (!card) { return; } setCommander(card); } /* ========================================================= INTERFACCIA RICERCA ========================================================= */ function updateSearchUI() { const searchBox = document.getElementById("search"); const clearButton = document.getElementById("clearSearch"); if (!searchBox || !clearButton) { return; } clearButton.style.display = searchBox.value.trim() ? "flex" : "none"; } function handleSearchKey(event) { if (event.key === "Enter") { searchCards(); } } function updateSearchStatus(count) { const status = document.getElementById( "searchStatus" ); if (!status) { return; } if (count === allCards.length) { status.textContent = `${count} ${count === 1 ? "carta" : "carte"}`; return; } status.textContent = `${count} ${count === 1 ? "carta trovata" : "carte trovate"}`; } /* ========================================================= FILTRI RAPIDI — TOGGLE ========================================================= */ function toggleQuickFilter( category, filter, button ) { if ( activeQuickFilters[category] === filter ) { activeQuickFilters[category] = null; button.classList.remove("active"); } else { activeQuickFilters[category] = filter; const selector = category === "color" ? ".color-filter, .multicolor-filter" : ".text-filter"; document .querySelectorAll(selector) .forEach(otherButton => { otherButton.classList.remove( "active" ); }); button.classList.add("active"); } searchCards(); } /* ========================================================= APPLICA FILTRI RAPIDI ========================================================= */ function applyQuickFilters(filtered) { if ( activeQuickFilters.color ) { const filter = activeQuickFilters.color; if ( filter === "multicolor" ) { filtered = filtered.filter(card => { const colors = Array.isArray(card.colors) ? card.colors : []; return colors.length > 1; }); } else { const value = filter .substring(2) .toLowerCase(); const colorMap = { w: "W", u: "U", b: "B", r: "R", g: "G" }; const requestedColor = colorMap[value]; if (requestedColor) { const colorMode = document .getElementById( "colorMode" ) .value; filtered = filtered.filter(card => { const colors = Array.isArray(card.colors) ? card.colors : []; if ( colorMode === "exact" ) { return ( colors.length === 1 && colors.includes( requestedColor ) ); } return colors.includes( requestedColor ); }); } } } if ( activeQuickFilters.type ) { const filter = activeQuickFilters.type; const value = filter .substring(2) .toLowerCase(); filtered = filtered.filter(card => { const type = String( card.type_line || "" ).toLowerCase(); return type.includes(value); }); } return filtered; } /* ========================================================= FILTRI VISUALI ========================================================= */ function applyVisualFilters() { searchCards(); } /* ========================================================= CANCELLA FILTRI ========================================================= */ function clearFilters() { document.getElementById( "search" ).value = ""; document.getElementById( "cmcFilter" ).value = ""; document.getElementById( "rarityFilter" ).value = ""; activeQuickFilters.color = null; activeQuickFilters.type = null; document .querySelectorAll( ".color-filter, .multicolor-filter, .text-filter" ) .forEach(button => { button.classList.remove( "active" ); }); updateSearchUI(); displayCards( sortFilteredCards(allCards) ); } /* ========================================================= OTTIENE RISULTATI RICERCA ========================================================= */ function getSearchResults() { const searchBox = document.getElementById("search"); const query = searchBox.value .trim() .toLowerCase(); if (!query) { return [...allCards]; } const terms = query.match( /(?:[^\s"]+|"[^"]*")+/g ) || []; return allCards.filter(card => { const name = String(card.name || "") .toLowerCase(); const type = String(card.type_line || "") .toLowerCase(); const oracle = String(card.oracle_text || "") .toLowerCase(); const flavor = String(card.flavor_text || "") .toLowerCase(); const mana = String(card.mana_cost || "") .toLowerCase(); const rarity = String(card.rarity || "") .toLowerCase() .trim(); const set = String(card.set || "") .toLowerCase(); const artist = String(card.artist || "") .toLowerCase(); const collector = String(card.collector_number || "") .toLowerCase(); const cmc = Number(card.cmc ?? 0); const colors = Array.isArray(card.colors) ? card.colors : []; return terms.every(rawTerm => { let term = rawTerm.trim(); if ( term.startsWith('"') && term.endsWith('"') ) { term = term.slice(1, -1); } if (!term) { return true; } if (term.startsWith("name:")) { const value = term.substring(5).trim(); return name.includes(value); } if (term.startsWith("t:")) { const value = term.substring(2).trim(); return type.includes(value); } if (term.startsWith("o:")) { const value = term.substring(2).trim(); return oracle.includes(value); } if (term.startsWith("f:")) { const value = term.substring(2).trim(); return flavor.includes(value); } if (term.startsWith("artist:")) { const value = term.substring(7).trim(); return artist.includes(value); } if (term.startsWith("set:")) { const value = term.substring(4).trim(); return ( set === value || set.includes(value) ); } if (term.startsWith("number:")) { const value = term.substring(7).trim(); return collector === value; } if (term.startsWith("r:")) { const value = term.substring(2).trim(); const normalizedRarity = rarity === "mithyc" ? "mythic" : rarity; return ( normalizedRarity === value || normalizedRarity.includes(value) ); } if (term.startsWith("cmc:")) { const value = term.substring(4).trim(); if (value.endsWith("+")) { const number = Number( value.slice(0, -1) ); if ( Number.isNaN(number) ) { return false; } return cmc >= number; } const number = Number(value); if ( Number.isNaN(number) ) { return false; } return cmc === number; } if (term.startsWith("c:")) { const value = term.substring(2).trim(); if (value === "c") { return colors.length === 0; } if (value === "m") { return colors.length > 1; } const colorMap = { w: "W", u: "U", b: "B", r: "R", g: "G" }; const requestedColors = value .split("") .map( letter => colorMap[letter] ) .filter(Boolean); if ( requestedColors.length === 0 || requestedColors.length !== value.length ) { return false; } const colorMode = document .getElementById( "colorMode" ) .value; if ( colorMode === "exact" ) { return ( colors.length === requestedColors.length && requestedColors.every( color => colors.includes(color) ) ); } return requestedColors.every( color => colors.includes(color) ); } if ( term === "multicolor" ) { return colors.length > 1; } if ( term === "colorless" ) { return colors.length === 0; } return ( name.includes(term) || type.includes(term) || oracle.includes(term) || flavor.includes(term) || mana.includes(term) || rarity.includes(term) || set.includes(term) || artist.includes(term) || collector.includes(term) ); }); }); } /* ========================================================= RICERCA PRINCIPALE ========================================================= */ function searchCards() { let filtered = getSearchResults(); filtered = applyQuickFilters(filtered); const cmcFilter = document.getElementById( "cmcFilter" ).value; const rarityFilter = document.getElementById( "rarityFilter" ).value; if (cmcFilter) { if (cmcFilter === "7+") { filtered = filtered.filter(card => Number(card.cmc ?? 0) >= 7 ); } else { const cmc = Number(cmcFilter); filtered = filtered.filter(card => Number(card.cmc ?? 0) === cmc ); } } if (rarityFilter) { filtered = filtered.filter(card => { let rarity = String(card.rarity || "") .toLowerCase() .trim(); if ( rarity === "mithyc" ) { rarity = "mythic"; } return ( rarity === rarityFilter || rarity.includes(rarityFilter) ); }); } displayCards( sortFilteredCards(filtered) ); } /* ========================================================= MANA ========================================================= */ function renderManaCost(manaCost) { if (!manaCost) { return ""; } return manaCost.replace( /\{([^}]+)\}/g, (match, symbol) => { const fileName = symbol.replace("/", ""); return ` <img src="/mana/${fileName}.svg" class="mana-symbol" alt="${symbol}" > `; } ); } /* ========================================================= MODALE CARTA ========================================================= */ function openCardModal(index) { window.currentModalIndex = index; updateCardModal(); } function updateCardModal() { const cards = window.currentDisplayedCards || []; const index = window.currentModalIndex; const card = cards[index]; if (!card) { return; } document.getElementById( "modalImage" ).src = card.image || ""; document.getElementById( "modalImage" ).alt = card.name || ""; document.getElementById( "modalName" ).textContent = card.name || ""; document.getElementById( "modalMana" ).innerHTML = renderManaCost( card.mana_cost ); document.getElementById( "modalType" ).textContent = card.type_line || ""; document.getElementById( "modalOracle" ).textContent = card.oracle_text || ""; document.getElementById( "modalFlavor" ).textContent = card.flavor_text || ""; document.getElementById( "modalColors" ).textContent = card.color_identity && card.color_identity.length ? card.color_identity.join(" / ") : "Colorless"; document.getElementById( "modalRarity" ).textContent = card.rarity || "—"; document.getElementById( "modalSet" ).textContent = card.set || "—"; document.getElementById( "modalCollector" ).textContent = card.collector_number || "—"; document.getElementById( "modalArtist" ).textContent = card.artist || "—"; const reviewBox = document.getElementById( "modalReview" ); if ( card.needs_review === true ) { reviewBox.style.display = "block"; } else { reviewBox.style.display = "none"; } const stats = card.power != null && card.toughness != null ? `${card.power} / ${card.toughness}` : ""; document.getElementById( "modalStats" ).textContent = stats; document.getElementById( "cardModal" ).classList.add("active"); updateModalNavigation(); } /* ========================================================= NAVIGAZIONE MODALE ========================================================= */ function updateModalNavigation() { const cards = window.currentDisplayedCards || []; const index = window.currentModalIndex; const previousButton = document.getElementById( "prevCard" ); const nextButton = document.getElementById( "nextCard" ); if ( !previousButton || !nextButton ) { return; } previousButton.disabled = index <= 0; nextButton.disabled = index >= cards.length - 1; } function showPreviousCard() { if ( window.currentModalIndex > 0 ) { window.currentModalIndex--; updateCardModal(); } } function showNextCard() { const cards = window.currentDisplayedCards || []; if ( window.currentModalIndex < cards.length - 1 ) { window.currentModalIndex++; updateCardModal(); } } function closeCardModal() { document .getElementById("cardModal") .classList .remove("active"); } /* ========================================================= CHIUSURA MODALE CLICCANDO FUORI ========================================================= */ document .getElementById("cardModal").addEventListener( "click", event => { if ( event.target.id === "cardModal" ) { closeCardModal(); } } ); /* ========================================================= ORDINAMENTO ========================================================= */ function sortCards() { searchCards(); } function sortFilteredCards(cards) { const sortValue = document.getElementById( "sortSelect" ).value; return [...cards].sort( (a, b) => { if ( sortValue === "name" ) { return ( (a.name || "") .localeCompare( b.name || "", "it", { sensitivity: "base" } ) ); } if ( sortValue === "cmc" ) { return ( Number(a.cmc || 0) - Number(b.cmc || 0) ); } if ( sortValue === "type" ) { return ( (a.type_line || "") .localeCompare( b.type_line || "", "it", { sensitivity: "base" } ) ); } if ( sortValue === "power" ) { return ( Number(a.power || 0) - Number(b.power || 0) ); } if ( sortValue === "toughness" ) { return ( Number(a.toughness || 0) - Number(b.toughness || 0) ); } return 0; } ); } /* ========================================================= TASTIERA ========================================================= */ document.addEventListener( "keydown", event => { if ( event.key === "Escape" ) { closeCardModal(); closeDeckPanel(); return; } const modal = document.getElementById( "cardModal" ); if ( !modal.classList.contains( "active" ) ) { return; } if ( event.key === "ArrowLeft" ) { showPreviousCard(); } if ( event.key === "ArrowRight" ) { showNextCard(); } } ); /* ========================================================= AVVIO ========================================================= */ loadDeck(); loadCards();
 /* ========================================================= ESPORTAZIONE PDF PROXY ========================================================= */
 function exportDeckToPDF() {
     const cardEntries = Object.values(deck.cards);
