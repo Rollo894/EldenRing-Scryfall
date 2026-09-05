@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+<html lang="it">
+
+<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EldenRing-Scryfall</title>
+
+<style>
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #171717;
+        color: #eee;
+    }
+
+    header {
+        background: #0d0d0d;
+        padding: 25px;
+        text-align: center;
+        border-bottom: 1px solid #444;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 32px;
+        letter-spacing: 3px;
+    }
+
+    .search-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 30px auto 15px;
+        max-width: 900px;
+        padding: 0 20px;
+    }
+
+    #search {
+        flex: 1;
+        padding: 14px;
+        font-size: 16px;
+        border: 1px solid #555;
+        border-radius: 6px;
+        background: #222;
+        color: white;
+    }
+
+    button,
+    select {
+        padding: 14px 18px;
+        border: none;
+        border-radius: 6px;
+        background: #b08d57;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    button:hover,
+    select:hover {
+        background: #c5a16a;
+    }
+
+    .filters {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 15px auto 25px;
+        padding: 0 20px;
+    }
+
+    .filters button {
+        padding: 9px 14px;
+        font-size: 13px;
+    }
+
+    #cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        padding: 20px 40px 50px;
+    }
+
+    .card {
+        background: #222;
+        border: 1px solid #444;
+        border-radius: 10px;
+        padding: 20px;
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card h2 {
+        margin-top: 0;
+        color: #d6b477;
+    }
+
+    .card-image {
+        width: 100%;
+        border-radius: 8px;
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    .mana {
+        color: #aaa;
+        margin-bottom: 10px;
+    }
+
+    .type {
+        font-style: italic;
+        color: #bbb;
+        margin-bottom: 15px;
+    }
+
+    .oracle {
+        white-space: pre-line;
+        line-height: 1.5;
+    }
+
+    .loading {
+        text-align: center;
+        color: #aaa;
+        padding: 40px;
+    }
+
+    .toolbar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+    }
+
+    .toolbar label {
+        color: #aaa;
+    }
+/* =========================
+DETTAGLIO CARTA
+========================= */
+
+.card {
+cursor: pointer;
+}
+
+.card-modal {
+display: none;
+position: fixed;
+inset: 0;
+z-index: 1000;
+background: rgba(0, 0, 0, 0.88);
+justify-content: center;
+align-items: center;
+padding: 30px;
+backdrop-filter: blur(6px);
+}
+
+.card-modal.active {
+display: flex;
+}
+
+.modal-content {
+position: relative;
+display: flex;
+gap: 40px;
+width: min(1100px, 95vw);
+max-height: 90vh;
+padding: 35px;
+background: linear-gradient(
+145deg,
+#252525,
+#151515
+);
+border: 1px solid #555;
+border-radius: 16px;
+box-shadow:
+0 25px 80px rgba(0, 0, 0, 0.9);
+overflow: auto;
+}
+
+.modal-image {
+width: 440px;
+max-width: 45%;
+height: auto;
+object-fit: contain;
+align-self: flex-start;
+border-radius: 12px;
+box-shadow:
+0 10px 35px rgba(0, 0, 0, 0.7);
+}
+
+.modal-details {
+flex: 1;
+min-width: 0;
+padding-top: 5px;
+}
+
+.modal-details h2 {
+margin: 0 45px 12px 0;
+color: #d6b477;
+font-size: 34px;
+line-height: 1.15;
+}
+
+.modal-mana {
+color: #ddd;
+font-size: 19px;
+margin-bottom: 12px;
+}
+
+.mana-symbol {
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+.modal-type {
+color: #aaa;
+font-style: italic;
+font-size: 17px;
+padding-bottom: 18px;
+border-bottom: 1px solid #444;
+margin-bottom: 20px;
+}
+
+.modal-oracle {
+white-space: pre-line;
+line-height: 1.65;
+font-size: 17px;
+color: #eee;
+}
+
+.modal-flavor {
+margin-top: 28px;
+padding-top: 20px;
+border-top: 1px solid #444;
+color: #999;
+font-style: italic;
+line-height: 1.5;
+}
+
+.modal-stats {
+margin-top: 25px;
+display: inline-block;
+padding: 8px 16px;
+border: 1px solid #555;
+border-radius: 8px;
+color: #d6b477;
+font-size: 21px;
+font-weight: bold;
+}
+
+.modal-close {
+position: absolute;
+top: 12px;
+right: 15px;
+z-index: 5;
+width: 42px;
+height: 42px;
+padding: 0;
+border: none;
+border-radius: 50%;
+background: #333;
+color: #ddd;
+font-size: 28px;
+line-height: 42px;
+cursor: pointer;
+}
+
+.modal-close {
+background: #555;
+color: white;
+}
+
+@media (max-width: 800px) {
+
+.card-modal {
+    padding: 15px;
+}
+
+.modal-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    padding: 25px;
+}
+
+.modal-image {
+    width: 400px;
+    max-width: 90%;
+}
+
+.modal-details {
+    width: 100%;
+}
+
+.modal-details h2 {
+    font-size: 27px;
+}
+
+}
+
+.modal-navigation {
+display: flex;
+justify-content: space-between;
+gap: 15px;
+margin-bottom: 25px;
+}
+
+.modal-navigation button {
+flex: 1;
+padding: 10px 15px;
+background: #292929;
+border: 1px solid #555;
+border-radius: 7px;
+color: #ccc;
+font-size: 14px;
+cursor: pointer;
+transition: 0.2s;
+}
+
+.modal-navigation button {
+background: #3a3a3a;
+color: #fff;
+border-color: #777;
+}
+
+.modal-navigation button {
+opacity: 0.3;
+cursor: default;
+}
+.modal-meta {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 10px;
+margin-bottom: 22px;
+padding-bottom: 20px;
+border-bottom: 1px solid #444;
+}
+
+.modal-review {
+    grid-column: 1 / -1;
+    padding: 10px 12px;
+    background: rgba(120, 70, 30, 0.18);
+    border: 1px solid #6b4d2a;
+    border-radius: 6px;
+    color: #d6b477;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+.meta-item {
+display: flex;
+flex-direction: column;
+gap: 4px;
+padding: 10px 12px;
+background: #202020;
+border: 1px solid #383838;
+border-radius: 6px;
+}
+
+.meta-label {
+font-size: 10px;
+letter-spacing: 1px;
+color: #777;
+}
+
+.meta-item span {
+color: #ccc;
+font-size: 14px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header> <h1>ELDENRING-SCRYFALL</h1> </header>
+
+<div class="search-container">
+
+<input
+    type="text"
+    id="search"
+    placeholder="Cerca una carta..."
+>
+
+<button onclick="searchCards()">
+    CERCA
+</button>
+
+</div>
+
+<div class="filters">
+
+<button onclick="setFilter('c:w')">
+    ⚪ Bianco
+</button>
+
+<button onclick="setFilter('c:u')">
+    🔵 Blu
+</button>
+
+<button onclick="setFilter('c:b')">
+    ⚫ Nero
+</button>
+
+<button onclick="setFilter('c:r')">
+    🔴 Rosso
+</button>
+
+<button onclick="setFilter('c:g')">
+    🟢 Verde
+</button>
+
+<button onclick="setFilter('multicolor')">
+    🌈 Multicolore
+</button>
+
+<button onclick="clearFilters()">
+    ✕ Pulisci
+</button>
+
+</div>
+
+<div class="toolbar">
+
+<label for="colorMode">
+    Colori:
+</label>
+
+<select id="colorMode" onchange="searchCards()">
+
+    <option value="inclusive">
+        Inclusivi
+    </option>
+
+    <option value="exact">
+        Esatti
+    </option>
+
+</select>
+
+
+<label for="sortSelect">
+    Ordina per:
+</label>
+
+<select id="sortSelect" onchange="sortCards()">
+
+    <option value="none">
+        Nessun ordinamento
+    </option>
+
+    <option value="name">
+        Nome
+    </option>
+
+    <option value="cmc">
+        Costo di mana
+    </option>
+
+    <option value="type">
+        Tipo
+    </option>
+
+    <option value="power">
+        Forza
+    </option>
+
+    <option value="toughness">
+        Costituzione
+    </option>
+
+</select>
+
+</div>
+
+<div id="cards">
+
+<div class="loading">
+    Caricamento carte...
+</div>
+
+</div>
+<div id="cardModal" class="card-modal">
+
+<div class="modal-content">
+
+    <button
+        class="modal-close"
+        onclick="closeCardModal()"
+    >
+        ×
+    </button>
+
+    <img
+        id="modalImage"
+        class="modal-image"
+        src=""
+        alt=""
+    >
+
+    <div class="modal-details">
+
+<div class="modal-navigation">
+
+<button
+    id="prevCard"
+    onclick="showPreviousCard()"
+>
+    ← PRECEDENTE
+</button>
+
+<button
+    id="nextCard"
+    onclick="showNextCard()"
+>
+    SUCCESSIVA →
+</button>
+
+</div>
+
+<div class="modal-meta">
+
+<div class="meta-item">
+    <span class="meta-label">COLORE</span>
+    <span id="modalColors">—</span>
+</div>
+
+<div
+    id="modalReview"
+    class="modal-review"
+>
+    ⚠️ DATI DA REVISIONARE
+</div>
+<div class="meta-item">
+    <span class="meta-label">RARITÀ</span>
+    <span id="modalRarity">—</span>
+</div>
+
+<div class="meta-item">
+    <span class="meta-label">SET</span>
+    <span id="modalSet">—</span>
+</div>
+
+<div class="meta-item">
+    <span class="meta-label">COLLECTOR NUMBER</span>
+    <span id="modalCollector">—</span>
+</div>
+
+<div class="meta-item">
+    <span class="meta-label">ARTISTA</span>
+    <span id="modalArtist">—</span>
+</div>
+
+</div>
+        <h2 id="modalName"></h2>
+
+        <div
+            id="modalMana"
+            class="modal-mana"
+        ></div>
+
+        <div
+            id="modalType"
+            class="modal-type"
+        ></div>
+
+        <div
+            id="modalOracle"
+            class="modal-oracle"
+        ></div>
+
+        <div
+            id="modalFlavor"
+            class="modal-flavor"
+        ></div>
+
+        <div
+            id="modalStats"
+            class="modal-stats"
+        ></div>
+
+    </div>
+
+</div>
+
+</div>
+
+<script> let allCards = []; /* ========================= CARICAMENTO CARTE ========================= */ async function loadCards() { try { const response = await fetch("/cards"); allCards = await response.json(); displayCards(allCards); } catch (error) { document.getElementById("cards").innerHTML = "<div class='loading'>Errore nel caricamento delle carte.</div>"; console.error(error); } } /* ========================= VISUALIZZAZIONE ========================= */ function displayCards(cards) {
+
+const container =
+    document.getElementById("cards");
+
+
+if (cards.length === 0) {
+
+    container.innerHTML =
+        "<div class='loading'>Nessuna carta trovata.</div>";
+
+    return;
+
+}
+
+
+container.innerHTML = cards.map((card, index) => `
+
+    <div
+        class="card"
+        onclick="openCardModal(${index})"
+    >
+
+        <img
+            src="${card.image}"
+            alt="${card.name}"
+            class="card-image"
+            onerror="this.style.display='none'"
+        >
+
+        <h2>
+            ${card.name || ""}
+        </h2>
+
+        <div class="mana">
+            ${card.mana_cost || ""}
+        </div>
+
+        <div class="type">
+            ${card.type_line || ""}
+        </div>
+
+        <div class="oracle">
+            ${card.oracle_text || ""}
+        </div>
+
+    </div>
+
+`).join("");
+
+
+window.currentDisplayedCards = cards;
+
+} /* ========================= FILTRI ========================= */ function setFilter(filter) { const searchBox = document.getElementById("search"); const current = searchBox.value.trim(); if (current) { searchBox.value = current + " " + filter; } else { searchBox.value = filter; } searchCards(); } function clearFilters() { document.getElementById("search").value = ""; displayCards(allCards); } /* ========================= RICERCA ========================= */ function searchCards() { const query = document.getElementById("search").value .trim() .toLowerCase(); if (!query) { displayCards( sortFilteredCards(allCards) ); return; } const terms = query.split(/\s+/); const filtered = allCards.filter(card => { const name = (card.name || "").toLowerCase(); const type = (card.type_line || "").toLowerCase(); const oracle = (card.oracle_text || "").toLowerCase(); const flavor = (card.flavor_text || "").toLowerCase(); const mana = (card.mana_cost || "").toLowerCase(); const rarity = (card.rarity || "").toLowerCase(); const cmc = String(card.cmc ?? ""); return terms.every(term => { /* NOME */ if (term.startsWith("name:")) { const value = term.substring(5); return name.includes(value); } /* TIPO */ if (term.startsWith("t:")) { const value = term.substring(2); return type.includes(value); } /* ORACLE */ if (term.startsWith("o:")) { const value = term.substring(2); return oracle.includes(value); } /* FLAVOR */ if (term.startsWith("f:")) { const value = term.substring(2); return flavor.includes(value); } /* MULTICOLORE */ if (term === "multicolor") { return (card.colors || []).length > 1; } /* COLORE */ if (term.startsWith("c:")) { const value = term.substring(2).toLowerCase(); if (value === "m") { return (card.colors || []).length > 1; } if (value === "c") { return (card.colors || []).length === 0; } const colorMap = { w: "W", u: "U", b: "B", r: "R", g: "G" }; if (value.length > 1) { const requestedColors = value .split("") .map(letter => colorMap[letter]) .filter(Boolean); if ( requestedColors.length !== value.length ) { return false; } const cardColors = card.colors || []; const colorMode = document .getElementById("colorMode") .value; if (colorMode === "exact") { return ( cardColors.length === requestedColors.length && requestedColors.every( color => cardColors.includes(color) ) ); } return requestedColors.every( color => cardColors.includes(color) ); } const color = colorMap[value]; if (!color) { return false; } return (card.colors || []) .includes(color); } /* CMC */ if (term.startsWith("cmc:")) { const value = term.substring(4); if (value === "6") { return Number(cmc) >= 6; } return Number(cmc) === Number(value); } /* RARITÀ */ if (term.startsWith("r:")) { const value = term.substring(2); return rarity === value; } /* RICERCA GENERICA */ return ( name.includes(term) || type.includes(term) || oracle.includes(term) || flavor.includes(term) || mana.includes(term) ); }); }); displayCards( sortFilteredCards(filtered) ); }
+
+/* =========================
+MODALE CARTA
+========================= */
+function renderManaCost(manaCost) {
+    if (!manaCost) {
+        return "";
+    }
+
+   return manaCost.replace(/\{([^}]+)\}/g, (match, symbol) => {
+    const fileName = symbol.replace("/", "");
+
+    return `<img src="/mana/${fileName}.svg" class="mana-symbol" alt="${symbol}">`;
+});
+}
+function openCardModal(index) {
+window.currentModalIndex = index;
+updateCardModal();
+}
+
+function updateCardModal() {
+const cards = window.currentDisplayedCards || [];
+const index = window.currentModalIndex;
+
+const card = cards[index];
+if (!card) return;
+
+document.getElementById("modalImage").src = card.image || "";
+document.getElementById("modalImage").alt = card.name || "";
+
+document.getElementById("modalName").textContent =
+    card.name || "";
+
+document.getElementById("modalMana").innerHTML =
+    renderManaCost(card.mana_cost);
+
+document.getElementById("modalType").textContent =
+    card.type_line || "";
+
+document.getElementById("modalOracle").textContent =
+    card.oracle_text || "";
+
+document.getElementById("modalFlavor").textContent =
+    card.flavor_text || "";
+
+document.getElementById("modalColors").textContent =
+card.color_identity && card.color_identity.length
+? card.color_identity.join(" / ")
+: "Colorless";
+
+document.getElementById("modalRarity").textContent =
+card.rarity || "—";
+
+document.getElementById("modalSet").textContent =
+card.set || "—";
+
+document.getElementById("modalCollector").textContent =
+card.collector_number || "—";
+
+document.getElementById("modalArtist").textContent =
+card.artist || "—";
+const reviewBox = document.getElementById("modalReview");
+
+if (card.needs_review === true) {
+reviewBox.style.display = "block";
+} else {
+reviewBox.style.display = "none";
+}
+const stats =
+    card.power != null && card.toughness != null
+        ? `${card.power} / ${card.toughness}`
+        : "";
+
+document.getElementById("modalStats").textContent =
+    stats;
+
+document.getElementById("cardModal")
+    .classList.add("active");
+
+updateModalNavigation();
+
+}
+
+function updateModalNavigation() {
+const cards = window.currentDisplayedCards || [];
+const index = window.currentModalIndex;
+
+const previousButton =
+    document.getElementById("prevCard");
+
+const nextButton =
+    document.getElementById("nextCard");
+
+if (!previousButton || !nextButton) return;
+
+previousButton.disabled = index <= 0;
+nextButton.disabled = index >= cards.length - 1;
+
+}
+
+function showPreviousCard() {
+if (window.currentModalIndex > 0) {
+window.currentModalIndex--;
+updateCardModal();
+}
+}
+
+function showNextCard() {
+const cards = window.currentDisplayedCards || [];
+
+if (window.currentModalIndex < cards.length - 1) {
+    window.currentModalIndex++;
+    updateCardModal();
+}
+
+}
+function closeCardModal() {
+document.getElementById("cardModal").classList.remove("active");
+}
+
+/* Chiudi cliccando fuori dal contenuto */
+
+document
+.getElementById("cardModal")
+.addEventListener("click", event => {
+
+    if (
+        event.target.id === "cardModal"
+    ) {
+
+        closeCardModal();
+
+    }
+
+});
+
+/* Chiudi con ESC */
+
+document.addEventListener(
+"keydown",
+event => {
+
+    if (event.key === "Escape") {
+
+        closeCardModal();
+
+    }
+
+}
+
+);
+
+ /* ========================= ORDINAMENTO ========================= */ function sortCards() { searchCards(); } function sortFilteredCards(cards) { const sortValue = document.getElementById("sortSelect").value; return [...cards].sort((a, b) => { if (sortValue === "name") { return (a.name || "") .localeCompare( b.name || "" ); } if (sortValue === "cmc") { return Number(a.cmc || 0) - Number(b.cmc || 0); } if (sortValue === "type") { return (a.type_line || "") .localeCompare( b.type_line || "" ); } if (sortValue === "power") { return Number(a.power || 0) - Number(b.power || 0); } if (sortValue === "toughness") { return Number(a.toughness || 0) - Number(b.toughness || 0); } return 0; }); } /* ========================= ENTER NELLA RICERCA ========================= */ 
+
+document.addEventListener("keydown", event => {
+
+if (event.key === "Escape") {
+    closeCardModal();
+    return;
+}
+
+const modal =
+    document.getElementById("cardModal");
+
+if (!modal.classList.contains("active")) {
+    return;
+}
+
+if (event.key === "ArrowLeft") {
+    showPreviousCard();
+}
+
+if (event.key === "ArrowRight") {
+    showNextCard();
+}
+
+}); /* ========================= AVVIO ========================= */ loadCards(); </script>
+
+</body>
+
+</html>

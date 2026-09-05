@@ -1,0 +1,17 @@
+Talisman :You can't control more than four talismans. (If you control two or more talismans with the same name, the legend rule applies to them.)
+
+Hemorrhage :Whenever a creature with hemorrhage deals combat damage to an opponent’s creature, put “X” bloodloss counters on that creature, where “X” is its hemorrhage value. If a creature has 3 or more bloodloss counters on it, its owner must sacrifice it and loses 2 life
+
+Madness: At the beginning of your end step, if you have 8 or more madness counters, discard a random card from your hands and you lose 4 life. Then remove all madness counters from yourself.
+
+Scarlet Rot :Whenever a creature with scarlet rot deals combat damage to a player, get a scarlet rot emblem, up to a maximum of 5.
+Scarlet Rot Emblem: At the beginning of your upkeep, you lose 1 life for each scarlet rot emblem you have.
+
+Frostbite: "Whenever a creature with frostbite deals damage to a creature, that creature gets -0/-1 until the end your next turn.
+
+Whenever a creature with frostbite deals damage to a player, that player taps a land they control, and it doesn't untap during their next untap step.
+
+Whenever a creature with frostbite deals damage to a Planeswalker, loyalty abilities of that planeswalker cost 1 more loyalty to activate until the end of your next turn."
+
+
+
