@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>EldenRing-Scryfall — Playtest Arena</title>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+
+<style>
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    background: #0b0c0b;
+}
+
+
+/* =========================================================
+   BODY / BACKGROUND
+   ========================================================= */
+
+body {
+    position: relative;
+
+    min-height: 100vh;
+
+    margin: 0;
+
+    overflow-x: hidden;
+
+    background:
+        radial-gradient(
+            ellipse 70% 45% at 50% 0%,
+            rgba(175, 150, 82, 0.16),
+            transparent 70%
+        ),
+        radial-gradient(
+            ellipse 45% 65% at 0% 45%,
+            rgba(55, 72, 57, 0.13),
+            transparent 70%
+        ),
+        radial-gradient(
+            ellipse 45% 65% at 100% 55%,
+            rgba(55, 70, 55, 0.11),
+            transparent 70%
+        ),
+        radial-gradient(
+            ellipse 80% 70% at 50% 45%,
+            rgba(45, 44, 38, 0.08),
+            transparent 75%
+        ),
+        #111211;
+
+    color: #eee;
+
+    font-family: Arial, sans-serif;
+
+    box-shadow:
+        inset 0 0 220px rgba(0, 0, 0, 0.85),
+        inset 0 0 80px rgba(0, 0, 0, 0.45);
+}
+
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+    background:
+        radial-gradient(
+            ellipse 55% 25% at 50% 10%,
+            rgba(190, 170, 105, 0.045),
+            transparent 75%
+        ),
+        radial-gradient(
+            ellipse 45% 30% at 10% 70%,
+            rgba(80, 95, 78, 0.035),
+            transparent 75%
+        ),
+        radial-gradient(
+            ellipse 45% 30% at 90% 65%,
+            rgba(80, 95, 78, 0.03),
+            transparent 75%
+        );
+
+    animation:
+        landsBetweenAtmosphere
+        20s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+    background:
+        radial-gradient(
+            circle at 7% 18%,
+            rgba(235, 211, 133, 0.85) 0,
+            rgba(235, 211, 133, 0.25) 2px,
+            rgba(235, 211, 133, 0.07) 7px,
+            transparent 17px
+        ),
+
+        radial-gradient(
+            circle at 17% 76%,
+            rgba(218, 191, 105, 0.65) 0,
+            rgba(218, 191, 105, 0.18) 2px,
+            transparent 14px
+        ),
+
+        radial-gradient(
+            circle at 29% 31%,
+            rgba(239, 216, 139, 0.62) 0,
+            rgba(239, 216, 139, 0.15) 2px,
+            transparent 13px
+        ),
+
+        radial-gradient(
+            circle at 42% 82%,
+            rgba(210, 182, 95, 0.55) 0,
+            rgba(210, 182, 95, 0.13) 2px,
+            transparent 13px
+        ),
+
+        radial-gradient(
+            circle at 55% 16%,
+            rgba(240, 218, 140, 0.82) 0,
+            rgba(240, 218, 140, 0.23) 2px,
+            rgba(240, 218, 140, 0.05) 7px,
+            transparent 17px
+        ),
+
+        radial-gradient(
+            circle at 68% 68%,
+            rgba(220, 193, 106, 0.60) 0,
+            rgba(220, 193, 106, 0.15) 2px,
+            transparent 14px
+        ),
+
+        radial-gradient(
+            circle at 80% 28%,
+            rgba(235, 211, 133, 0.70) 0,
+            rgba(235, 211, 133, 0.18) 2px,
+            transparent 14px
+        ),
+
+        radial-gradient(
+            circle at 92% 80%,
+            rgba(215, 185, 94, 0.58) 0,
+            rgba(215, 185, 94, 0.12) 2px,
+            transparent 13px
+        ),
+
+        radial-gradient(
+            circle at 13% 92%,
+            rgba(230, 202, 121, 0.50) 0,
+            rgba(230, 202, 121, 0.11) 2px,
+            transparent 12px
+        ),
+
+        radial-gradient(
+            circle at 88% 12%,
+            rgba(239, 215, 137, 0.65) 0,
+            rgba(239, 215, 137, 0.15) 2px,
+            transparent 13px
+        );
+
+    animation:
+        graceGlow
+        8s
+        ease-in-out
+        infinite
+        alternate;
+
+    opacity: 0.7;
+}
+
+
+body > * {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+@keyframes graceGlow {
+
+    0% {
+        opacity: 0.48;
+
+        transform:
+            translate3d(
+                0,
+                0,
+                0
+            );
+    }
+
+    50% {
+        opacity: 0.72;
+    }
+
+    100% {
+        opacity: 0.55;
+
+        transform:
+            translate3d(
+                3px,
+                -5px,
+                0
+            );
+    }
+}
+
+
+@keyframes landsBetweenAtmosphere {
+
+    0% {
+        opacity: 0.65;
+
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform: scale(1.015);
+    }
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+    height: 72px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 28px;
+
+    border-bottom:
+        1px solid
+        rgba(180, 160, 100, 0.22);
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(15, 16, 15, 0.95),
+            rgba(15, 16, 15, 0.72)
+        );
+
+    box-shadow:
+        0 8px 30px
+        rgba(0, 0, 0, 0.35);
+}
+
+
+.logo {
+    font-family:
+        'Cormorant SC',
+        serif;
+
+    font-size: 28px;
+
+    font-weight: 600;
+
+    letter-spacing: 4px;
+
+    color: #d8c995;
+
+    text-shadow:
+        0 0 15px
+        rgba(210, 190, 120, 0.15);
+}
+
+
+.arena-title {
+    position: absolute;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    font-family:
+        'Cormorant SC',
+        serif;
+
+    font-size: 22px;
+
+    letter-spacing: 5px;
+
+    color:
+        rgba(235, 225, 190, 0.75);
+}
+
+
+.back-button {
+    padding:
+        8px 14px;
+
+    border:
+        1px solid
+        rgba(180, 160, 100, 0.3);
+
+    border-radius: 4px;
+
+    background:
+        rgba(20, 21, 20, 0.7);
+
+    color: #c9bd95;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.back-button:hover {
+
+    background:
+        rgba(180, 160, 100, 0.12);
+
+    border-color:
+        rgba(210, 190, 120, 0.5);
+}
+
+
+/* =========================================================
+   ARENA
+   ========================================================= */
+
+.arena {
+
+    width: 100%;
+
+    min-height:
+        calc(100vh - 72px);
+
+    padding:
+        14px 22px 8px;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   PLAYER ZONE
+   ========================================================= */
+
+.player-zone {
+
+    flex: 1;
+
+    min-height: 0;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.opponent-zone {
+    min-height: 360px;
+}
+
+
+.player-zone-bottom {
+    min-height: 500px;
+}
+
+
+/* =========================================================
+   PLAYER BAR
+   ========================================================= */
+
+.player-bar {
+
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+}
+
+
+.player-name {
+
+    font-family:
+        'Cormorant SC',
+        serif;
+
+    font-size: 18px;
+
+    letter-spacing: 3px;
+
+    color: #bfb79c;
+}
+
+
+.life-counter {
+
+    position: absolute;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.opponent-bar .life-counter {
+
+    right: 0;
+}
+
+
+.player-bar-bottom .life-counter {
+
+    left: 0;
+}
+
+
+.life {
+
+    min-width: 48px;
+
+    font-family:
+        'Cormorant SC',
+        serif;
+
+    font-size: 28px;
+
+    font-weight: 600;
+
+    text-align: center;
+
+    color: #e0d6b7;
+}
+
+
+.life-button {
+
+    width: 27px;
+
+    height: 27px;
+
+    border:
+        1px solid
+        rgba(180, 160, 100, 0.3);
+
+    border-radius: 50%;
+
+    background:
+        rgba(15, 16, 15, 0.7);
+
+    color: #cfc29d;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   BATTLEFIELD
+   ========================================================= */
+
+.battlefield {
+    flex: 1;
+
+    min-height: 0;
+
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    padding:
+        4px 105px;
+}
+
+/* linea centrale */
+
+.battlefield::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 5%;
+
+    right: 5%;
+
+    top: 50%;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            to right,
+            transparent,
+            rgba(190, 170, 105, 0.25),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   BATTLE ROW
+   ========================================================= */
+
+.battle-row {
+
+    position: relative;
+
+    min-height: 165px;
+
+    padding:
+        28px 10px 8px;
+
+    border:
+        1px solid
+        rgba(180, 160, 100, 0.10);
+
+    border-radius: 8px;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(100, 90, 60, 0.035),
+            transparent 70%
+        );
+}
+
+
+.row-title {
+
+    position: absolute;
+
+    top: 6px;
+
+    left: 13px;
+
+    font-family:
+        'Cormorant SC',
+        serif;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    color:
+        rgba(190, 178, 140, 0.40);
+
+    text-transform: uppercase;
+}
+
+
+.cards-row {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   SPLIT PERMANENT ROW
+   ========================================================= */
+
+.permanent-row {
+
+    min-height: 165px;
+
+    display: grid;
+
+    grid-template-columns:
+        1.65fr
+        1fr;
+
+    gap: 10px;
+}
+
+
+.lands-zone,
+.other-permanents-zone {
+
+    position: relative;
+
+    min-width: 0;
+
+    padding:
+        28px 10px 8px;
+
+    border:
+        1px solid
+        rgba(180, 160, 100, 0.10);
+
+    border-radius: 8px;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(100, 90, 60, 0.035),
+            transparent 70%
+        );
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.battle-card {
+
+    width: 105px;
+
+    aspect-ratio: 5 / 7;
+
+    border-radius: 7px;
+
+    object-fit: cover;
+
+    flex-shrink: 0;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 18px
+        rgba(0, 0, 0, 0.55);
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+
+.battle-card:hover {
+
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+        0 14px 25px
+        rgba(0, 0, 0, 0.7),
+
+        0 0 12px
+        rgba(210, 190, 120, 0.18);
+}
+
+
+/* =========================================================
+   SIDE ZONES
+   ========================================================= */
+.side-zone {
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 82px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 5px;
+
+    z-index: 10;
+}
+
+
+.side-zone.left {
+    left: 10px;
+}
+
+
+.side-zone.right {
+    right: 10px;
+}
+
+
+.zone-label {
+
+    font-family:
+        'Cormorant SC',
+        serif;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+    color:
+        rgba(190, 178, 140, 0.45);
+}
+
+
+/* =========================================================
+   PILES
+   ========================================================= */
+
+.deck-pile,
+.graveyard-pile,
+.commander-pile,
+.exile-pile {
+
+    width: 72px;
+
+    height: 101px;
+
+    flex-shrink: 0;
+
+    border-radius: 6px;
+
+    border:
+        1px solid
+        rgba(180, 160, 100, 0.25);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(55, 50, 40, 0.85),
+            rgba(18, 19, 18, 0.95)
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color:
+        rgba(200, 190, 160, 0.45);
+
+    font-family:
+        'Cormorant SC',
+        serif;
+
+    font-size: 10px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 18px
+        rgba(0, 0, 0, 0.5);
+}
+
+
+/* ESILIO */
+
+.exile-pile {
+
+    border-color:
+        rgba(150, 150, 135, 0.18);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(42, 44, 42, 0.65),
+            rgba(15, 16, 15, 0.9)
+        );
+
+    color:
+        rgba(190, 190, 175, 0.32);
+
+    box-shadow:
+        0 8px 18px
+        rgba(0, 0, 0, 0.45);
+}
+
+
+/* =========================================================
+   HAND
+   ========================================================= */
+
+.hand-area {
+
+    height: 128px;
+
+    flex-shrink: 0;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+    padding:
+        0 50px 4px;
+}
+
+
+.hand-label {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    font-family:
+        'Cormorant SC',
+        serif;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    color:
+        rgba(190, 178, 140, 0.42);
+}
+
+
+.hand {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+    height: 112px;
+
+    max-width: 900px;
+}
+
+
+.hand-card {
+
+    width: 92px;
+
+    aspect-ratio: 5 / 7;
+
+    object-fit: cover;
+
+    border-radius: 6px;
+
+    margin-left: -18px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 15px
+        rgba(0, 0, 0, 0.65);
+
+    transition:
+        transform 0.18s,
+        margin 0.18s;
+}
+
+
+.hand-card:first-child {
+
+    margin-left: 0;
+}
+
+
+.hand-card:hover {
+
+    transform:
+        translateY(-20px);
+
+    margin-left: 2px;
+
+    margin-right: 2px;
+
+    z-index: 20;
+}
+
+
+/* =========================================================
+   CONTROLS
+   ========================================================= */
+
+.controls {
+
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+}
+
+
+.control-button {
+
+    padding:
+        6px 14px;
+
+    border:
+        1px solid
+        rgba(180, 160, 100, 0.28);
+
+    border-radius: 4px;
+
+    background:
+        rgba(20, 21, 20, 0.72);
+
+    color: #cfc29d;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.control-button:hover {
+
+    background:
+        rgba(180, 160, 100, 0.11);
+
+    border-color:
+        rgba(210, 190, 120, 0.45);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    header {
+
+        height: 60px;
+
+        padding: 0 12px;
+    }
+
+
+    .logo {
+
+        font-size: 21px;
+
+        letter-spacing: 3px;
+    }
+
+
+    .arena-title {
+
+        display: none;
+    }
+
+
+    .arena {
+
+        min-height:
+            calc(100vh - 60px);
+
+        padding:
+            6px;
+    }
+
+
+    .battlefield {
+
+        padding:
+            4px 45px;
+    }
+
+
+    .side-zone.left {
+
+        left: -72px;
+    }
+
+
+    .side-zone.right {
+
+        right: -72px;
+    }
+
+
+    .battle-row,
+    .permanent-row {
+
+        min-height: 145px;
+    }
+
+
+    .battle-card {
+
+        width: 78px;
+    }
+
+
+    .cards-row {
+
+        gap: 5px;
+    }
+
+
+    .hand-area {
+
+        height: 110px;
+
+        padding-bottom: 3px;
+    }
+
+
+    .hand {
+
+        height: 98px;
+    }
+
+
+    .hand-card {
+
+        width: 72px;
+
+        margin-left: -24px;
+    }
+
+
+    .deck-pile,
+    .graveyard-pile,
+    .commander-pile,
+    .exile-pile {
+
+        width: 55px;
+
+        height: 77px;
+    }
+
+
+    .zone-label {
+
+        font-size: 8px;
+    }
+
+
+    .control-button {
+
+        padding:
+            5px 9px;
+
+        font-size: 10px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .battlefield {
+
+        padding:
+            3px 32px;
+    }
+
+
+    .side-zone.left {
+
+        left: -62px;
+    }
+
+
+    .side-zone.right {
+
+        right: -62px;
+    }
+
+
+    .battle-card {
+
+        width: 65px;
+    }
+
+
+    .battle-row,
+    .permanent-row {
+
+        min-height: 125px;
+    }
+
+
+    .hand-card {
+
+        width: 65px;
+
+        margin-left: -29px;
+    }
+
+
+    .permanent-row {
+
+        grid-template-columns:
+            1.55fr
+            1fr;
+
+        gap: 6px;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITÀ
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    body::before,
+    body::after {
+
+        animation: none;
+    }
+
+
+    * {
+
+        transition: none !important;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     HEADER
+     ======================================================= -->
+
+<header>
+
+    <div class="logo">
+        ELDENRING-SCRYFALL
+    </div>
+
+
+    <div class="arena-title">
+        PLAYTEST ARENA
+    </div>
+
+
+    <button
+        class="back-button"
+        onclick="goBack()"
+    >
+        ← DATABASE
+    </button>
+
+</header>
+
+
+
+<!-- =======================================================
+     ARENA
+     ======================================================= -->
+
+<main class="arena">
+
+
+<!-- =======================================================
+     AVVERSARIO
+     ======================================================= -->
+
+<section class="player-zone opponent-zone">
+
+
+    <div class="player-bar opponent-bar">
+
+        <div class="player-name">
+            AVVERSARIO
+        </div>
+
+
+        <div class="life-counter">
+
+            <button
+                class="life-button"
+                onclick="changeLife('opponent', -1)"
+            >
+                −
+            </button>
+
+
+            <div
+                class="life"
+                id="opponentLife"
+            >
+                40
+            </div>
+
+
+            <button
+                class="life-button"
+                onclick="changeLife('opponent', 1)"
+            >
+                +
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="battlefield">
+
+
+        <!-- CREATURE AVVERSARIO -->
+
+        <div class="battle-row">
+
+            <div class="row-title">
+                Creature
+            </div>
+
+
+            <div
+                class="cards-row"
+                id="opponentCreatures"
+            >
+            </div>
+
+        </div>
+
+
+
+        <!-- PERMANENTI AVVERSARIO -->
+
+        <div class="permanent-row">
+
+
+            <div class="lands-zone">
+
+                <div class="row-title">
+                    Terre
+                </div>
+
+
+                <div
+                    class="cards-row"
+                    id="opponentLands"
+                >
+                </div>
+
+            </div>
+
+
+
+            <div class="other-permanents-zone">
+
+                <div class="row-title">
+                    Artefatti · Incantesimi
+                </div>
+
+
+                <div
+                    class="cards-row"
+                    id="opponentOtherPermanents"
+                >
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ZONE LATERALI AVVERSARIO -->
+
+        <div class="side-zone right">
+
+
+            <div class="zone-label">
+                LIBRERIA
+            </div>
+
+
+            <div class="deck-pile">
+                DECK
+            </div>
+
+
+            <div class="zone-label">
+                CIMITERO
+            </div>
+
+
+            <div class="graveyard-pile">
+                GRAVE
+            </div>
+
+
+            <div class="zone-label">
+                ESILIO
+            </div>
+
+
+            <div class="exile-pile">
+                EXILE
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =======================================================
+     GIOCATORE
+     ======================================================= -->
+
+<section class="player-zone player-zone-bottom">
+
+
+    <div class="battlefield">
+
+
+        <!-- CREATURE GIOCATORE -->
+
+        <div class="battle-row">
+
+            <div class="row-title">
+                Creature
+            </div>
+
+
+            <div
+                class="cards-row"
+                id="playerCreatures"
+            >
+            </div>
+
+        </div>
+
+
+
+        <!-- TERRE + ALTRI PERMANENTI -->
+
+        <div class="permanent-row">
+
+
+            <div class="lands-zone">
+
+                <div class="row-title">
+                    Terre
+                </div>
+
+
+                <div
+                    class="cards-row"
+                    id="playerLands"
+                >
+                </div>
+
+            </div>
+
+
+
+            <div class="other-permanents-zone">
+
+                <div class="row-title">
+                    Artefatti · Incantesimi
+                </div>
+
+
+                <div
+                    class="cards-row"
+                    id="playerOtherPermanents"
+                >
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ZONE LATERALI GIOCATORE -->
+
+        <div class="side-zone left">
+
+
+            <div class="zone-label">
+                COMANDANTE
+            </div>
+
+
+            <div
+                class="commander-pile"
+                id="commanderPile"
+            >
+                COMMANDER
+            </div>
+
+
+            <div class="zone-label">
+                CIMITERO
+            </div>
+
+
+            <div class="graveyard-pile">
+                GRAVE
+            </div>
+
+
+            <div class="zone-label">
+                ESILIO
+            </div>
+
+
+            <div class="exile-pile">
+                EXILE
+            </div>
+
+        </div>
+
+
+
+        <div class="side-zone right">
+
+
+            <div class="zone-label">
+                LIBRERIA
+            </div>
+
+
+            <div class="deck-pile">
+                DECK
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PLAYER BAR
+         ===================================================== -->
+
+    <div class="player-bar player-bar-bottom">
+
+
+        <div class="player-name">
+            GIOCATORE
+        </div>
+
+
+        <div class="life-counter">
+
+            <button
+                class="life-button"
+                onclick="changeLife('player', -1)"
+            >
+                −
+            </button>
+
+
+            <div
+                class="life"
+                id="playerLife"
+            >
+                40
+            </div>
+
+
+            <button
+                class="life-button"
+                onclick="changeLife('player', 1)"
+            >
+                +
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         MANO
+         ===================================================== -->
+
+    <div class="hand-area">
+
+
+        <div class="hand-label">
+            MANO
+        </div>
+
+
+        <div
+            class="hand"
+            id="hand"
+        >
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CONTROLLI
+         ===================================================== -->
+
+    <div class="controls">
+
+
+        <button
+            class="control-button"
+            onclick="drawCard()"
+        >
+            PESCA
+        </button>
+
+
+        <button
+            class="control-button"
+            onclick="untapAll()"
+        >
+            STAPPA
+        </button>
+
+
+        <button
+            class="control-button"
+            onclick="nextTurn()"
+        >
+            FINE TURNO
+        </button>
+
+    </div>
+
+
+</section>
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   STATO DEL GIOCO
+   ========================================================= */
+
+let playerLife = 40;
+
+let opponentLife = 40;
+
+let turnNumber = 1;
+
+let library = [];
+
+let hand = [];
+
+let battlefield = [];
+
+let graveyard = [];
+
+let commander = null;
+
+
+/* =========================================================
+   RITORNO AL DATABASE
+   ========================================================= */
+
+function goBack() {
+
+    window.location.href = "/";
+}
+
+
+/* =========================================================
+   VITA
+   ========================================================= */
+
+function changeLife(player, amount) {
+
+    if (player === "player") {
+
+        playerLife += amount;
+
+        document.getElementById(
+            "playerLife"
+        ).textContent = playerLife;
+
+    } else {
+
+        opponentLife += amount;
+
+        document.getElementById(
+            "opponentLife"
+        ).textContent = opponentLife;
+    }
+}
+
+
+/* =========================================================
+   PESCA
+   ========================================================= */
+
+function drawCard() {
+
+    if (library.length === 0) {
+
+        return;
+    }
+
+
+    const card =
+        library.pop();
+
+
+    hand.push(card);
+
+
+    renderHand();
+}
+
+
+/* =========================================================
+   MANO
+   ========================================================= */
+
+function renderHand() {
+
+    const handElement =
+        document.getElementById("hand");
+
+
+    handElement.innerHTML = "";
+
+
+    hand.forEach(
+        (card, index) => {
+
+            const img =
+                document.createElement("img");
+
+
+            img.src =
+                card.image;
+
+
+            img.alt =
+                card.name || "";
+
+
+            img.className =
+                "hand-card";
+
+
+            img.loading =
+                "lazy";
+
+
+            img.onclick =
+                () => playCard(index);
+
+
+            handElement.appendChild(img);
+        }
+    );
+}
+
+
+/* =========================================================
+   GIOCA CARTA
+   ========================================================= */
+
+function playCard(index) {
+
+    const card =
+        hand[index];
+
+
+    if (!card) {
+
+        return;
+    }
+
+
+    hand.splice(index, 1);
+
+
+    battlefield.push({
+
+        card: card,
+
+        tapped: false
+
+    });
+
+
+    renderHand();
+
+
+    console.log(
+        "Carta giocata:",
+        card.name
+    );
+}
+
+
+/* =========================================================
+   STAPPA
+   ========================================================= */
+
+function untapAll() {
+
+    battlefield.forEach(
+        permanent => {
+
+            permanent.tapped =
+                false;
+        }
+    );
+
+
+    console.log(
+        "Tutti i permanenti sono stappati."
+    );
+}
+
+
+/* =========================================================
+   FINE TURNO
+   ========================================================= */
+
+function nextTurn() {
+
+    turnNumber++;
+
+
+    drawCard();
+
+
+    console.log(
+        "Turno:",
+        turnNumber
+    );
+}
+
+
+/* =========================================================
+   MAZZO DEMO
+   ========================================================= */
+
+function createDemoDeck() {
+
+    const demoCards = [
+
+        {
+            name:
+                "Bloodhound's Step",
+
+            image:
+                "/cards/webp/Bloodhound's Step.webp"
+        },
+
+
+        {
+            name:
+                "Carian Sovereignty",
+
+            image:
+                "/cards/webp/Carian Sovereignty.webp"
+        },
+
+
+        {
+            name:
+                "Comet Azur",
+
+            image:
+                "/cards/webp/Comet Azur.webp"
+        },
+
+
+        {
+            name:
+                "Gravitas",
+
+            image:
+                "/cards/webp/Gravitas.webp"
+        },
+
+
+        {
+            name:
+                "Hoarfrost Stomp",
+
+            image:
+                "/cards/webp/Hoarfrost Stomp.webp"
+        }
+
+    ];
+
+
+    library = [];
+
+
+    for (
+        let i = 0;
+        i < 4;
+        i++
+    ) {
+
+        demoCards.forEach(
+            card => {
+
+                library.push({
+                    ...card
+                });
+
+            }
+        );
+    }
+
+
+    shuffleLibrary();
+
+
+    hand = [];
+
+
+    for (
+        let i = 0;
+        i < 7;
+        i++
+    ) {
+
+        if (
+            library.length > 0
+        ) {
+
+            hand.push(
+                library.pop()
+            );
+        }
+    }
+
+
+    renderHand();
+}
+
+
+/* =========================================================
+   MESCOLA
+   ========================================================= */
+
+function shuffleLibrary() {
+
+    for (
+        let i = library.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+
+        [
+            library[i],
+            library[j]
+        ] =
+        [
+            library[j],
+            library[i]
+        ];
+    }
+}
+
+
+/* =========================================================
+   CARICAMENTO DECK
+   ========================================================= */
+
+function loadDeck() {
+    const saved = sessionStorage.getItem("eldenring-scryfall-deck");
+
+    if (!saved) {
+        console.log("Nessun deck salvato. Uso il mazzo demo.");
+        createDemoDeck();
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(saved);
+
+        console.log("Deck reale caricato:", parsed);
+        console.log("CARTE DEL DECK:", parsed.cards);
+        console.log("COMMANDER:", parsed.commander);
+
+        deck = parsed;
+
+        library = [];
+        hand = [];
+        battlefield = [];
+        graveyard = [];
+        commander = null;
+
+        console.log("Deck pronto per il playtest.");
+
+    } catch (error) {
+        console.error("Errore caricamento deck:", error);
+
+        createDemoDeck();
+    }
+}
+
+/* =========================================================
+   AVVIO
+   ========================================================= */
+
+loadDeck();
+
+</script>
+
+
+</body>
+
+</html>
