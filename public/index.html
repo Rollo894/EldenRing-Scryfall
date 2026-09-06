@@ -10,7 +10,16 @@
 
 <title>EldenRing-Scryfall</title>
 
-<style> /* ========================================================= BASE ========================================================= */ body { margin: 0; font-family: Arial, sans-serif; background: #171717; color: #eee; } header { background: #0d0d0d; padding: 25px; text-align: center; border-bottom: 1px solid #444; } h1 { margin: 0; font-size: 32px; letter-spacing: 3px; } /* ========================================================= INTERFACCIA RICERCA ========================================================= */ .search-section { width: calc(100% - 40px); max-width: 1200px; margin: 30px auto; } /* --------------------------------------------------------- SEARCH BOX --------------------------------------------------------- */ .search-container { width: 100%; margin: 0 auto; padding: 0; } .search-box { position: relative; display: flex; width: 100%; align-items: stretch; } .search-box input { flex: 1; min-width: 0; padding: 16px 55px 16px 20px; font-size: 17px; border: 1px solid rgba(255,255,255,0.15); border-right: none; border-radius: 8px 0 0 8px; background: rgba(20,20,20,0.9); color: white; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; } .search-box input:focus { border-color: rgba(255,255,255,0.4); box-shadow: 0 0 0 2px rgba(255,255,255,0.06); } .search-box input::placeholder { color: rgba(255,255,255,0.45); } .search-button { padding: 0 24px; border: 1px solid rgba(255,255,255,0.15); border-radius: 0 8px 8px 0; background: rgba(255,255,255,0.12); color: white; font-weight: 600; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease; } .search-button:hover { background: rgba(255,255,255,0.2); } .search-button:active { transform: scale(0.98); } .clear-search { position: absolute; right: 105px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; display: none; align-items: center; justify-content: center; border: none; border-radius: 50%; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-size: 20px; cursor: pointer; padding: 0; } .clear-search:hover { background: rgba(255,255,255,0.2); color: white; } .search-hint { margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.4); text-align: left; } .search-hint strong { color: rgba(255,255,255,0.65); } /* ========================================================= QUICK FILTERS ========================================================= */ .quick-filters { display: flex; align-items: center; gap: 8px; margin-top: 18px; flex-wrap: wrap; } .filter-title { margin-right: 5px; font-size: 11px; letter-spacing: 1px; color: rgba(255,255,255,0.4); } .filter-divider { width: 1px; height: 28px; background: #444; margin: 0 8px; } .color-filter, .multicolor-filter { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; background: rgba(255,255,255,0.05); font-size: 18px; cursor: pointer; padding: 0; transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; } .color-filter:hover, .multicolor-filter:hover { transform: translateY(-2px); background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.3); } .color-filter.active, .multicolor-filter.active { background: rgba(214,180,119,0.22); border-color: #d6b477; box-shadow: 0 0 0 2px rgba(214,180,119,0.15), 0 0 12px rgba(214,180,119,0.18); transform: translateY(-1px); } .text-filter { padding: 7px 12px; background: #292929; border: 1px solid #4a4a4a; border-radius: 6px; color: #ccc; font-size: 13px; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; } .text-filter:hover { background: #3a3a3a; color: #fff; border-color: #777; transform: translateY(-1px); } .text-filter:active { transform: translateY(1px); } .text-filter.active { background: rgba(214,180,119,0.18); color: #fff; border-color: #d6b477; box-shadow: 0 0 0 2px rgba(214,180,119,0.12), 0 0 10px rgba(214,180,119,0.15); } /* ========================================================= TOOLBAR ========================================================= */ .toolbar { display: flex; align-items: center; gap: 18px; margin-top: 18px; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.025); flex-wrap: wrap; } .toolbar-group { display: flex; align-items: center; gap: 8px; } .toolbar-group label { font-size: 12px; color: rgba(255,255,255,0.5); } .toolbar select { padding: 7px 10px; border: 1px solid rgba(255,255,255,0.12); border-radius: 5px; background: rgba(20,20,20,0.9); color: white; cursor: pointer; outline: none; } .toolbar select:hover { border-color: rgba(255,255,255,0.25); } .reset-button { margin-left: auto; padding: 7px 12px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; background: transparent; color: rgba(255,255,255,0.55); cursor: pointer; transition: background 0.2s ease, color 0.2s ease; } .reset-button:hover { background: rgba(255,255,255,0.08); color: white; } .search-status { margin-top: 18px; font-size: 13px; color: rgba(255,255,255,0.45); text-align: left; } /* =========================================================
+<style> /* ========================================================= BASE ========================================================= */ body { margin: 0; font-family: Arial, sans-serif; background: #171717; color: #eee; } header { background: #0d0d0d; padding: 25px; text-align: center; border-bottom: 1px solid #444; }
+
+h1 {
+    margin: 0;
+    font-family: 'Cormorant SC', serif;
+    font-size: 38px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+} /* ========================================================= INTERFACCIA RICERCA ========================================================= */ .search-section { width: calc(100% - 40px); max-width: 1200px; margin: 30px auto; } /* --------------------------------------------------------- SEARCH BOX --------------------------------------------------------- */ .search-container { width: 100%; margin: 0 auto; padding: 0; } .search-box { position: relative; display: flex; width: 100%; align-items: stretch; } .search-box input { flex: 1; min-width: 0; padding: 16px 55px 16px 20px; font-size: 17px; border: 1px solid rgba(255,255,255,0.15); border-right: none; border-radius: 8px 0 0 8px; background: rgba(20,20,20,0.9); color: white; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; } .search-box input:focus { border-color: rgba(255,255,255,0.4); box-shadow: 0 0 0 2px rgba(255,255,255,0.06); } .search-box input::placeholder { color: rgba(255,255,255,0.45); } .search-button { padding: 0 24px; border: 1px solid rgba(255,255,255,0.15); border-radius: 0 8px 8px 0; background: rgba(255,255,255,0.12); color: white; font-weight: 600; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease; } .search-button:hover { background: rgba(255,255,255,0.2); } .search-button:active { transform: scale(0.98); } .clear-search { position: absolute; right: 105px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; display: none; align-items: center; justify-content: center; border: none; border-radius: 50%; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-size: 20px; cursor: pointer; padding: 0; } .clear-search:hover { background: rgba(255,255,255,0.2); color: white; } .search-hint { margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.4); text-align: left; } .search-hint strong { color: rgba(255,255,255,0.65); } /* ========================================================= QUICK FILTERS ========================================================= */ .quick-filters { display: flex; align-items: center; gap: 8px; margin-top: 18px; flex-wrap: wrap; } .filter-title { margin-right: 5px; font-size: 11px; letter-spacing: 1px; color: rgba(255,255,255,0.4); } .filter-divider { width: 1px; height: 28px; background: #444; margin: 0 8px; } .color-filter, .multicolor-filter { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; background: rgba(255,255,255,0.05); font-size: 18px; cursor: pointer; padding: 0; transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; } .color-filter:hover, .multicolor-filter:hover { transform: translateY(-2px); background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.3); } .color-filter.active, .multicolor-filter.active { background: rgba(214,180,119,0.22); border-color: #d6b477; box-shadow: 0 0 0 2px rgba(214,180,119,0.15), 0 0 12px rgba(214,180,119,0.18); transform: translateY(-1px); } .text-filter { padding: 7px 12px; background: #292929; border: 1px solid #4a4a4a; border-radius: 6px; color: #ccc; font-size: 13px; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; } .text-filter:hover { background: #3a3a3a; color: #fff; border-color: #777; transform: translateY(-1px); } .text-filter:active { transform: translateY(1px); } .text-filter.active { background: rgba(214,180,119,0.18); color: #fff; border-color: #d6b477; box-shadow: 0 0 0 2px rgba(214,180,119,0.12), 0 0 10px rgba(214,180,119,0.15); } /* ========================================================= TOOLBAR ========================================================= */ .toolbar { display: flex; align-items: center; gap: 18px; margin-top: 18px; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.025); flex-wrap: wrap; } .toolbar-group { display: flex; align-items: center; gap: 8px; } .toolbar-group label { font-size: 12px; color: rgba(255,255,255,0.5); } .toolbar select { padding: 7px 10px; border: 1px solid rgba(255,255,255,0.12); border-radius: 5px; background: rgba(20,20,20,0.9); color: white; cursor: pointer; outline: none; } .toolbar select:hover { border-color: rgba(255,255,255,0.25); } .reset-button { margin-left: auto; padding: 7px 12px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; background: transparent; color: rgba(255,255,255,0.55); cursor: pointer; transition: background 0.2s ease, color 0.2s ease; } .reset-button:hover { background: rgba(255,255,255,0.08); color: white; } .search-status { margin-top: 18px; font-size: 13px; color: rgba(255,255,255,0.45); text-align: left; } /* =========================================================
    RICERCA AVANZATA
    ========================================================= */
 
@@ -942,7 +951,33 @@
         max-height: 68vh;
     }
 }
+
+.site-footer {
+    max-width: 1000px;
+    margin: 80px auto 30px;
+    padding: 30px 25px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    text-align: center;
+}
+
+.disclaimer-title {
+    margin-bottom: 15px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #888;
+}
+
+.disclaimer-text {
+    max-width: 850px;
+    margin: 0 auto;
+    font-size: 11px;
+    line-height: 1.7;
+    color: #666;
+}
 </style>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -2286,7 +2321,45 @@ function exportDeckToPDF() {
     }
 
 </script>
+<footer class="site-footer">
+    <div class="disclaimer-title">DISCLAIMER</div>
 
+    <div class="disclaimer-text">
+        Eldenring-Scryfall is an unofficial, fan-made and non-commercial
+        project created purely as a creative tribute to Elden Ring and
+        Magic: The Gathering.
+        <br><br>
+
+        This website is not affiliated with, endorsed, sponsored or approved
+        by FromSoftware, Inc., Bandai Namco Entertainment Inc.,
+        Wizards of the Coast LLC, or any of their affiliates.
+        <br><br>
+
+        Elden Ring, its characters, locations, names, lore and related
+        intellectual property belong to their respective owners.
+        Magic: The Gathering and its related names, characters, trademarks
+        and intellectual property belong to Wizards of the Coast LLC.
+        <br><br>
+
+        All custom cards and concepts presented on this website are fan-made
+        creations made for entertainment, experimentation and creative
+        exploration. They are not official Magic: The Gathering cards
+        and have no commercial value.
+        <br><br>
+
+        No cards, products or other materials are offered for sale through
+        this website.
+        <br><br>
+
+        The purpose of Eldenring-Scryfall is to explore and showcase,
+        purely as a fan concept, what an Elden Ring-inspired
+        Magic: The Gathering universe could look and feel like.
+        <br><br>
+
+        Eldenring-Scryfall does not imply any official collaboration,
+        endorsement or affiliation with the respective rights holders.
+    </div>
+</footer>
 </body>
 
 </html>
