@@ -489,7 +489,7 @@
       "B",
       "G"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "ELDEN RING",
@@ -520,7 +520,7 @@
       "G",
       "W"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "ELDEN RING",
@@ -549,7 +549,7 @@
       "B",
       "R"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "ELDEN RING",
@@ -578,7 +578,7 @@
       "G",
       "W"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "ELDEN RING",
@@ -829,7 +829,7 @@
       "U",
       "W"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "CHRISTIAN ANGEL",
@@ -1675,7 +1675,7 @@
       "U",
       "R"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "ELDEN RING",
@@ -3835,7 +3835,7 @@
       "U",
       "W"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "SHIMHAQ",
@@ -4591,7 +4591,7 @@
     "flavor_text": "“Together, we will devour the very gods!”",
     "colors": ["R"],
     "color_identity": ["R", "B"],
-    "rarity": "common",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "Kankan33333",
@@ -4618,7 +4618,7 @@
     "color_identity": [
       "R"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "ELDEN RING",
@@ -6417,7 +6417,7 @@
       "B",
       "R"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "THEARKON",
@@ -6797,7 +6797,7 @@
     "color_identity": [
       "B"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "000SAMIO00",
@@ -7794,7 +7794,7 @@
       "R",
       "U"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "KANKAN33333",
@@ -8439,7 +8439,7 @@
       "U",
       "W"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "EDIPTUS",
@@ -9813,7 +9813,7 @@
     "color_identity": [
       "W"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "MINEOH",
@@ -9840,7 +9840,7 @@
     "color_identity": [
       "W"
     ],
-    "rarity": "uncommon",
+    "rarity": "mythic",
     "set": "ER",
     "collector_number": "P",
     "artist": "2III / CHRISTIAN ANGEL",
