@@ -95,7 +95,61 @@ h1 {
     text-align: center;
     color: #777;
 }
-/* ========================================================= CONTROLLI CARTA / DECK BUILDER ========================================================= */ .card-deck-controls { position: absolute; top: 12px; right: 12px; display: flex; gap: 5px; z-index: 3; } .card-deck-button { width: 34px; height: 34px; padding: 0; border: 1px solid rgba(255,255,255,0.18); border-radius: 7px; background: rgba(15,15,15,0.9); color: #ddd; cursor: pointer; font-size: 16px; transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease; } .card-deck-button:hover { background: #3a3a3a; border-color: #d6b477; transform: translateY(-1px); } .card-deck-button.commander { color: #d6b477; } .card-deck-quantity { position: absolute; top: 52px; right: 12px; z-index: 3; padding: 4px 8px; border: 1px solid rgba(214,180,119,0.35); border-radius: 5px; background: rgba(15,15,15,0.92); color: #d6b477; font-size: 10px; font-weight: bold; letter-spacing: 0.5px; pointer-events: none; box-shadow: 0 3px 10px rgba(0,0,0,0.45); } /* ========================================================= PULSANTE MAZZO FISSO ========================================================= */ .deck-toggle { position: fixed; right: 22px; bottom: 22px; z-index: 900; padding: 13px 18px; border: 1px solid #80683f; border-radius: 10px; background: linear-gradient( 145deg, #302818, #1d1810 ); color: #eee; font-size: 14px; font-weight: bold; cursor: pointer; box-shadow: 0 8px 30px rgba(0,0,0,0.55); transition: transform 0.15s ease, background 0.2s ease; } .deck-toggle:hover { transform: translateY(-2px); background: linear-gradient( 145deg, #40351f, #282015 ); } /* ========================================================= PANNELLO DECK BUILDER ========================================================= */ .deck-overlay { display: none; position: fixed; inset: 0; z-index: 950; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); } .deck-overlay.active { display: block; } .deck-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 960; width: min(430px, 92vw); display: flex; flex-direction: column; background: linear-gradient( 145deg, #242424, #141414 ); border-left: 1px solid #555; box-shadow: -15px 0 50px rgba(0,0,0,0.65); transform: translateX(100%); transition: transform 0.25s ease; } .deck-panel.active { transform: translateX(0); } .deck-header { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 18px 20px; border-bottom: 1px solid #444; background: rgba(0,0,0,0.25); } .deck-header h2 { margin: 0; color: #d6b477; font-size: 19px; letter-spacing: 1px; } .deck-close { width: 36px; height: 36px; border: none; border-radius: 50%; background: #333; color: #ccc; font-size: 24px; cursor: pointer; } .deck-close:hover { background: #555; color: white; } .deck-settings { padding: 15px 20px; border-bottom: 1px solid #3d3d3d; } .deck-format-label { display: block; margin-bottom: 7px; font-size: 11px; letter-spacing: 1px; color: #888; } .deck-format { width: 100%; padding: 10px; border: 1px solid #555; border-radius: 7px; background: #1c1c1c; color: white; font-size: 14px; outline: none; } .deck-status { margin-top: 12px; padding: 12px; border: 1px solid #444; border-radius: 8px; background: #1c1c1c; } .deck-count { font-size: 17px; font-weight: bold; color: #eee; } .deck-validity { margin-top: 5px; font-size: 12px; color: #999; } .deck-validity.valid { color: #9ccc8c; } .deck-validity.invalid { color: #d89a78; } .deck-commander { padding: 15px 20px; border-bottom: 1px solid #3d3d3d; } .deck-section-title { margin-bottom: 9px; font-size: 11px; letter-spacing: 1px; color: #888; } .commander-empty { padding: 12px; border: 1px dashed #555; border-radius: 7px; color: #777; font-size: 13px; text-align: center; } .commander-card { display: flex; align-items: center; gap: 10px; padding: 9px; border: 1px solid #6b5734; border-radius: 8px; background: rgba(214,180,119,0.08); } .commander-card-image { width: 48px; height: 67px; object-fit: cover; border-radius: 5px; } .commander-card-info { flex: 1; min-width: 0; } .commander-card-name { color: #d6b477; font-weight: bold; font-size: 14px; } .commander-card-type { margin-top: 4px; color: #999; font-size: 11px; } .commander-remove { border: none; background: transparent; color: #999; font-size: 18px; cursor: pointer; } .commander-remove:hover { color: #fff; } .deck-list { flex: 1; overflow-y: auto; padding: 15px 20px; } .deck-list-title { display: flex; justify-content: space-between; margin-bottom: 10px; color: #888; font-size: 11px; letter-spacing: 1px; } .deck-empty { padding: 35px 15px; color: #666; text-align: center; font-size: 13px; line-height: 1.6; } .deck-item { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; padding: 8px; border: 1px solid #363636; border-radius: 7px; background: #1d1d1d; } .deck-item-image { width: 38px; height: 53px; object-fit: cover; border-radius: 4px; flex-shrink: 0; } .deck-item-name { flex: 1; min-width: 0; color: #ddd; font-size: 13px; line-height: 1.25; } .deck-item-controls { display: flex; align-items: center; gap: 4px; } .deck-quantity-button { width: 26px; height: 26px; padding: 0; border: 1px solid #555; border-radius: 5px; background: #292929; color: #ddd; cursor: pointer; font-size: 15px; } .deck-quantity-button:hover { background: #3b3b3b; border-color: #777; } .deck-quantity { min-width: 20px; text-align: center; color: #d6b477; font-weight: bold; font-size: 13px; } .deck-footer { padding: 15px 20px; border-top: 1px solid #444; background: rgba(0,0,0,0.25); } .clear-deck-button { width: 100%; padding: 10px; border: 1px solid #633d32; border-radius: 7px; background: rgba(120,60,40,0.15); color: #c99580; cursor: pointer; font-weight: bold; } .clear-deck-button:hover { background: rgba(120,60,40,0.28); color: #e3b09a; } /* ========================================================= DETTAGLIO CARTA / MODALE ========================================================= */ .card-modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0, 0, 0, 0.88); justify-content: center; align-items: center; padding: 30px; backdrop-filter: blur(6px); } .card-modal.active { display: flex; } .modal-content { position: relative; display: flex; gap: 40px; width: min(1100px, 95vw); max-height: 90vh; padding: 35px; background: linear-gradient( 145deg, #252525, #151515 ); border: 1px solid #555; border-radius: 16px; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9); overflow: auto; } .modal-image { width: 440px; max-width: 45%; height: auto; object-fit: contain; align-self: flex-start; border-radius: 12px; box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7); } .modal-details { flex: 1; min-width: 0; padding-top: 5px; } .modal-details h2 { margin: 0 45px 12px 0; color: #d6b477; font-size: 34px; line-height: 1.15; } .modal-mana { color: #ddd; font-size: 19px; margin-bottom: 12px; } .mana-symbol { width: 22px; height: 22px; vertical-align: middle; margin-right: 3px; } .modal-type { color: #aaa; font-style: italic; font-size: 17px; padding-bottom: 18px; border-bottom: 1px solid #444; margin-bottom: 20px; } .modal-oracle { white-space: pre-line; line-height: 1.65; font-size: 17px; color: #eee; } .modal-flavor { margin-top: 28px; padding-top: 20px; border-top: 1px solid #444; color: #999; font-style: italic; line-height: 1.5; } .modal-stats { margin-top: 25px; display: inline-block; padding: 8px 16px; border: 1px solid #555; border-radius: 8px; color: #d6b477; font-size: 21px; font-weight: bold; } .modal-close { position: absolute; top: 12px; right: 15px; z-index: 5; width: 42px; height: 42px; padding: 0; border: none; border-radius: 50%; background: #333; color: #ddd; font-size: 28px; line-height: 42px; cursor: pointer; transition: background 0.2s ease; } .modal-close:hover { background: #555; color: white; } .modal-navigation { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px; } .modal-navigation button { flex: 1; padding: 10px 15px; background: #292929; border: 1px solid #555; border-radius: 7px; color: #ccc; font-size: 14px; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease; } .modal-navigation button:hover:not(:disabled) { background: #3a3a3a; color: #fff; border-color: #777; } .modal-navigation button:disabled { opacity: 0.3; cursor: default; } .modal-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 22px; padding-bottom: 20px; border-bottom: 1px solid #444; } .modal-review { grid-column: 1 / -1; padding: 10px 12px; background: rgba(120, 70, 30, 0.18); border: 1px solid #6b4d2a; border-radius: 6px; color: #d6b477; font-size: 13px; font-weight: bold; letter-spacing: 0.5px; } .meta-item { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; background: #202020; border: 1px solid #383838; border-radius: 6px; } .meta-label { font-size: 10px; letter-spacing: 1px; color: #777; } .meta-item span { color: #ccc; font-size: 14px; } /* ========================================================= MOBILE ========================================================= */ @media (max-width: 800px) { .card-modal { padding: 15px; } .modal-content { flex-direction: column; align-items: center; gap: 25px; padding: 25px; } .modal-image { width: 400px; max-width: 90%; } .modal-details { width: 100%; } .modal-details h2 { font-size: 27px; } } /* =========================================================
+/* ========================================================= CONTROLLI CARTA / DECK BUILDER ========================================================= */ .card-deck-controls { position: absolute; top: 12px; right: 12px; display: flex; gap: 5px; z-index: 3; } .card-deck-button { width: 34px; height: 34px; padding: 0; border: 1px solid rgba(255,255,255,0.18); border-radius: 7px; background: rgba(15,15,15,0.9); color: #ddd; cursor: pointer; font-size: 16px; transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease; } .card-deck-button:hover { background: #3a3a3a; border-color: #d6b477; transform: translateY(-1px); } .card-deck-button.commander { color: #d6b477; } .card-deck-quantity { position: absolute; top: 52px; right: 12px; z-index: 3; padding: 4px 8px; border: 1px solid rgba(214,180,119,0.35); border-radius: 5px; background: rgba(15,15,15,0.92); color: #d6b477; font-size: 10px; font-weight: bold; letter-spacing: 0.5px; pointer-events: none; box-shadow: 0 3px 10px rgba(0,0,0,0.45); } /* ========================================================= PULSANTE MAZZO FISSO ========================================================= */ .deck-toggle { position: fixed; right: 22px; bottom: 22px; z-index: 900; padding: 13px 18px; border: 1px solid #80683f; border-radius: 10px; background: linear-gradient( 145deg, #302818, #1d1810 ); color: #eee; font-size: 14px; font-weight: bold; cursor: pointer; box-shadow: 0 8px 30px rgba(0,0,0,0.55); transition: transform 0.15s ease, background 0.2s ease; } .deck-toggle:hover { transform: translateY(-2px); background: linear-gradient( 145deg, #40351f, #282015 ); } /* ========================================================= PANNELLO DECK BUILDER ========================================================= */ .deck-overlay { display: none; position: fixed; inset: 0; z-index: 950; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); } .deck-overlay.active { display: block; } 
+
+.deck-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 960; width: min(430px, 92vw); display: flex; flex-direction: column;
+overflow-y: auto;
+overflow-x: hidden;
+background: linear-gradient( 145deg, #242424, #141414 ); border-left: 1px solid #555; box-shadow: -15px 0 50px rgba(0,0,0,0.65); transform: translateX(100%); transition: transform 0.25s ease; } 
+
+.deck-scroll-area {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.deck-panel.active { transform: translateX(0); } .deck-header { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 18px 20px; border-bottom: 1px solid #444; background: rgba(0,0,0,0.25); } .deck-header h2 { margin: 0; color: #d6b477; font-size: 19px; letter-spacing: 1px; } .deck-close { width: 36px; height: 36px; border: none; border-radius: 50%; background: #333; color: #ccc; font-size: 24px; cursor: pointer; } .deck-close:hover { background: #555; color: white; } .deck-settings { padding: 15px 20px; border-bottom: 1px solid #3d3d3d; } .deck-format-label { display: block; margin-bottom: 7px; font-size: 11px; letter-spacing: 1px; color: #888; } .deck-format { width: 100%; padding: 10px; border: 1px solid #555; border-radius: 7px; background: #1c1c1c; color: white; font-size: 14px; outline: none; } .deck-status { margin-top: 12px; padding: 12px; border: 1px solid #444; border-radius: 8px; background: #1c1c1c; } .deck-count { font-size: 17px; font-weight: bold; color: #eee; } .deck-validity { margin-top: 5px; font-size: 12px; color: #999; } .deck-validity.valid { color: #9ccc8c; } .deck-validity.invalid { color: #d89a78; }
+.deck-statistics {
+    padding: 15px 20px;
+    border-bottom: 1px solid #3d3d3d;
+}
+
+.deck-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.deck-stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    background: #1c1c1c;
+    border: 1px solid #3a3a3a;
+    border-radius: 6px;
+}
+
+.deck-stat-label {
+    font-size: 10px;
+    color: #999;
+    letter-spacing: 0.5px;
+}
+
+.deck-stat-value {
+    font-size: 15px;
+    font-weight: bold;
+    color: #ddd;
+}
+ .deck-commander { padding: 15px 20px; border-bottom: 1px solid #3d3d3d; } .deck-section-title { margin-bottom: 9px; font-size: 11px; letter-spacing: 1px; color: #888; } .commander-empty { padding: 12px; border: 1px dashed #555; border-radius: 7px; color: #777; font-size: 13px; text-align: center; } .commander-card { display: flex; align-items: center; gap: 10px; padding: 9px; border: 1px solid #6b5734; border-radius: 8px; background: rgba(214,180,119,0.08); } .commander-card-image { width: 48px; height: 67px; object-fit: cover; border-radius: 5px; } .commander-card-info { flex: 1; min-width: 0; } .commander-card-name { color: #d6b477; font-weight: bold; font-size: 14px; } .commander-card-type { margin-top: 4px; color: #999; font-size: 11px; } .commander-remove { border: none; background: transparent; color: #999; font-size: 18px; cursor: pointer; } .commander-remove:hover { color: #fff; } 
+
+.deck-list {
+    flex: none;
+    min-height: 0;
+    overflow: visible;
+
+ } .deck-list-title { display: flex; justify-content: space-between; margin-bottom: 10px; color: #888; font-size: 11px; letter-spacing: 1px; } .deck-empty { padding: 35px 15px; color: #666; text-align: center; font-size: 13px; line-height: 1.6; } .deck-item { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; padding: 8px; border: 1px solid #363636; border-radius: 7px; background: #1d1d1d; } .deck-item-image { width: 38px; height: 53px; object-fit: cover; border-radius: 4px; flex-shrink: 0; } .deck-item-name { flex: 1; min-width: 0; color: #ddd; font-size: 13px; line-height: 1.25; } .deck-item-controls { display: flex; align-items: center; gap: 4px; } .deck-quantity-button { width: 26px; height: 26px; padding: 0; border: 1px solid #555; border-radius: 5px; background: #292929; color: #ddd; cursor: pointer; font-size: 15px; } .deck-quantity-button:hover { background: #3b3b3b; border-color: #777; } .deck-quantity { min-width: 20px; text-align: center; color: #d6b477; font-weight: bold; font-size: 13px; } .deck-footer { padding: 15px 20px; border-top: 1px solid #444; background: rgba(0,0,0,0.25); } .clear-deck-button { width: 100%; padding: 10px; border: 1px solid #633d32; border-radius: 7px; background: rgba(120,60,40,0.15); color: #c99580; cursor: pointer; font-weight: bold; } .clear-deck-button:hover { background: rgba(120,60,40,0.28); color: #e3b09a; } /* ========================================================= DETTAGLIO CARTA / MODALE ========================================================= */ .card-modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0, 0, 0, 0.88); justify-content: center; align-items: center; padding: 30px; backdrop-filter: blur(6px); } .card-modal.active { display: flex; } .modal-content { position: relative; display: flex; gap: 40px; width: min(1100px, 95vw); max-height: 90vh; padding: 35px; background: linear-gradient( 145deg, #252525, #151515 ); border: 1px solid #555; border-radius: 16px; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9); overflow: auto; } .modal-image { width: 440px; max-width: 45%; height: auto; object-fit: contain; align-self: flex-start; border-radius: 12px; box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7); } .modal-details { flex: 1; min-width: 0; padding-top: 5px; } .modal-details h2 { margin: 0 45px 12px 0; color: #d6b477; font-size: 34px; line-height: 1.15; } .modal-mana { color: #ddd; font-size: 19px; margin-bottom: 12px; } .mana-symbol { width: 22px; height: 22px; vertical-align: middle; margin-right: 3px; } .modal-type { color: #aaa; font-style: italic; font-size: 17px; padding-bottom: 18px; border-bottom: 1px solid #444; margin-bottom: 20px; } .modal-oracle { white-space: pre-line; line-height: 1.65; font-size: 17px; color: #eee; } .modal-flavor { margin-top: 28px; padding-top: 20px; border-top: 1px solid #444; color: #999; font-style: italic; line-height: 1.5; } .modal-stats { margin-top: 25px; display: inline-block; padding: 8px 16px; border: 1px solid #555; border-radius: 8px; color: #d6b477; font-size: 21px; font-weight: bold; } .modal-close { position: absolute; top: 12px; right: 15px; z-index: 5; width: 42px; height: 42px; padding: 0; border: none; border-radius: 50%; background: #333; color: #ddd; font-size: 28px; line-height: 42px; cursor: pointer; transition: background 0.2s ease; } .modal-close:hover { background: #555; color: white; } .modal-navigation { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px; } .modal-navigation button { flex: 1; padding: 10px 15px; background: #292929; border: 1px solid #555; border-radius: 7px; color: #ccc; font-size: 14px; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease; } .modal-navigation button:hover:not(:disabled) { background: #3a3a3a; color: #fff; border-color: #777; } .modal-navigation button:disabled { opacity: 0.3; cursor: default; } .modal-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 22px; padding-bottom: 20px; border-bottom: 1px solid #444; } .modal-review { grid-column: 1 / -1; padding: 10px 12px; background: rgba(120, 70, 30, 0.18); border: 1px solid #6b4d2a; border-radius: 6px; color: #d6b477; font-size: 13px; font-weight: bold; letter-spacing: 0.5px; } .meta-item { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; background: #202020; border: 1px solid #383838; border-radius: 6px; } .meta-label { font-size: 10px; letter-spacing: 1px; color: #777; } .meta-item span { color: #ccc; font-size: 14px; } /* ========================================================= MOBILE ========================================================= */ @media (max-width: 800px) { .card-modal { padding: 15px; } .modal-content { flex-direction: column; align-items: center; gap: 25px; padding: 25px; } .modal-image { width: 400px; max-width: 90%; } .modal-details { width: 100%; } .modal-details h2 { font-size: 27px; } } /* =========================================================
    RESPONSIVE MOBILE
    ========================================================= */
 
@@ -1730,6 +1784,56 @@ onclick="toggleDeckPanel()"
     </div>
 
 </div>
+<div class="deck-statistics">
+
+    <div class="deck-section-title">
+        STATISTICHE DEL MAZZO
+    </div>
+
+    <div class="deck-stat-grid">
+
+        <div class="deck-stat-item">
+            <span class="deck-stat-label">TERRE</span>
+            <span id="deckStatLands" class="deck-stat-value">0</span>
+        </div>
+
+        <div class="deck-stat-item">
+            <span class="deck-stat-label">CREATURE</span>
+            <span id="deckStatCreatures" class="deck-stat-value">0</span>
+        </div>
+
+        <div class="deck-stat-item">
+            <span class="deck-stat-label">ISTANTANEI</span>
+            <span id="deckStatInstants" class="deck-stat-value">0</span>
+        </div>
+
+        <div class="deck-stat-item">
+            <span class="deck-stat-label">STREGONERIE</span>
+            <span id="deckStatSorceries" class="deck-stat-value">0</span>
+        </div>
+
+        <div class="deck-stat-item">
+            <span class="deck-stat-label">ARTEFATTI</span>
+            <span id="deckStatArtifacts" class="deck-stat-value">0</span>
+        </div>
+<div class="deck-stat-item">
+            <span class="deck-stat-label">INCANTESIMI</span>
+            <span id="deckStatEnchantments" class="deck-stat-value">0</span>
+        </div>
+
+        <div class="deck-stat-item">
+            <span class="deck-stat-label">PLANESWALKER</span>
+            <span id="deckStatPlaneswalkers" class="deck-stat-value">0</span>
+        </div>
+
+        <div class="deck-stat-item">
+            <span class="deck-stat-label">ALTRO</span>
+            <span id="deckStatOther" class="deck-stat-value">0</span>
+        </div>
+
+    </div>
+
+</div>
 
 </div>
 
@@ -1777,8 +1881,9 @@ onclick="toggleDeckPanel()"
 
 </div>
 
-<div class="deck-footer">
-    <button
+
+
+<div class="deck-footer">    <button
         class="clear-deck-button"
         onclick="exportDeckToPDF()"
         style="margin-bottom: 10px; background: rgba(119,180,214,0.15); border-color: #38769c; color: #8cb8c9;"
@@ -2018,7 +2123,136 @@ let currentFilteredCards = []; /* ==============================================
     
     saveDeck(); 
     updateDeckUI(); 
-} /* ========================================================= RIMUOVI COPIA ========================================================= */ function removeCardFromDeck(key) { const entry = deck.cards[key]; if (!entry) { return; } entry.quantity--; if ( entry.quantity <= 0 ) { delete deck.cards[key]; } saveDeck(); updateDeckUI(); } /* ========================================================= RIMUOVI CARTA COMPLETAMENTE ========================================================= */ function removeAllCopies(key) { if ( deck.cards[key] ) { delete deck.cards[key]; } saveDeck(); updateDeckUI(); } /* ========================================================= IMPOSTA COMANDANTE ========================================================= */ function setCommander(card) { if ( deck.format !== "commander" ) { alert( "Il comandante è disponibile solamente nel formato Commander." ); return; } if (!card) { return; } const typeLine = String( card.type_line || "" ).toLowerCase(); /* * Deve essere Legendary. */ if ( !typeLine.includes("legendary") ) { alert( "Il comandante deve essere una carta Legendary." ); return; } const key = getCardKey(card); /* * Se la carta era già nel mazzo principale, * la rimuoviamo prima di impostarla come comandante. */ if ( deck.cards[key] ) { delete deck.cards[key]; } deck.commander = card; saveDeck(); updateDeckUI(); } /* ========================================================= RIMUOVI COMANDANTE ========================================================= */ function removeCommander() { deck.commander = null; saveDeck(); updateDeckUI(); } /* ========================================================= VALIDITÀ DECK ========================================================= */ function getDeckStats() { let mainCount = 0; let tooManyCopies = false; const entries = Object.values(deck.cards); entries.forEach(entry => { const quantity = Number(entry.quantity || 0); mainCount += quantity; if ( deck.format === "standard" && quantity > 4 ) { tooManyCopies = true; } if ( deck.format === "commander" && quantity > 1 ) { tooManyCopies = true; } }); let valid = true; let message = ""; if ( deck.format === "standard" ) { if ( mainCount < 60 ) { valid = false; message = `Servono almeno 60 carte. Mancano ${60 - mainCount}.`; } else if ( tooManyCopies ) { valid = false; message = "Una o più carte superano il limite di 4 copie."; } else { valid = true; message = "Mazzo Standard valido."; } } if ( deck.format === "commander" ) { if ( !deck.commander ) { valid = false; message = "Seleziona un comandante."; } else if ( mainCount !== 99 ) { valid = false; message = `Il mazzo principale deve avere esattamente 99 carte. Attualmente: ${mainCount}.`; } else if ( tooManyCopies ) { valid = false; message = "Commander permette una sola copia di ogni carta."; } else { valid = true; message = "Mazzo Commander valido: 99 + 1 comandante."; } } return { mainCount, valid, message }; } /* ========================================================= AGGIORNA INTERFACCIA DECK ========================================================= */ function updateDeckUI() { const stats = getDeckStats(); /* * Conteggio pulsante flottante. */ const totalVisible = stats.mainCount + ( deck.commander ? 1 : 0 ); const deckButtonCount = document.getElementById( "deckButtonCount" ); if (deckButtonCount) { deckButtonCount.textContent = totalVisible; } /* * Conteggio principale. */ const deckCount = document.getElementById( "deckCount" ); if ( deckCount ) { if ( deck.format === "standard" ) { deckCount.textContent = `${stats.mainCount} / 60 carte`; } else { deckCount.textContent = `${stats.mainCount} / 99 carte + ${deck.commander ? 1 : 0} comandante`; } } /* * Validità. */ const validity = document.getElementById( "deckValidity" ); if (validity) { validity.textContent = stats.message; validity.classList.remove( "valid", "invalid" ); validity.classList.add( stats.valid ? "valid" : "invalid" ); } /* * Sezione comandante. */ updateCommanderUI(); /* * Lista carte. */ updateDeckListUI(); /* * Aggiorna i badge direttamente sulle carte visibili. */ updateCardDeckBadges(); } /* ========================================================= AGGIORNA COMANDANTE ========================================================= */ function updateCommanderUI() { const container = document.getElementById( "commanderContainer" ); if (!container) { return; } if ( deck.format !== "commander" ) { container.innerHTML = ` <div class="commander-empty"> Disponibile solo in formato Commander. </div> `; return; } if ( !deck.commander ) { container.innerHTML = ` <div class="commander-empty"> Nessun comandante selezionato. <br> Usa il pulsante 👑 su una carta Legendary. </div> `; return; } const commander = deck.commander; container.innerHTML = ` <div class="commander-card"> <img class="commander-card-image" src="${commander.image || ""}" alt="${commander.name || ""}" onerror="this.style.display='none'" > <div class="commander-card-info"> <div class="commander-card-name"> ${commander.name || ""} </div> <div class="commander-card-type"> ${commander.type_line || ""} </div> </div> <button class="commander-remove" onclick="removeCommander()" title="Rimuovi comandante" > × </button> </div> `; } /* ========================================================= AGGIORNA LISTA DECK ========================================================= */ function updateDeckListUI() { const container = document.getElementById( "deckCards" ); const uniqueCount = document.getElementById( "deckUniqueCount" ); if ( !container ) { return; } const entries = Object.entries( deck.cards ); if ( uniqueCount ) { uniqueCount.textContent = `${entries.length} ${entries.length === 1 ? "carta" : "carte"}`; } if ( entries.length === 0 ) { container.innerHTML = ` <div class="deck-empty"> Il tuo mazzo è vuoto.<br> Usa il pulsante <strong>+</strong> sulle carte per aggiungerle. </div> `; return; } entries.sort( (a, b) => { const nameA = String( a[1].card.name || "" ); const nameB = String( b[1].card.name || "" ); return nameA.localeCompare( nameB, "it", { sensitivity: "base" } ); } ); container.innerHTML = entries.map( ([key, entry]) => ` <div class="deck-item"> <img class="deck-item-image" src="${entry.card.image || ""}" alt="${entry.card.name || ""}" onerror="this.style.display='none'" > <div class="deck-item-name"> ${entry.card.name || ""} </div> <div class="deck-item-controls"> <button class="deck-quantity-button" onclick="removeCardFromDeck('${escapeJsString(key)}')" > − </button> <span class="deck-quantity"> ${entry.quantity} </span> <button class="deck-quantity-button" onclick="addCardToDeckByKey('${escapeJsString(key)}')" > + </button> </div> </div> ` ).join(""); } /* ========================================================= ESCAPE CHIAVE JAVASCRIPT ========================================================= */ function escapeJsString(value) { return String(value) .replace(/\\/g, "\\\\") .replace(/'/g, "\\'"); } /* ========================================================= AGGIUNGI DA CHIAVE ========================================================= */ function addCardToDeckByKey(key) { const entry = deck.cards[key]; if (!entry) { return; } addCardToDeck( entry.card ); } /* ========================================================= SVUOTA MAZZO ========================================================= */ function clearDeck() { const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (!hasCards) { return; } const confirmed = confirm( "Vuoi davvero svuotare completamente il mazzo?" ); if (!confirmed) { return; } deck = { format: deck.format, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= APERTURA PANNELLO DECK ========================================================= */ function toggleDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.toggle( "active" ); overlay.classList.toggle( "active" ); } /* ========================================================= CHIUSURA PANNELLO DECK ========================================================= */ function closeDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.remove( "active" ); overlay.classList.remove( "active" ); } /* ========================================================= CARICAMENTO CARTE ========================================================= */ 
+} /* ========================================================= RIMUOVI COPIA ========================================================= */ function removeCardFromDeck(key) { const entry = deck.cards[key]; if (!entry) { return; } entry.quantity--; if ( entry.quantity <= 0 ) { delete deck.cards[key]; } saveDeck(); updateDeckUI(); } /* ========================================================= RIMUOVI CARTA COMPLETAMENTE ========================================================= */ function removeAllCopies(key) { if ( deck.cards[key] ) { delete deck.cards[key]; } saveDeck(); updateDeckUI(); } /* ========================================================= IMPOSTA COMANDANTE ========================================================= */ function setCommander(card) { if ( deck.format !== "commander" ) { alert( "Il comandante è disponibile solamente nel formato Commander." ); return; } if (!card) { return; } const typeLine = String( card.type_line || "" ).toLowerCase(); /* * Deve essere Legendary. */ if ( !typeLine.includes("legendary") ) { alert( "Il comandante deve essere una carta Legendary." ); return; } const key = getCardKey(card); /* * Se la carta era già nel mazzo principale, * la rimuoviamo prima di impostarla come comandante. */ if ( deck.cards[key] ) { delete deck.cards[key]; } deck.commander = card; saveDeck(); updateDeckUI(); } /* ========================================================= RIMUOVI COMANDANTE ========================================================= */ function removeCommander() { deck.commander = null; saveDeck(); updateDeckUI(); } /* ========================================================= VALIDITÀ DECK ========================================================= */ function getDeckStats() {
+    let mainCount = 0;
+    let tooManyCopies = false;
+
+    const typeStats = {
+        lands: 0,
+        creatures: 0,
+        instants: 0,
+        sorceries: 0,
+        artifacts: 0,
+        enchantments: 0,
+        planeswalkers: 0,
+        other: 0
+    };
+
+    const entries = Object.values(deck.cards);
+
+    entries.forEach(entry => {
+        const quantity = Number(entry.quantity || 0);
+        const card = entry.card;
+
+        mainCount += quantity;
+
+        if ( deck.format === "standard" && quantity > 4 ) {
+            tooManyCopies = true;
+        }
+
+        if ( deck.format === "commander" && quantity > 1 ) {
+            tooManyCopies = true;
+        }
+
+        if (!card) {
+            return;
+        }
+
+        const typeLine = String(card.type_line || "").toLowerCase();
+
+        let recognizedType = false;
+
+        if (typeLine.includes("land")) {
+            typeStats.lands += quantity;
+            recognizedType = true;
+        }
+
+        if (typeLine.includes("creature")) {
+            typeStats.creatures += quantity;
+            recognizedType = true;
+        }
+
+        if (typeLine.includes("instant")) {
+            typeStats.instants += quantity;
+            recognizedType = true;
+        }
+
+        if (typeLine.includes("sorcery")) {
+            typeStats.sorceries += quantity;
+            recognizedType = true;
+        }
+
+        if (typeLine.includes("artifact")) {
+            typeStats.artifacts += quantity;
+            recognizedType = true;
+        }
+
+        if (typeLine.includes("enchantment")) {
+            typeStats.enchantments += quantity;
+            recognizedType = true;
+        }
+
+        if (typeLine.includes("planeswalker")) {
+            typeStats.planeswalkers += quantity;
+            recognizedType = true;
+        }
+
+        if (!recognizedType) {
+            typeStats.other += quantity;
+        }
+    });
+
+    let valid = true;
+    let message = "";
+
+    if ( deck.format === "standard" ) {
+        if ( mainCount < 60 ) {
+            valid = false;
+            message = `Servono almeno 60 carte. Mancano ${60 - mainCount}.`;
+        } else if ( tooManyCopies ) {
+            valid = false;
+            message = "Una o più carte superano il limite di 4 copie.";
+        } else {
+            valid = true;
+            message = "Mazzo Standard valido.";
+        }
+    }
+
+    if ( deck.format === "commander" ) {
+        if ( !deck.commander ) {
+            valid = false;
+            message = "Seleziona un comandante.";
+        } else if ( mainCount !== 99 ) {
+            valid = false;
+            message = `Il mazzo principale deve avere esattamente 99 carte. Attualmente: ${mainCount}.`;
+        } else if ( tooManyCopies ) {
+            valid = false;
+            message = "Commander permette una sola copia di ogni carta.";
+        } else {
+            valid = true;
+            message = "Mazzo Commander valido: 99 + 1 comandante.";
+        }
+    }
+
+    return {
+        mainCount,
+        valid,
+        message,
+        typeStats
+    };
+}
+/* ========================================================= AGGIORNA INTERFACCIA DECK ========================================================= */ function updateDeckUI() { const stats = getDeckStats();
+const typeStats = stats.typeStats;
+
+    document.getElementById("deckStatLands").textContent = typeStats.lands;
+    document.getElementById("deckStatCreatures").textContent = typeStats.creatures;
+    document.getElementById("deckStatInstants").textContent = typeStats.instants;
+    document.getElementById("deckStatSorceries").textContent = typeStats.sorceries;
+    document.getElementById("deckStatArtifacts").textContent = typeStats.artifacts;
+    document.getElementById("deckStatEnchantments").textContent = typeStats.enchantments;
+    document.getElementById("deckStatPlaneswalkers").textContent = typeStats.planeswalkers;
+    document.getElementById("deckStatOther").textContent = typeStats.other;
+ /* * Conteggio pulsante flottante. */ const totalVisible = stats.mainCount + ( deck.commander ? 1 : 0 ); const deckButtonCount = document.getElementById( "deckButtonCount" ); if (deckButtonCount) { deckButtonCount.textContent = totalVisible; } /* * Conteggio principale. */ const deckCount = document.getElementById( "deckCount" ); if ( deckCount ) { if ( deck.format === "standard" ) { deckCount.textContent = `${stats.mainCount} / 60 carte`; } else { deckCount.textContent = `${stats.mainCount} / 99 carte + ${deck.commander ? 1 : 0} comandante`; } } /* * Validità. */ const validity = document.getElementById( "deckValidity" ); if (validity) { validity.textContent = stats.message; validity.classList.remove( "valid", "invalid" ); validity.classList.add( stats.valid ? "valid" : "invalid" ); } /* * Sezione comandante. */ updateCommanderUI(); /* * Lista carte. */ updateDeckListUI(); /* * Aggiorna i badge direttamente sulle carte visibili. */ updateCardDeckBadges(); } /* ========================================================= AGGIORNA COMANDANTE ========================================================= */ function updateCommanderUI() { const container = document.getElementById( "commanderContainer" ); if (!container) { return; } if ( deck.format !== "commander" ) { container.innerHTML = ` <div class="commander-empty"> Disponibile solo in formato Commander. </div> `; return; } if ( !deck.commander ) { container.innerHTML = ` <div class="commander-empty"> Nessun comandante selezionato. <br> Usa il pulsante 👑 su una carta Legendary. </div> `; return; } const commander = deck.commander; container.innerHTML = ` <div class="commander-card"> <img class="commander-card-image" src="${commander.image || ""}" alt="${commander.name || ""}" onerror="this.style.display='none'" > <div class="commander-card-info"> <div class="commander-card-name"> ${commander.name || ""} </div> <div class="commander-card-type"> ${commander.type_line || ""} </div> </div> <button class="commander-remove" onclick="removeCommander()" title="Rimuovi comandante" > × </button> </div> `; } /* ========================================================= AGGIORNA LISTA DECK ========================================================= */ function updateDeckListUI() { const container = document.getElementById( "deckCards" ); const uniqueCount = document.getElementById( "deckUniqueCount" ); if ( !container ) { return; } const entries = Object.entries( deck.cards ); if ( uniqueCount ) { uniqueCount.textContent = `${entries.length} ${entries.length === 1 ? "carta" : "carte"}`; } if ( entries.length === 0 ) { container.innerHTML = ` <div class="deck-empty"> Il tuo mazzo è vuoto.<br> Usa il pulsante <strong>+</strong> sulle carte per aggiungerle. </div> `; return; } entries.sort( (a, b) => { const nameA = String( a[1].card.name || "" ); const nameB = String( b[1].card.name || "" ); return nameA.localeCompare( nameB, "it", { sensitivity: "base" } ); } ); container.innerHTML = entries.map( ([key, entry]) => ` <div class="deck-item"> <img class="deck-item-image" src="${entry.card.image || ""}" alt="${entry.card.name || ""}" onerror="this.style.display='none'" > <div class="deck-item-name"> ${entry.card.name || ""} </div> <div class="deck-item-controls"> <button class="deck-quantity-button" onclick="removeCardFromDeck('${escapeJsString(key)}')" > − </button> <span class="deck-quantity"> ${entry.quantity} </span> <button class="deck-quantity-button" onclick="addCardToDeckByKey('${escapeJsString(key)}')" > + </button> </div> </div> ` ).join(""); } /* ========================================================= ESCAPE CHIAVE JAVASCRIPT ========================================================= */ function escapeJsString(value) { return String(value) .replace(/\\/g, "\\\\") .replace(/'/g, "\\'"); } /* ========================================================= AGGIUNGI DA CHIAVE ========================================================= */ function addCardToDeckByKey(key) { const entry = deck.cards[key]; if (!entry) { return; } addCardToDeck( entry.card ); } /* ========================================================= SVUOTA MAZZO ========================================================= */ function clearDeck() { const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (!hasCards) { return; } const confirmed = confirm( "Vuoi davvero svuotare completamente il mazzo?" ); if (!confirmed) { return; } deck = { format: deck.format, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= APERTURA PANNELLO DECK ========================================================= */ function toggleDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.toggle( "active" ); overlay.classList.toggle( "active" ); } /* ========================================================= CHIUSURA PANNELLO DECK ========================================================= */ function closeDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.remove( "active" ); overlay.classList.remove( "active" ); } /* ========================================================= CARICAMENTO CARTE ========================================================= */ 
 async function loadCards() {
     try {
         const response = await fetch("/cards_test.json");
