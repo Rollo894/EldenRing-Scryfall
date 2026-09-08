@@ -2040,6 +2040,14 @@ onclick="toggleDeckPanel()"
     alt=""
 >
 
+<button
+    id="flipCardButton"
+    class="modal-flip-button"
+    onclick="flipModalCard()"
+    style="display: none;"
+>
+    ↔ FRONTE / RETRO
+</button>
 <div class="modal-details">
 
     <div class="modal-navigation">
@@ -2186,7 +2194,55 @@ const CARDS_PER_PAGE = 12;
 
 let currentPage = 1;
 
-let currentFilteredCards = []; /* ========================================================= STATO FILTRI RAPIDI ========================================================= */ let activeQuickFilters = { color: null, type: null }; /* ========================================================= DECK BUILDER ========================================================= */ const DECK_STORAGE_KEY = "eldenring-scryfall-deck"; let deck = { format: "standard", cards: {}, commander: null }; /* ========================================================= IDENTIFICATIVO CARTA ========================================================= */ function getCardKey(card) { if (card.id) { return String(card.id); } if ( card.set || card.collector_number ) { return ( String(card.set || "") + ":" + String(card.collector_number || "") ); } return String( card.name || "" ); } /* ========================================================= QUANTITÀ CARTA NEL DECK ========================================================= */ function getDeckQuantity(card) { const key = getCardKey(card); const entry = deck.cards[key]; return entry ? Number(entry.quantity || 0) : 0; } /* ========================================================= AGGIORNA BADGE CARTE ========================================================= */ function updateCardDeckBadges() { const cards = window.currentDisplayedCards || []; const cardElements = document.querySelectorAll("#cards .card"); cardElements.forEach((cardElement, index) => { const card = cards[index]; if (!card) { return; } const quantity = getDeckQuantity(card); let badge = cardElement.querySelector(".card-deck-quantity"); if (quantity > 0) { if (!badge) { badge = document.createElement("div"); badge.className = "card-deck-quantity"; cardElement.appendChild(badge); } badge.textContent = `NEL MAZZO: ${quantity}`; } else if (badge) { badge.remove(); } }); } /* ========================================================= SALVATAGGIO DECK ========================================================= */ function saveDeck() { try { sessionStorage.setItem( DECK_STORAGE_KEY, JSON.stringify(deck) ); } catch (error) { console.error( "Errore salvataggio mazzo:", error ); } } /* ========================================================= CARICAMENTO DECK ========================================================= */ function loadDeck() { try { const saved = sessionStorage.getItem( DECK_STORAGE_KEY ); if (!saved) { updateDeckUI(); return; } const parsed = JSON.parse(saved); if ( !parsed || typeof parsed !== "object" ) { updateDeckUI(); return; } deck = { format: parsed.format === "commander" ? "commander" : "standard", cards: parsed.cards && typeof parsed.cards === "object" ? parsed.cards : {}, commander: parsed.commander || null }; document.getElementById( "deckFormat" ).value = deck.format; updateDeckUI(); } catch (error) { console.error( "Errore caricamento mazzo:", error ); deck = { format: "standard", cards: {}, commander: null }; updateDeckUI(); } } /* ========================================================= CAMBIO FORMATO ========================================================= */ function changeDeckFormat() { const newFormat = document.getElementById( "deckFormat" ).value; if ( newFormat === deck.format ) { return; } const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (hasCards) { const confirmed = confirm( "Cambiare formato svuoterà il mazzo attuale. Continuare?" ); if (!confirmed) { document.getElementById( "deckFormat" ).value = deck.format; return; } } deck = { format: newFormat, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= AGGIUNGI CARTA ========================================================= */ function addCardToDeck(card) { 
+let currentFilteredCards = []; /* ========================================================= STATO FILTRI RAPIDI ========================================================= */ let activeQuickFilters = { color: null, type: null }; /* ========================================================= DECK BUILDER ========================================================= */ const DECK_STORAGE_KEY = "eldenring-scryfall-deck"; let deck = { format: "standard", cards: {}, commander: null }; /* ========================================================= IDENTIFICATIVO CARTA ========================================================= */ function getCardKey(card) {
+
+    if (!card) {
+        return "";
+    }
+
+    /*
+     * =====================================================
+     * CARTE BIFRONTE
+     * =====================================================
+     *
+     * Fronte e retro devono essere considerati
+     * la stessa carta dal Deck Builder.
+     *
+     * Esempio:
+     * erc-354 = fronte
+     * erc-269 = retro
+     *
+     * Entrambe avranno come chiave:
+     * erc-354
+     */
+
+    if (
+        card.is_double_faced === true &&
+        card.front_face_id
+    ) {
+        return String(card.front_face_id);
+    }
+
+    /*
+     * =====================================================
+     * CARTE NORMALI
+     * =====================================================
+     */
+
+    if (card.id) {
+        return String(card.id);
+    }
+
+    if (card.set || card.collector_number) {
+        return (
+            String(card.set || "") +
+            ":" +
+            String(card.collector_number || "")
+        );
+    }
+
+    return String(card.name || "");
+} /* ========================================================= QUANTITÀ CARTA NEL DECK ========================================================= */ function getDeckQuantity(card) { const key = getCardKey(card); const entry = deck.cards[key]; return entry ? Number(entry.quantity || 0) : 0; } /* ========================================================= AGGIORNA BADGE CARTE ========================================================= */ function updateCardDeckBadges() { const cards = window.currentDisplayedCards || []; const cardElements = document.querySelectorAll("#cards .card"); cardElements.forEach((cardElement, index) => { const card = cards[index]; if (!card) { return; } const quantity = getDeckQuantity(card); let badge = cardElement.querySelector(".card-deck-quantity"); if (quantity > 0) { if (!badge) { badge = document.createElement("div"); badge.className = "card-deck-quantity"; cardElement.appendChild(badge); } badge.textContent = `NEL MAZZO: ${quantity}`; } else if (badge) { badge.remove(); } }); } /* ========================================================= SALVATAGGIO DECK ========================================================= */ function saveDeck() { try { sessionStorage.setItem( DECK_STORAGE_KEY, JSON.stringify(deck) ); } catch (error) { console.error( "Errore salvataggio mazzo:", error ); } } /* ========================================================= CARICAMENTO DECK ========================================================= */ function loadDeck() { try { const saved = sessionStorage.getItem( DECK_STORAGE_KEY ); if (!saved) { updateDeckUI(); return; } const parsed = JSON.parse(saved); if ( !parsed || typeof parsed !== "object" ) { updateDeckUI(); return; } deck = { format: parsed.format === "commander" ? "commander" : "standard", cards: parsed.cards && typeof parsed.cards === "object" ? parsed.cards : {}, commander: parsed.commander || null }; document.getElementById( "deckFormat" ).value = deck.format; updateDeckUI(); } catch (error) { console.error( "Errore caricamento mazzo:", error ); deck = { format: "standard", cards: {}, commander: null }; updateDeckUI(); } } /* ========================================================= CAMBIO FORMATO ========================================================= */ function changeDeckFormat() { const newFormat = document.getElementById( "deckFormat" ).value; if ( newFormat === deck.format ) { return; } const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (hasCards) { const confirmed = confirm( "Cambiare formato svuoterà il mazzo attuale. Continuare?" ); if (!confirmed) { document.getElementById( "deckFormat" ).value = deck.format; return; } } deck = { format: newFormat, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= AGGIUNGI CARTA ========================================================= */ function addCardToDeck(card) { 
     if (!card) { return; } 
     const key = getCardKey(card); 
 
@@ -2374,28 +2430,126 @@ const typeStats = stats.typeStats;
     document.getElementById("deckStatOther").textContent = typeStats.other;
  /* * Conteggio pulsante flottante. */ const totalVisible = stats.mainCount + ( deck.commander ? 1 : 0 ); const deckButtonCount = document.getElementById( "deckButtonCount" ); if (deckButtonCount) { deckButtonCount.textContent = totalVisible; } /* * Conteggio principale. */ const deckCount = document.getElementById( "deckCount" ); if ( deckCount ) { if ( deck.format === "standard" ) { deckCount.textContent = `${stats.mainCount} / 60 carte`; } else { deckCount.textContent = `${stats.mainCount} / 99 carte + ${deck.commander ? 1 : 0} comandante`; } } /* * Validità. */ const validity = document.getElementById( "deckValidity" ); if (validity) { validity.textContent = stats.message; validity.classList.remove( "valid", "invalid" ); validity.classList.add( stats.valid ? "valid" : "invalid" ); } /* * Sezione comandante. */ updateCommanderUI(); /* * Lista carte. */ updateDeckListUI(); /* * Aggiorna i badge direttamente sulle carte visibili. */ updateCardDeckBadges(); } /* ========================================================= AGGIORNA COMANDANTE ========================================================= */ function updateCommanderUI() { const container = document.getElementById( "commanderContainer" ); if (!container) { return; } if ( deck.format !== "commander" ) { container.innerHTML = ` <div class="commander-empty"> Disponibile solo in formato Commander. </div> `; return; } if ( !deck.commander ) { container.innerHTML = ` <div class="commander-empty"> Nessun comandante selezionato. <br> Usa il pulsante 👑 su una carta Legendary. </div> `; return; } const commander = deck.commander; container.innerHTML = ` <div class="commander-card"> <img class="commander-card-image" src="${commander.image || ""}" alt="${commander.name || ""}" onerror="this.style.display='none'" > <div class="commander-card-info"> <div class="commander-card-name"> ${commander.name || ""} </div> <div class="commander-card-type"> ${commander.type_line || ""} </div> </div> <button class="commander-remove" onclick="removeCommander()" title="Rimuovi comandante" > × </button> </div> `; } /* ========================================================= AGGIORNA LISTA DECK ========================================================= */ function updateDeckListUI() { const container = document.getElementById( "deckCards" ); const uniqueCount = document.getElementById( "deckUniqueCount" ); if ( !container ) { return; } const entries = Object.entries( deck.cards ); if ( uniqueCount ) { uniqueCount.textContent = `${entries.length} ${entries.length === 1 ? "carta" : "carte"}`; } if ( entries.length === 0 ) { container.innerHTML = ` <div class="deck-empty"> Il tuo mazzo è vuoto.<br> Usa il pulsante <strong>+</strong> sulle carte per aggiungerle. </div> `; return; } entries.sort( (a, b) => { const nameA = String( a[1].card.name || "" ); const nameB = String( b[1].card.name || "" ); return nameA.localeCompare( nameB, "it", { sensitivity: "base" } ); } ); container.innerHTML = entries.map( ([key, entry]) => ` <div class="deck-item"> <img class="deck-item-image" src="${entry.card.image || ""}" alt="${entry.card.name || ""}" onerror="this.style.display='none'" > <div class="deck-item-name"> ${entry.card.name || ""} </div> <div class="deck-item-controls"> <button class="deck-quantity-button" onclick="removeCardFromDeck('${escapeJsString(key)}')" > − </button> <span class="deck-quantity"> ${entry.quantity} </span> <button class="deck-quantity-button" onclick="addCardToDeckByKey('${escapeJsString(key)}')" > + </button> </div> </div> ` ).join(""); } /* ========================================================= ESCAPE CHIAVE JAVASCRIPT ========================================================= */ function escapeJsString(value) { return String(value) .replace(/\\/g, "\\\\") .replace(/'/g, "\\'"); } /* ========================================================= AGGIUNGI DA CHIAVE ========================================================= */ function addCardToDeckByKey(key) { const entry = deck.cards[key]; if (!entry) { return; } addCardToDeck( entry.card ); } /* ========================================================= SVUOTA MAZZO ========================================================= */ function clearDeck() { const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (!hasCards) { return; } const confirmed = confirm( "Vuoi davvero svuotare completamente il mazzo?" ); if (!confirmed) { return; } deck = { format: deck.format, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= APERTURA PANNELLO DECK ========================================================= */ function toggleDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.toggle( "active" ); overlay.classList.toggle( "active" ); } /* ========================================================= CHIUSURA PANNELLO DECK ========================================================= */ function closeDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.remove( "active" ); overlay.classList.remove( "active" ); } /* ========================================================= CARICAMENTO CARTE ========================================================= */ 
 async function loadCards() {
+
     try {
-        const response = await fetch("/cards_test.json");
+
+        const response =
+            await fetch("/cards_test.json");
 
         if (!response.ok) {
-            throw new Error( `Errore HTTP ${response.status}` );
+            throw new Error(`Errore HTTP ${response.status}`);
         }
 
-        const data = await response.json();
-        allCards = data.cards;
+        const data =
+            await response.json();
+
+        allCards =
+            data.cards;
+
 
         if (!Array.isArray(allCards)) {
-            throw new Error( "Il database non contiene un array di carte." );
+            throw new Error(
+                "Il database non contiene un array di carte."
+            );
         }
 
-        displayCards( sortFilteredCards(allCards) );
+
+        /*
+        * =====================================================
+ * CARTE BIFRONTE
+ * =====================================================
+ *
+ * I collegamenti vengono letti direttamente
+ * dal database.
+         */
+
+       window.doubleFacedCards = {};
+
+allCards.forEach(card => {
+
+    if (
+        card.is_double_faced === true &&
+        card.front_face_id &&
+        card.back_face_id
+    ) {
+
+        window.doubleFacedCards[
+            card.front_face_id
+        ] = card.back_face_id;
+
+    }
+
+});
+
+        /*
+         * Nel risultato normale mostriamo solamente
+         * il fronte delle carte bifronte.
+         *
+         * Il retro rimane comunque presente in allCards
+         * e potrà essere richiamato dal sistema fronte/retro.
+         */
+
+        const displayableCards =
+            getDisplayableCards(allCards);
+
+
+        displayCards(
+            sortFilteredCards(displayableCards)
+        );
+
 
     } catch (error) {
+
         document.getElementById("cards").innerHTML =
             "<div class='loading'>Errore nel caricamento delle carte.</div>";
 
-        console.error( "Errore caricamento carte:", error );
+        console.error(
+            "Errore caricamento carte:",
+            error
+        );
+
     }
+}
+
+
+/*
+ * =====================================================
+ * CARTE BIFRONTE - FILTRO RISULTATI
+ * =====================================================
+ *
+ * I retro delle carte bifronte non vengono mostrati
+ * come risultati indipendenti.
+ *
+ * Rimangono comunque disponibili dentro allCards.
+ */
+
+function getDisplayableCards(cards) {
+
+    if (!Array.isArray(cards)) {
+        return [];
+    }
+
+    return cards.filter(card => {
+
+        const isBackFace =
+            Object.values(window.doubleFacedCards || {})
+                .includes(card.id);
+
+        if (isBackFace) {
+
+            const frontId =
+                Object.keys(window.doubleFacedCards || {})
+                    .find(id =>
+                        window.doubleFacedCards[id] === card.id
+                    );
+
+            if (frontId) {
+                return false;
+            }
+        }
+
+        return true;
+    });
 }
  /* ========================================================= VISUALIZZAZIONE CARTE ========================================================= */ /* =========================================================
    VISUALIZZAZIONE CARTE
@@ -2409,8 +2563,9 @@ function getWebpPath(imagePath) {
 
 function displayCards(cards, resetPage = true) {
 
-    const container = document.getElementById("cards");
+    cards = getDisplayableCards(cards);
 
+    const container = document.getElementById("cards");
     /*
      * Salviamo tutti i risultati filtrati.
      */
@@ -2809,7 +2964,26 @@ function goToPage(page) {
             block: "start"
         });
     }
-} /* ========================================================= AGGIUNGI CARTA DALLA GRIGLIA ========================================================= */ function addCardToDeckByCardIndex(index) { const cards = window.currentDisplayedCards || []; const card = cards[index]; if (!card) { return; } addCardToDeck(card); } /* ========================================================= IMPOSTA COMANDANTE DALLA GRIGLIA ========================================================= */ function setCommanderByCardIndex(index) { const cards = window.currentDisplayedCards || []; const card = cards[index]; if (!card) { return; } setCommander(card); } /* ========================================================= INTERFACCIA RICERCA ========================================================= */ function updateSearchUI() { const searchBox = document.getElementById("search"); const clearButton = document.getElementById("clearSearch"); if (!searchBox || !clearButton) { return; } clearButton.style.display = searchBox.value.trim() ? "flex" : "none"; } function handleSearchKey(event) { if (event.key === "Enter") { searchCards(); } } function updateSearchStatus(count) { const status = document.getElementById( "searchStatus" ); if (!status) { return; } if (count === allCards.length) { status.textContent = `${count} ${count === 1 ? "carta" : "carte"}`; return; } status.textContent = `${count} ${count === 1 ? "carta trovata" : "carte trovate"}`; } /* ========================================================= FILTRI RAPIDI — TOGGLE ========================================================= */ function toggleQuickFilter( category, filter, button ) { if ( activeQuickFilters[category] === filter ) { activeQuickFilters[category] = null; button.classList.remove("active"); } else { activeQuickFilters[category] = filter; const selector = category === "color" ? ".color-filter, .multicolor-filter" : ".text-filter"; document .querySelectorAll(selector) .forEach(otherButton => { otherButton.classList.remove( "active" ); }); button.classList.add("active"); } searchCards(); } /* ========================================================= APPLICA FILTRI RAPIDI ========================================================= */ function applyQuickFilters(filtered) {
+} /* ========================================================= AGGIUNGI CARTA DALLA GRIGLIA ========================================================= */ function addCardToDeckByCardIndex(index) { const cards = window.currentDisplayedCards || []; const card = cards[index]; if (!card) { return; }   /*
+     * =====================================================
+     * PULSANTE FRONTE / RETRO
+     * =====================================================
+     */
+
+    const flipButton =
+        document.getElementById("flipCardButton");
+
+    if (flipButton) {
+
+        const hasBackFace =
+            Boolean(
+                window.doubleFacedCards &&
+                window.doubleFacedCards[card.id]
+            );
+
+        flipButton.style.display =
+            hasBackFace ? "block" : "none";
+    }addCardToDeck(card); } /* ========================================================= IMPOSTA COMANDANTE DALLA GRIGLIA ========================================================= */ function setCommanderByCardIndex(index) { const cards = window.currentDisplayedCards || []; const card = cards[index]; if (!card) { return; } setCommander(card); } /* ========================================================= INTERFACCIA RICERCA ========================================================= */ function updateSearchUI() { const searchBox = document.getElementById("search"); const clearButton = document.getElementById("clearSearch"); if (!searchBox || !clearButton) { return; } clearButton.style.display = searchBox.value.trim() ? "flex" : "none"; } function handleSearchKey(event) { if (event.key === "Enter") { searchCards(); } } function updateSearchStatus(count) { const status = document.getElementById( "searchStatus" ); if (!status) { return; } if (count === allCards.length) { status.textContent = `${count} ${count === 1 ? "carta" : "carte"}`; return; } status.textContent = `${count} ${count === 1 ? "carta trovata" : "carte trovate"}`; } /* ========================================================= FILTRI RAPIDI — TOGGLE ========================================================= */ function toggleQuickFilter( category, filter, button ) { if ( activeQuickFilters[category] === filter ) { activeQuickFilters[category] = null; button.classList.remove("active"); } else { activeQuickFilters[category] = filter; const selector = category === "color" ? ".color-filter, .multicolor-filter" : ".text-filter"; document .querySelectorAll(selector) .forEach(otherButton => { otherButton.classList.remove( "active" ); }); button.classList.add("active"); } searchCards(); } /* ========================================================= APPLICA FILTRI RAPIDI ========================================================= */ function applyQuickFilters(filtered) {
     if (activeQuickFilters.color) {
         const filter = activeQuickFilters.color;
 
@@ -2903,7 +3077,161 @@ function goToPage(page) {
     }
 
     return filtered;
-} /* ========================================================= FILTRI VISUALI ========================================================= */ function applyVisualFilters() { searchCards(); } /* ========================================================= CANCELLA FILTRI ========================================================= */ function clearFilters() { document.getElementById( "search" ).value = ""; document.getElementById( "cmcFilter" ).value = ""; document.getElementById( "rarityFilter" ).value = ""; activeQuickFilters.color = null; activeQuickFilters.type = null; document .querySelectorAll( ".color-filter, .multicolor-filter, .text-filter" ) .forEach(button => { button.classList.remove( "active" ); }); updateSearchUI(); displayCards( sortFilteredCards(allCards) ); } /* ========================================================= OTTIENE RISULTATI RICERCA ========================================================= */ function getSearchResults() { const searchBox = document.getElementById("search"); const query = searchBox.value .trim() .toLowerCase(); if (!query) { return [...allCards]; } const terms = query.match( /(?:[^\s"]+|"[^"]*")+/g ) || []; return allCards.filter(card => { const name = String(card.name || "") .toLowerCase(); const type = String(card.type_line || "") .toLowerCase(); const oracle = String(card.oracle_text || "") .toLowerCase(); const flavor = String(card.flavor_text || "") .toLowerCase(); const mana = String(card.mana_cost || "") .toLowerCase(); const rarity = String(card.rarity || "") .toLowerCase() .trim(); const set = String(card.set || "") .toLowerCase(); const artist = String(card.artist || "") .toLowerCase(); const collector = String(card.collector_number || "") .toLowerCase(); const cmc = Number(card.cmc ?? 0); const colors = Array.isArray(card.colors) ? card.colors : []; return terms.every(rawTerm => { let term = rawTerm.trim(); if ( term.startsWith('"') && term.endsWith('"') ) { term = term.slice(1, -1); } if (!term) { return true; } if (term.startsWith("name:")) { const value = term.substring(5).trim(); return name.includes(value); } if (term.startsWith("t:")) { const value = term.substring(2).trim(); return type.includes(value); } if (term.startsWith("o:")) { const value = term.substring(2).trim(); return oracle.includes(value); } if (term.startsWith("f:")) { const value = term.substring(2).trim(); return flavor.includes(value); } if (term.startsWith("artist:")) { const value = term.substring(7).trim(); return artist.includes(value); } if (term.startsWith("set:")) { const value = term.substring(4).trim(); return ( set === value || set.includes(value) ); } if (term.startsWith("number:")) { const value = term.substring(7).trim(); return collector === value; } if (term.startsWith("r:")) { const value = term.substring(2).trim(); const normalizedRarity = rarity === "mithyc" ? "mythic" : rarity; return ( normalizedRarity === value || normalizedRarity.includes(value) ); } if (term.startsWith("cmc:")) { const value = term.substring(4).trim(); if (value.endsWith("+")) { const number = Number( value.slice(0, -1) ); if ( Number.isNaN(number) ) { return false; } return cmc >= number; } const number = Number(value); if ( Number.isNaN(number) ) { return false; } return cmc === number; } if (term.startsWith("c:")) { const value = term.substring(2).trim(); if (value === "c") { return colors.length === 0; } if (value === "m") { return colors.length > 1; } const colorMap = { w: "W", u: "U", b: "B", r: "R", g: "G" }; const requestedColors = value .split("") .map( letter => colorMap[letter] ) .filter(Boolean); if ( requestedColors.length === 0 || requestedColors.length !== value.length ) { return false; } const colorMode = document .getElementById( "colorMode" ) .value; if ( colorMode === "exact" ) { return ( colors.length === requestedColors.length && requestedColors.every( color => colors.includes(color) ) ); } return requestedColors.every( color => colors.includes(color) ); } if ( term === "multicolor" ) { return colors.length > 1; } if ( term === "colorless" ) { return colors.length === 0; } return ( name.includes(term) || type.includes(term) || oracle.includes(term) || flavor.includes(term) || mana.includes(term) || rarity.includes(term) || set.includes(term) || artist.includes(term) || collector.includes(term) ); }); }); } /* ========================================================= RICERCA PRINCIPALE ========================================================= */ function searchCards() { let filtered = getSearchResults(); filtered = applyQuickFilters(filtered); const cmcFilter = document.getElementById( "cmcFilter" ).value; const rarityFilter = document.getElementById( "rarityFilter" ).value; if (cmcFilter) { if (cmcFilter === "7+") { filtered = filtered.filter(card => Number(card.cmc ?? 0) >= 7 ); } else { const cmc = Number(cmcFilter); filtered = filtered.filter(card => Number(card.cmc ?? 0) === cmc ); } } if (rarityFilter) { filtered = filtered.filter(card => { let rarity = String(card.rarity || "") .toLowerCase() .trim(); if ( rarity === "mithyc" ) { rarity = "mythic"; } return ( rarity === rarityFilter || rarity.includes(rarityFilter) ); }); } displayCards( sortFilteredCards(filtered) ); } /* ========================================================= MANA ========================================================= */ function renderManaCost(manaCost) { if (!manaCost) { return ""; } return manaCost.replace( /\{([^}]+)\}/g, (match, symbol) => { const fileName = symbol.replace("/", ""); return ` <img src="/mana/${fileName}.svg" class="mana-symbol" alt="${symbol}" > `; } ); } /* ========================================================= MODALE CARTA ========================================================= */ function openCardModal(index) { window.currentModalIndex = index; updateCardModal(); } function updateCardModal() { const cards = window.currentDisplayedCards || []; const index = window.currentModalIndex; const card = cards[index]; if (!card) { return; } document.getElementById( "modalImage" ).src = card.image || ""; document.getElementById( "modalImage" ).alt = card.name || ""; document.getElementById( "modalName" ).textContent = card.name || ""; document.getElementById( "modalMana" ).innerHTML = renderManaCost( card.mana_cost ); document.getElementById( "modalType" ).textContent = card.type_line || ""; document.getElementById( "modalOracle" ).textContent = card.oracle_text || ""; document.getElementById( "modalFlavor" ).textContent = card.flavor_text || ""; document.getElementById( "modalColors" ).textContent = card.color_identity && card.color_identity.length ? card.color_identity.join(" / ") : "Colorless"; document.getElementById( "modalRarity" ).textContent = card.rarity || "—"; document.getElementById( "modalSet" ).textContent = card.set || "—"; document.getElementById( "modalCollector" ).textContent = card.collector_number || "—"; document.getElementById( "modalArtist" ).textContent = card.artist || "—"; const reviewBox = document.getElementById( "modalReview" ); if ( card.needs_review === true ) { reviewBox.style.display = "block"; } else { reviewBox.style.display = "none"; } const stats = card.power != null && card.toughness != null ? `${card.power} / ${card.toughness}` : ""; document.getElementById( "modalStats" ).textContent = stats; document.getElementById( "cardModal" ).classList.add("active"); updateModalNavigation(); } /* ========================================================= NAVIGAZIONE MODALE ========================================================= */ function updateModalNavigation() { const cards = window.currentDisplayedCards || []; const index = window.currentModalIndex; const previousButton = document.getElementById( "prevCard" ); const nextButton = document.getElementById( "nextCard" ); if ( !previousButton || !nextButton ) { return; } previousButton.disabled = index <= 0; nextButton.disabled = index >= cards.length - 1; } function showPreviousCard() { if ( window.currentModalIndex > 0 ) { window.currentModalIndex--; updateCardModal(); } } function showNextCard() { const cards = window.currentDisplayedCards || []; if ( window.currentModalIndex < cards.length - 1 ) { window.currentModalIndex++; updateCardModal(); } } function closeCardModal() { document .getElementById("cardModal") .classList .remove("active"); } /* ========================================================= CHIUSURA MODALE CLICCANDO FUORI ========================================================= */ document .getElementById("cardModal").addEventListener( "click", event => { if ( event.target.id === "cardModal" ) { closeCardModal(); } } ); /* ========================================================= ORDINAMENTO ========================================================= */ function sortCards() { searchCards(); } function sortFilteredCards(cards) { const sortValue = document.getElementById( "sortSelect" ).value; return [...cards].sort( (a, b) => { if ( sortValue === "name" ) { return ( (a.name || "") .localeCompare( b.name || "", "it", { sensitivity: "base" } ) ); } if ( sortValue === "cmc" ) { return ( Number(a.cmc || 0) - Number(b.cmc || 0) ); } if ( sortValue === "type" ) { return ( (a.type_line || "") .localeCompare( b.type_line || "", "it", { sensitivity: "base" } ) ); } if ( sortValue === "power" ) { return ( Number(a.power || 0) - Number(b.power || 0) ); } if ( sortValue === "toughness" ) { return ( Number(a.toughness || 0) - Number(b.toughness || 0) ); } return 0; } ); } /* ========================================================= TASTIERA ========================================================= */ document.addEventListener( "keydown", event => { if ( event.key === "Escape" ) { closeCardModal(); closeDeckPanel(); return; } const modal = document.getElementById( "cardModal" ); if ( !modal.classList.contains( "active" ) ) { return; } if ( event.key === "ArrowLeft" ) { showPreviousCard(); } if ( event.key === "ArrowRight" ) { showNextCard(); } } ); /* ========================================================= AVVIO ========================================================= */ loadDeck(); loadCards();
+} /* ========================================================= FILTRI VISUALI ========================================================= */ function applyVisualFilters() { searchCards(); } /* ========================================================= CANCELLA FILTRI ========================================================= */ function clearFilters() { document.getElementById( "search" ).value = ""; document.getElementById( "cmcFilter" ).value = ""; document.getElementById( "rarityFilter" ).value = ""; activeQuickFilters.color = null; activeQuickFilters.type = null; document .querySelectorAll( ".color-filter, .multicolor-filter, .text-filter" ) .forEach(button => { button.classList.remove( "active" ); }); updateSearchUI(); displayCards( sortFilteredCards(allCards) ); } /* ========================================================= OTTIENE RISULTATI RICERCA ========================================================= */ function getSearchResults() { const searchBox = document.getElementById("search"); const query = searchBox.value .trim() .toLowerCase(); if (!query) { return [...allCards]; } const terms = query.match( /(?:[^\s"]+|"[^"]*")+/g ) || []; return allCards.filter(card => { const name = String(card.name || "") .toLowerCase(); const type = String(card.type_line || "") .toLowerCase(); const oracle = String(card.oracle_text || "") .toLowerCase(); const flavor = String(card.flavor_text || "") .toLowerCase(); const mana = String(card.mana_cost || "") .toLowerCase(); const rarity = String(card.rarity || "") .toLowerCase() .trim(); const set = String(card.set || "") .toLowerCase(); const artist = String(card.artist || "") .toLowerCase(); const collector = String(card.collector_number || "") .toLowerCase(); const cmc = Number(card.cmc ?? 0); const colors = Array.isArray(card.colors) ? card.colors : []; return terms.every(rawTerm => { let term = rawTerm.trim(); if ( term.startsWith('"') && term.endsWith('"') ) { term = term.slice(1, -1); } if (!term) { return true; } if (term.startsWith("name:")) { const value = term.substring(5).trim(); return name.includes(value); } if (term.startsWith("t:")) { const value = term.substring(2).trim(); return type.includes(value); } if (term.startsWith("o:")) { const value = term.substring(2).trim(); return oracle.includes(value); } if (term.startsWith("f:")) { const value = term.substring(2).trim(); return flavor.includes(value); } if (term.startsWith("artist:")) { const value = term.substring(7).trim(); return artist.includes(value); } if (term.startsWith("set:")) { const value = term.substring(4).trim(); return ( set === value || set.includes(value) ); } if (term.startsWith("number:")) { const value = term.substring(7).trim(); return collector === value; } if (term.startsWith("r:")) { const value = term.substring(2).trim(); const normalizedRarity = rarity === "mithyc" ? "mythic" : rarity; return ( normalizedRarity === value || normalizedRarity.includes(value) ); } if (term.startsWith("cmc:")) { const value = term.substring(4).trim(); if (value.endsWith("+")) { const number = Number( value.slice(0, -1) ); if ( Number.isNaN(number) ) { return false; } return cmc >= number; } const number = Number(value); if ( Number.isNaN(number) ) { return false; } return cmc === number; } if (term.startsWith("c:")) { const value = term.substring(2).trim(); if (value === "c") { return colors.length === 0; } if (value === "m") { return colors.length > 1; } const colorMap = { w: "W", u: "U", b: "B", r: "R", g: "G" }; const requestedColors = value .split("") .map( letter => colorMap[letter] ) .filter(Boolean); if ( requestedColors.length === 0 || requestedColors.length !== value.length ) { return false; } const colorMode = document .getElementById( "colorMode" ) .value; if ( colorMode === "exact" ) { return ( colors.length === requestedColors.length && requestedColors.every( color => colors.includes(color) ) ); } return requestedColors.every( color => colors.includes(color) ); } if ( term === "multicolor" ) { return colors.length > 1; } if ( term === "colorless" ) { return colors.length === 0; } return ( name.includes(term) || type.includes(term) || oracle.includes(term) || flavor.includes(term) || mana.includes(term) || rarity.includes(term) || set.includes(term) || artist.includes(term) || collector.includes(term) ); }); }); } /* ========================================================= RICERCA PRINCIPALE ========================================================= */ function searchCards() { let filtered = getSearchResults(); filtered = applyQuickFilters(filtered); const cmcFilter = document.getElementById( "cmcFilter" ).value; const rarityFilter = document.getElementById( "rarityFilter" ).value; if (cmcFilter) { if (cmcFilter === "7+") { filtered = filtered.filter(card => Number(card.cmc ?? 0) >= 7 ); } else { const cmc = Number(cmcFilter); filtered = filtered.filter(card => Number(card.cmc ?? 0) === cmc ); } } if (rarityFilter) { filtered = filtered.filter(card => { let rarity = String(card.rarity || "") .toLowerCase() .trim(); if ( rarity === "mithyc" ) { rarity = "mythic"; } return ( rarity === rarityFilter || rarity.includes(rarityFilter) ); }); } displayCards( sortFilteredCards(filtered) ); } /* ========================================================= MANA ========================================================= */ function renderManaCost(manaCost) { if (!manaCost) { return ""; } return manaCost.replace( /\{([^}]+)\}/g, (match, symbol) => { const fileName = symbol.replace("/", ""); return ` <img src="/mana/${fileName}.svg" class="mana-symbol" alt="${symbol}" > `; } ); } /* ========================================================= MODALE CARTA ========================================================= */ function openCardModal(index) {
+
+    window.currentModalIndex = index;
+
+    /*
+     * Quando apriamo una carta, partiamo sempre
+     * dal fronte.
+     */
+    window.currentModalFace = "front";
+
+    updateCardModal();
+}
+
+
+function updateCardModal() {
+
+    const cards =
+        window.currentDisplayedCards || [];
+
+    const index =
+        window.currentModalIndex;
+
+    const card =
+        cards[index];
+
+    if (!card) {
+        return;
+    }
+
+
+    /*
+     * =====================================================
+     * PULSANTE FRONTE / RETRO
+     * =====================================================
+     */
+
+    const flipButton =
+        document.getElementById("flipCardButton");
+
+    if (flipButton) {
+
+        const hasBackFace =
+            Boolean(
+                window.doubleFacedCards &&
+                window.doubleFacedCards[card.id]
+            );
+
+        flipButton.style.display =
+            hasBackFace ? "block" : "none";
+    }
+
+
+    /*
+     * =====================================================
+     * DATI CARTA
+     * =====================================================
+     */
+
+    document.getElementById("modalImage").src =
+        card.image || "";
+
+    document.getElementById("modalImage").alt =
+        card.name || "";
+
+    document.getElementById("modalName").textContent =
+        card.name || "";
+
+    document.getElementById("modalMana").innerHTML =
+        renderManaCost(card.mana_cost);
+
+    document.getElementById("modalType").textContent =
+        card.type_line || "";
+
+    document.getElementById("modalOracle").textContent =
+        card.oracle_text || "";
+
+    document.getElementById("modalFlavor").textContent =
+        card.flavor_text || "";
+
+    document.getElementById("modalColors").textContent =
+        card.color_identity &&
+        card.color_identity.length
+            ? card.color_identity.join(" / ")
+            : "Colorless";
+
+    document.getElementById("modalRarity").textContent =
+        card.rarity || "—";
+
+    document.getElementById("modalSet").textContent =
+        card.set || "—";
+
+    document.getElementById("modalCollector").textContent =
+        card.collector_number || "—";
+
+    document.getElementById("modalArtist").textContent =
+        card.artist || "—";
+
+
+    /*
+     * =====================================================
+     * REVISIONE
+     * =====================================================
+     */
+
+    const reviewBox =
+        document.getElementById("modalReview");
+
+    if (card.needs_review === true) {
+
+        reviewBox.style.display = "block";
+
+    } else {
+
+        reviewBox.style.display = "none";
+
+    }
+
+
+    /*
+     * =====================================================
+     * STATISTICHE
+     * =====================================================
+     */
+
+    const stats =
+        card.power != null &&
+        card.toughness != null
+            ? `${card.power} / ${card.toughness}`
+            : "";
+
+    document.getElementById("modalStats").textContent =
+        stats;
+
+
+    /*
+     * =====================================================
+     * APERTURA MODAL
+     * =====================================================
+     */
+
+    document.getElementById("cardModal")
+        .classList.add("active");
+
+
+    updateModalNavigation();
+}
+
+
+/*
+ * =====================================================
+ * FRONTE / RETRO
+ * =====================================================
+ */
+
+function flipModalCard() { const cards = window.currentDisplayedCards || []; const index = window.currentModalIndex; const card = cards[index]; if (!card) { return; } /* * ===================================================== * SE STIAMO GUARDANDO IL RETRO * TORNIAMO AL FRONTE * ===================================================== */ if (window.currentModalFace === "back") { window.currentModalFace = "front"; updateCardModal(); return; } /* * ===================================================== * CERCHIAMO IL RETRO * ===================================================== */ const backId = window.doubleFacedCards && window.doubleFacedCards[card.id]; if (!backId) { return; } /* * Cerchiamo il retro dentro allCards. */ const backCard = allCards.find( c => c.id === backId ); if (!backCard) { console.warn( "Retro non trovato:", backId ); return; } /* * Salviamo fronte e retro. */ window.modalFrontCard = card; window.modalBackCard = backCard; /* * ===================================================== * MOSTRIAMO IL RETRO * ===================================================== */ document.getElementById("modalImage").src = backCard.image || ""; document.getElementById("modalImage").alt = backCard.name || ""; document.getElementById("modalName").textContent = backCard.name || ""; document.getElementById("modalMana").innerHTML = renderManaCost(backCard.mana_cost); document.getElementById("modalType").textContent = backCard.type_line || ""; document.getElementById("modalOracle").textContent = backCard.oracle_text || ""; document.getElementById("modalFlavor").textContent = backCard.flavor_text || ""; document.getElementById("modalColors").textContent = backCard.color_identity && backCard.color_identity.length ? backCard.color_identity.join(" / ") : "Colorless"; document.getElementById("modalRarity").textContent = backCard.rarity || "—"; document.getElementById("modalSet").textContent = backCard.set || "—"; document.getElementById("modalCollector").textContent = backCard.collector_number || "—"; document.getElementById("modalArtist").textContent = backCard.artist || "—"; /* * ===================================================== * REVISIONE * ===================================================== */ const reviewBox = document.getElementById("modalReview"); if (backCard.needs_review === true) { reviewBox.style.display = "block"; } else { reviewBox.style.display = "none"; } /* * ===================================================== * STATISTICHE * ===================================================== */ const stats = backCard.power != null && backCard.toughness != null ? `${backCard.power} / ${backCard.toughness}` : ""; document.getElementById("modalStats").textContent = stats; /* * ===================================================== * MEMORIZZIAMO CHE SIAMO SUL RETRO * ===================================================== */ window.currentModalFace = "back"; } /* ========================================================= NAVIGAZIONE MODALE ========================================================= */ function updateModalNavigation() { const cards = window.currentDisplayedCards || []; const index = window.currentModalIndex; const previousButton = document.getElementById( "prevCard" ); const nextButton = document.getElementById( "nextCard" ); if ( !previousButton || !nextButton ) { return; } previousButton.disabled = index <= 0; nextButton.disabled = index >= cards.length - 1; } function showPreviousCard() { if ( window.currentModalIndex > 0 ) { window.currentModalIndex--; updateCardModal(); } } function showNextCard() { const cards = window.currentDisplayedCards || []; if ( window.currentModalIndex < cards.length - 1 ) { window.currentModalIndex++; updateCardModal(); } } function closeCardModal() { document .getElementById("cardModal") .classList .remove("active"); } /* ========================================================= CHIUSURA MODALE CLICCANDO FUORI ========================================================= */ document .getElementById("cardModal").addEventListener( "click", event => { if ( event.target.id === "cardModal" ) { closeCardModal(); } } ); /* ========================================================= ORDINAMENTO ========================================================= */ function sortCards() { searchCards(); } function sortFilteredCards(cards) { const sortValue = document.getElementById( "sortSelect" ).value; return [...cards].sort( (a, b) => { if ( sortValue === "name" ) { return ( (a.name || "") .localeCompare( b.name || "", "it", { sensitivity: "base" } ) ); } if ( sortValue === "cmc" ) { return ( Number(a.cmc || 0) - Number(b.cmc || 0) ); } if ( sortValue === "type" ) { return ( (a.type_line || "") .localeCompare( b.type_line || "", "it", { sensitivity: "base" } ) ); } if ( sortValue === "power" ) { return ( Number(a.power || 0) - Number(b.power || 0) ); } if ( sortValue === "toughness" ) { return ( Number(a.toughness || 0) - Number(b.toughness || 0) ); } return 0; } ); } /* ========================================================= TASTIERA ========================================================= */ document.addEventListener( "keydown", event => { if ( event.key === "Escape" ) { closeCardModal(); closeDeckPanel(); return; } const modal = document.getElementById( "cardModal" ); if ( !modal.classList.contains( "active" ) ) { return; } if ( event.key === "ArrowLeft" ) { showPreviousCard(); } if ( event.key === "ArrowRight" ) { showNextCard(); } } ); /* ========================================================= AVVIO ========================================================= */ loadDeck(); loadCards();
 /* ========================================================= ESPORTAZIONE PDF PROXY ========================================================= */
 function exportDeckToPDF() {
     const cardEntries = Object.values(deck.cards);
@@ -2939,14 +3267,65 @@ function exportDeckToPDF() {
     }
 
     cardEntries.forEach(entry => {
-        for (let i = 0; i < entry.quantity; i++) {
+
+    for (let i = 0; i < entry.quantity; i++) {
+
+        const card = entry.card;
+
+        /*
+         * =====================================================
+         * CARTE BIFRONTE
+         * =====================================================
+         *
+         * Nel PDF fronte e retro occupano due celle
+         * consecutive della griglia.
+         */
+
+        if (
+            card &&
+            card.is_double_faced === true &&
+            card.front_face_id &&
+            card.back_face_id
+        ) {
+
+            const frontCard =
+                allCards.find(c =>
+                    c.id === card.front_face_id
+                );
+
+            const backCard =
+                allCards.find(c =>
+                    c.id === card.back_face_id
+                );
+
+            if (frontCard) {
+                itemsToPrint.push({
+                    card: frontCard,
+                    quantity: 1
+                });
+            }
+
+            if (backCard) {
+                itemsToPrint.push({
+                    card: backCard,
+                    quantity: 1
+                });
+            }
+
+        } else {
+
+            /*
+             * Carta normale
+             */
+
             itemsToPrint.push({
-                card: entry.card,
+                card: card,
                 quantity: 1
             });
-        }
-    });
 
+        }
+    }
+});
     // Configurazione griglia proxy (es. 3 colonne x 3 righe per pagina A4)
     const cols = 3;
     const rows = 3;

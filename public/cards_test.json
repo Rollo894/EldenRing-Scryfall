@@ -7648,6 +7648,9 @@
     {
       "id": "erc-269",
       "name": "Malenia, Goddess of Rot",
+"is_double_faced": true,
+"front_face_id": "erc-354",
+"back_face_id": "erc-269",
     "mana_cost": "",
     "cmc": 0,
     "type_line": "Legendary Creature — Empyrean God",
@@ -9829,6 +9832,9 @@
     {
       "id": "erc-354",
       "name": "Malenia, Blade of Miquella // Malenia, Goddess of Rot",
+"is_double_faced": true,
+"front_face_id": "erc-354",
+"back_face_id": "erc-269",
     "mana_cost": "{2}{W}{W}",
     "cmc": 4,
     "type_line": "Legendary Creature — Empyrean Demigod // Legendary Creature — Empyrean God",
