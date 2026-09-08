@@ -2493,9 +2493,15 @@ allCards.forEach(card => {
             getDisplayableCards(allCards);
 
 
-        displayCards(
-            sortFilteredCards(displayableCards)
-        );
+        const shuffledCards = [...displayableCards];
+
+for (let i = shuffledCards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledCards[i], shuffledCards[j]] =
+        [shuffledCards[j], shuffledCards[i]];
+}
+
+displayCards(shuffledCards);
 
 
     } catch (error) {
