@@ -19,107 +19,7 @@ h1 {
     font-weight: 600;
     letter-spacing: 5px;
     text-transform: uppercase;
-} /* ========================================================= INTERFACCIA RICERCA ========================================================= */ .search-section { width: calc(100% - 40px); max-width: 1200px; margin: 30px auto; } /* --------------------------------------------------------- SEARCH BOX --------------------------------------------------------- */ .search-container { width: 100%; margin: 0 auto; padding: 0; } .search-box { position: relative; display: flex; width: 100%; align-items: stretch; } .search-box input { flex: 1; min-width: 0; padding: 16px 55px 16px 20px; font-size: 17px; border: 1px solid rgba(255,255,255,0.15); border-right: none; border-radius: 8px 0 0 8px; background: rgba(20,20,20,0.9); color: white; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; } .search-box input:focus { border-color: rgba(255,255,255,0.4); box-shadow: 0 0 0 2px rgba(255,255,255,0.06); } .search-box input::placeholder { color: rgba(255,255,255,0.45); } .search-button { padding: 0 24px; border: 1px solid rgba(255,255,255,0.15); border-radius: 0 8px 8px 0; background: rgba(255,255,255,0.12); color: white; font-weight: 600; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease; } .search-button:hover { background: rgba(255,255,255,0.2); } .search-button:active { transform: scale(0.98); } .clear-search { position: absolute; right: 105px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; display: none; align-items: center; justify-content: center; border: none; border-radius: 50%; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-size: 20px; cursor: pointer; padding: 0; } .clear-search:hover { background: rgba(255,255,255,0.2); color: white; } .search-hint { margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.4); text-align: left; } .search-hint strong { color: rgba(255,255,255,0.65); } /* ========================================================= QUICK FILTERS ========================================================= */ .quick-filters {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 18px;
-    flex-wrap: wrap;
-}
-
-.filter-title {
-    margin-right: 5px;
-    font-size: 11px;
-    letter-spacing: 1px;
-    color: rgba(255,255,255,0.4);
-}
-
-.filter-divider {
-    width: 1px;
-    height: 28px;
-    background: #444;
-    margin: 0 8px;
-}
-
-.color-filter,
-.multicolor-filter {
-    width: 38px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 50%;
-    background: rgba(255,255,255,0.05);
-    font-size: 18px;
-    cursor: pointer;
-    padding: 0;
-    transition:
-        transform 0.15s ease,
-        background 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.mana-filter-icon {
-    width: 22px;
-    height: 22px;
-    display: block;
-    object-fit: contain;
-}
-
-.color-filter:hover,
-.multicolor-filter:hover {
-    transform: translateY(-2px);
-    background: rgba(255,255,255,0.12);
-    border-color: rgba(255,255,255,0.3);
-}
-
-.color-filter.active,
-.multicolor-filter.active {
-    background: rgba(214,180,119,0.22);
-    border-color: #d6b477;
-    box-shadow:
-        0 0 0 2px rgba(214,180,119,0.15),
-        0 0 12px rgba(214,180,119,0.18);
-    transform: translateY(-1px);
-}
-
-.text-filter {
-    padding: 7px 12px;
-    background: #292929;
-    border: 1px solid #4a4a4a;
-    border-radius: 6px;
-    color: #ccc;
-    font-size: 13px;
-    cursor: pointer;
-    transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.15s ease,
-        box-shadow 0.2s ease;
-}
-
-.text-filter:hover {
-    background: #3a3a3a;
-    color: #fff;
-    border-color: #777;
-    transform: translateY(-1px);
-}
-
-.text-filter:active {
-    transform: translateY(1px);
-}
-
-.text-filter.active {
-    background: rgba(214,180,119,0.18);
-    color: #fff;
-    border-color: #d6b477;
-    box-shadow:
-        0 0 0 2px rgba(214,180,119,0.12),
-        0 0 10px rgba(214,180,119,0.15);
-} /* ========================================================= TOOLBAR ========================================================= */ .toolbar { display: flex; align-items: center; gap: 18px; margin-top: 18px; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.025); flex-wrap: wrap; } .toolbar-group { display: flex; align-items: center; gap: 8px; } .toolbar-group label { font-size: 12px; color: rgba(255,255,255,0.5); } .toolbar select { padding: 7px 10px; border: 1px solid rgba(255,255,255,0.12); border-radius: 5px; background: rgba(20,20,20,0.9); color: white; cursor: pointer; outline: none; } .toolbar select:hover { border-color: rgba(255,255,255,0.25); } .reset-button { margin-left: auto; padding: 7px 12px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; background: transparent; color: rgba(255,255,255,0.55); cursor: pointer; transition: background 0.2s ease, color 0.2s ease; } .reset-button:hover { background: rgba(255,255,255,0.08); color: white; } .search-status { margin-top: 18px; font-size: 13px; color: rgba(255,255,255,0.45); text-align: left; } /* =========================================================
+} /* ========================================================= INTERFACCIA RICERCA ========================================================= */ .search-section { width: calc(100% - 40px); max-width: 1200px; margin: 30px auto; } /* --------------------------------------------------------- SEARCH BOX --------------------------------------------------------- */ .search-container { width: 100%; margin: 0 auto; padding: 0; } .search-box { position: relative; display: flex; width: 100%; align-items: stretch; } .search-box input { flex: 1; min-width: 0; padding: 16px 55px 16px 20px; font-size: 17px; border: 1px solid rgba(255,255,255,0.15); border-right: none; border-radius: 8px 0 0 8px; background: rgba(20,20,20,0.9); color: white; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; } .search-box input:focus { border-color: rgba(255,255,255,0.4); box-shadow: 0 0 0 2px rgba(255,255,255,0.06); } .search-box input::placeholder { color: rgba(255,255,255,0.45); } .search-button { padding: 0 24px; border: 1px solid rgba(255,255,255,0.15); border-radius: 0 8px 8px 0; background: rgba(255,255,255,0.12); color: white; font-weight: 600; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease; } .search-button:hover { background: rgba(255,255,255,0.2); } .search-button:active { transform: scale(0.98); } .clear-search { position: absolute; right: 105px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; display: none; align-items: center; justify-content: center; border: none; border-radius: 50%; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-size: 20px; cursor: pointer; padding: 0; } .clear-search:hover { background: rgba(255,255,255,0.2); color: white; } .search-hint { margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.4); text-align: left; } .search-hint strong { color: rgba(255,255,255,0.65); } /* ========================================================= QUICK FILTERS ========================================================= */ .quick-filters { display: flex; align-items: center; gap: 8px; margin-top: 18px; flex-wrap: wrap; } .filter-title { margin-right: 5px; font-size: 11px; letter-spacing: 1px; color: rgba(255,255,255,0.4); } .filter-divider { width: 1px; height: 28px; background: #444; margin: 0 8px; } .color-filter, .multicolor-filter { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; background: rgba(255,255,255,0.05); font-size: 18px; cursor: pointer; padding: 0; transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; } .color-filter:hover, .multicolor-filter:hover { transform: translateY(-2px); background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.3); } .color-filter.active, .multicolor-filter.active { background: rgba(214,180,119,0.22); border-color: #d6b477; box-shadow: 0 0 0 2px rgba(214,180,119,0.15), 0 0 12px rgba(214,180,119,0.18); transform: translateY(-1px); } .text-filter { padding: 7px 12px; background: #292929; border: 1px solid #4a4a4a; border-radius: 6px; color: #ccc; font-size: 13px; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; } .text-filter:hover { background: #3a3a3a; color: #fff; border-color: #777; transform: translateY(-1px); } .text-filter:active { transform: translateY(1px); } .text-filter.active { background: rgba(214,180,119,0.18); color: #fff; border-color: #d6b477; box-shadow: 0 0 0 2px rgba(214,180,119,0.12), 0 0 10px rgba(214,180,119,0.15); } /* ========================================================= TOOLBAR ========================================================= */ .toolbar { display: flex; align-items: center; gap: 18px; margin-top: 18px; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.025); flex-wrap: wrap; } .toolbar-group { display: flex; align-items: center; gap: 8px; } .toolbar-group label { font-size: 12px; color: rgba(255,255,255,0.5); } .toolbar select { padding: 7px 10px; border: 1px solid rgba(255,255,255,0.12); border-radius: 5px; background: rgba(20,20,20,0.9); color: white; cursor: pointer; outline: none; } .toolbar select:hover { border-color: rgba(255,255,255,0.25); } .reset-button { margin-left: auto; padding: 7px 12px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; background: transparent; color: rgba(255,255,255,0.55); cursor: pointer; transition: background 0.2s ease, color 0.2s ease; } .reset-button:hover { background: rgba(255,255,255,0.08); color: white; } .search-status { margin-top: 18px; font-size: 13px; color: rgba(255,255,255,0.45); text-align: left; } /* =========================================================
    RICERCA AVANZATA
    ========================================================= */
 
@@ -1494,67 +1394,67 @@ body > * {
 
         <div class="quick-filters">
 
-    <span class="filter-title">
-        COLORE
-    </span>
+            <span class="filter-title">
+                COLORE
+            </span>
 
-    <button
-        class="color-filter white"
-        onclick="toggleQuickFilter('color', 'c:w', this)"
-        title="Bianco"
-    >
-        <img src="/mana/W.svg" class="mana-filter-icon" alt="W">
-    </button>
 
-    <button
-        class="color-filter blue"
-        onclick="toggleQuickFilter('color', 'c:u', this)"
-        title="Blu"
-    >
-        <img src="/mana/U.svg" class="mana-filter-icon" alt="U">
-    </button>
+            <button
+                class="color-filter white"
+                onclick="toggleQuickFilter('color', 'c:w', this)"
+                title="Bianco"
+            >
+                ⚪
+            </button>
 
-    <button
-        class="color-filter black"
-        onclick="toggleQuickFilter('color', 'c:b', this)"
-        title="Nero"
-    >
-        <img src="/mana/B.svg" class="mana-filter-icon" alt="B">
-    </button>
+            <button
+                class="color-filter blue"
+                onclick="toggleQuickFilter('color', 'c:u', this)"
+                title="Blu"
+            >
+                🔵
+            </button>
 
-    <button
-        class="color-filter red"
-        onclick="toggleQuickFilter('color', 'c:r', this)"
-        title="Rosso"
-    >
-        <img src="/mana/R.svg" class="mana-filter-icon" alt="R">
-    </button>
+            <button
+                class="color-filter black"
+                onclick="toggleQuickFilter('color', 'c:b', this)"
+                title="Nero"
+            >
+                ⚫
+            </button>
 
-    <button
-        class="color-filter green"
-        onclick="toggleQuickFilter('color', 'c:g', this)"
-        title="Verde"
-    >
-        <img src="/mana/G.svg" class="mana-filter-icon" alt="G">
-    </button>
+            <button
+                class="color-filter red"
+                onclick="toggleQuickFilter('color', 'c:r', this)"
+                title="Rosso"
+            >
+                🔴
+            </button>
 
-    <button
-        class="multicolor-filter"
-        onclick="toggleQuickFilter('color', 'multicolor', this)"
-        title="Multicolore"
-    >
-        🌈
-    </button>
+            <button
+                class="color-filter green"
+                onclick="toggleQuickFilter('color', 'c:g', this)"
+                title="Verde"
+            >
+                🟢
+            </button>
 
-    <button
-        class="color-filter colorless"
-        onclick="toggleQuickFilter('color', 'c:c', this)"
-        title="Incolore"
-    >
-        <img src="/mana/C.svg" class="mana-filter-icon" alt="C">
-    </button>
+            <button
+                class="multicolor-filter"
+                onclick="toggleQuickFilter('color', 'multicolor', this)"
+                title="Multicolore"
+            >
+                🌈
+            </button>
+<button
+    class="color-filter colorless"
+    onclick="toggleQuickFilter('color', 'c:c', this)"
+    title="Incolore"
+>
+    C
+</button>
 
-    <span class="filter-divider"></span>
+            <span class="filter-divider"></span>
 
 
             <span class="filter-title">
