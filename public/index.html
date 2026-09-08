@@ -195,7 +195,21 @@ h1 {
     text-align: center;
     color: #777;
 }
-/* ========================================================= CONTROLLI CARTA / DECK BUILDER ========================================================= */ .card-deck-controls { position: absolute; top: 12px; right: 12px; display: flex; gap: 5px; z-index: 3; } .card-deck-button { width: 34px; height: 34px; padding: 0; border: 1px solid rgba(255,255,255,0.18); border-radius: 7px; background: rgba(15,15,15,0.9); color: #ddd; cursor: pointer; font-size: 16px; transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease; } .card-deck-button:hover { background: #3a3a3a; border-color: #d6b477; transform: translateY(-1px); } .card-deck-button.commander { color: #d6b477; } .card-deck-quantity { position: absolute; top: 52px; right: 12px; z-index: 3; padding: 4px 8px; border: 1px solid rgba(214,180,119,0.35); border-radius: 5px; background: rgba(15,15,15,0.92); color: #d6b477; font-size: 10px; font-weight: bold; letter-spacing: 0.5px; pointer-events: none; box-shadow: 0 3px 10px rgba(0,0,0,0.45); } /* ========================================================= PULSANTE MAZZO FISSO ========================================================= */ .deck-toggle { position: fixed; right: 22px; bottom: 22px; z-index: 900; padding: 13px 18px; border: 1px solid #80683f; border-radius: 10px; background: linear-gradient( 145deg, #302818, #1d1810 ); color: #eee; font-size: 14px; font-weight: bold; cursor: pointer; box-shadow: 0 8px 30px rgba(0,0,0,0.55); transition: transform 0.15s ease, background 0.2s ease; } .deck-toggle:hover { transform: translateY(-2px); background: linear-gradient( 145deg, #40351f, #282015 ); } /* ========================================================= PANNELLO DECK BUILDER ========================================================= */ .deck-overlay { display: none; position: fixed; inset: 0; z-index: 950; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); } .deck-overlay.active { display: block; } 
+/* ========================================================= CONTROLLI CARTA / DECK BUILDER ========================================================= */ .card-deck-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+} .card-deck-button { width: 34px; height: 34px; padding: 0; border: 1px solid rgba(255,255,255,0.18); border-radius: 7px; background: rgba(15,15,15,0.9); color: #ddd; cursor: pointer; font-size: 16px; transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease; }
+ .card-deck-button:hover { background: #3a3a3a; border-color: #d6b477; transform: translateY(-1px); } .card-deck-button.commander { color: #d6b477; }
+.card-deck-button.add-to-deck {
+    width: 150px;
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 600;
+} .card-deck-quantity { position: absolute; top: 52px; right: 12px; z-index: 3; padding: 4px 8px; border: 1px solid rgba(214,180,119,0.35); border-radius: 5px; background: rgba(15,15,15,0.92); color: #d6b477; font-size: 10px; font-weight: bold; letter-spacing: 0.5px; pointer-events: none; box-shadow: 0 3px 10px rgba(0,0,0,0.45); } /* ========================================================= PULSANTE MAZZO FISSO ========================================================= */ .deck-toggle { position: fixed; right: 22px; bottom: 22px; z-index: 900; padding: 13px 18px; border: 1px solid #80683f; border-radius: 10px; background: linear-gradient( 145deg, #302818, #1d1810 ); color: #eee; font-size: 14px; font-weight: bold; cursor: pointer; box-shadow: 0 8px 30px rgba(0,0,0,0.55); transition: transform 0.15s ease, background 0.2s ease; } .deck-toggle:hover { transform: translateY(-2px); background: linear-gradient( 145deg, #40351f, #282015 ); } /* ========================================================= PANNELLO DECK BUILDER ========================================================= */ .deck-overlay { display: none; position: fixed; inset: 0; z-index: 950; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); } .deck-overlay.active { display: block; } 
 
 .deck-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 960; width: min(430px, 92vw); display: flex; flex-direction: column;
 overflow-y: auto;
@@ -774,11 +788,11 @@ background: linear-gradient( 145deg, #242424, #141414 ); border-left: 1px solid 
 
 
     .card-deck-button {
-        width: 25px;
-        height: 25px;
+        width: auto;
+        height: 34px;
 
-        min-width: 25px;
-
+        min-width: 120px;
+        padding: 0 12px;
         font-size: 13px;
     }
 
@@ -1539,12 +1553,12 @@ body > * {
     </button>
 
     <button
-        class="multicolor-filter"
-        onclick="toggleQuickFilter('color', 'multicolor', this)"
-        title="Multicolore"
-    >
-        🌈
-    </button>
+    class="multicolor-filter"
+    onclick="toggleQuickFilter('color', 'multicolor', this)"
+    title="Multicolore"
+>
+    <img src="/mana/MULTI.svg" class="mana-filter-icon" alt="Multicolore">
+</button>
 
     <button
         class="color-filter colorless"
@@ -2466,73 +2480,84 @@ function displayCards(cards, resetPage = true) {
     /*
      * Disegna solamente le carte della pagina corrente.
      */
-    container.innerHTML = visibleCards.map((card, index) => {
+   container.innerHTML = visibleCards.map((card, index) => {
 
-        const deckQuantity =
-            getDeckQuantity(card);
+    const deckQuantity =
+        getDeckQuantity(card);
 
-        return `
-            <div
-                class="card"
-                onclick="openCardModal(${index})"
+    const isLegendaryCreature =
+        String(card.type_line || "")
+            .toLowerCase()
+            .includes("legendary creature");
+
+    return `
+        <div
+            class="card"
+            onclick="openCardModal(${index})"
+        >
+
+            ${
+                deckQuantity > 0
+                ? `<div class="card-deck-quantity">
+                    NEL MAZZO: ${deckQuantity}
+                   </div>`
+                : ""
+            }
+
+            <img
+                src="${getWebpPath(card.image)}"
+                alt="${card.name || ""}"
+                class="card-image"
+                loading="lazy"
+                onerror="this.style.display='none'"
             >
 
-                <div class="card-deck-controls">
+            <div class="card-deck-controls">
 
-                    <button
-                        class="card-deck-button"
-                        onclick="event.stopPropagation(); addCardToDeckByCardIndex(${index})"
-                        title="Aggiungi al mazzo"
-                    >
-                        +
-                    </button>
-
-                    <button
-                        class="card-deck-button commander"
-                        onclick="event.stopPropagation(); setCommanderByCardIndex(${index})"
-                        title="Imposta come comandante"
-                    >
-                        👑
-                    </button>
-
-                </div>
+                <button
+    class="card-deck-button add-to-deck"
+    onclick="event.stopPropagation(); addCardToDeckByCardIndex(${index})"
+    title="Aggiungi al mazzo"
+>
+    Aggiungi al Mazzo
+</button>
 
                 ${
-                    deckQuantity > 0
-                    ? `<div class="card-deck-quantity">
-                        NEL MAZZO: ${deckQuantity}
-                       </div>`
+                    isLegendaryCreature
+                    ? `
+                        <button
+                            class="card-deck-button commander"
+                            onclick="event.stopPropagation(); setCommanderByCardIndex(${index})"
+                            title="Imposta come comandante"
+                        >
+                            👑
+                        </button>
+                    `
                     : ""
                 }
 
-                <img
-                    src="${getWebpPath(card.image)}"
-                    alt="${card.name || ""}"
-                    class="card-image"
-                    loading="lazy"
-                    onerror="this.style.display='none'"
-                >
-
-                <h2>
-                    ${card.name || ""}
-                </h2>
-
-                <div class="mana">
-                    ${renderManaCost(card.mana_cost)}
-                </div>
-
-                <div class="type">
-                    ${card.type_line || ""}
-                </div>
-
-                <div class="oracle">
-                    ${card.oracle_text || ""}
-                </div>
-
             </div>
-        `;
 
-    }).join("");
+            <h2>
+                ${card.name || ""}
+            </h2>
+
+            <div class="mana">
+                ${renderManaCost(card.mana_cost)}
+            </div>
+
+            <div class="type">
+                ${card.type_line || ""}
+            </div>
+
+            <div class="oracle">
+                ${card.oracle_text || ""}
+            </div>
+
+        </div>
+    `;
+
+}).join("");
 
     /*
      * Disegna la paginazione.

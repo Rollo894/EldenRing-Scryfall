@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="multi" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5f5f5"/>
+      <stop offset="20%" stop-color="#4aa3df"/>
+      <stop offset="40%" stop-color="#222222"/>
+      <stop offset="60%" stop-color="#d94b4b"/>
+      <stop offset="80%" stop-color="#6aaa45"/>
+      <stop offset="100%" stop-color="#d6b477"/>
+    </linearGradient>
+  </defs>
+
+  <circle
+    cx="50"
+    cy="50"
+    r="46"
+    fill="url(#multi)"
+    stroke="#111"
+    stroke-width="5"
+  />
+
+  <circle
+    cx="50"
+    cy="50"
+    r="31"
+    fill="#171717"
+    opacity="0.9"
+  />
+
+  <path
+    d="M50 22
+       C59 31 72 35 78 50
+       C72 65 59 69 50 78
+       C41 69 28 65 22 50
+       C28 35 41 31 50 22Z"
+    fill="url(#multi)"
+    opacity="0.95"
+  />
+</svg>
