@@ -488,7 +488,7 @@
                                              "B",
                                              "G"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -519,7 +519,7 @@
                                              "G",
                                              "W"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -548,7 +548,7 @@
                                              "B",
                                              "R"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -577,7 +577,7 @@
                                              "G",
                                              "W"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -836,7 +836,7 @@
                                              "U",
                                              "W"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "CHRISTIAN ANGEL",
@@ -1731,7 +1731,7 @@
                                              "U",
                                              "R"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -2456,7 +2456,7 @@
                                              "R",
                                              "W"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "Teolehogs",
@@ -2483,7 +2483,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "Ariamis Arts",
@@ -2627,7 +2627,7 @@
                                              "G",
                                              "W"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "JOHON DERVISHI",
@@ -2735,7 +2735,7 @@
                       "color_identity":  [
                                              "W"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -3202,7 +3202,7 @@
                       "color_identity":  [
                                              "G"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "JASONENGLE",
@@ -3526,7 +3526,7 @@
                       "color_identity":  [
                                              "G"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ROGER GAPSKI",
@@ -3553,7 +3553,7 @@
                       "color_identity":  [
                                              "G"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -3661,7 +3661,7 @@
                       "color_identity":  [
                                              "G"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "DESKRIDGE",
@@ -3907,7 +3907,7 @@
                       "color_identity":  [
                                              "G"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -3961,7 +3961,7 @@
                       "color_identity":  [
                                              "G"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "VINHANMACLY1",
@@ -4023,7 +4023,7 @@
                                              "U",
                                              "W"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "SHIMHAQ",
@@ -4131,7 +4131,7 @@
                       "color_identity":  [
                                              "G"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "YONAZ",
@@ -4554,7 +4554,7 @@
                       "color_identity":  [
                                              "G"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "MADJESTERS1",
@@ -4664,7 +4664,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "SHIMHAQ",
@@ -4718,7 +4718,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "GuidoMng",
@@ -4800,7 +4800,7 @@
                                              "R",
                                              "B"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "Kankan33333",
@@ -4827,7 +4827,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -4881,7 +4881,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "Temmaru",
@@ -4908,7 +4908,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "Abdulllrahmanha",
@@ -4935,7 +4935,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "Tyranosaure",
@@ -4962,7 +4962,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "Mateusz Horbowiec",
@@ -4989,7 +4989,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "EVS-EME",
@@ -5070,7 +5070,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "Azure_Meraki",
@@ -5178,7 +5178,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "VILEBLOODS",
@@ -5205,7 +5205,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "Kankan33333",
@@ -5232,7 +5232,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "Moe Mobalart",
@@ -5286,7 +5286,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "COBALTPLASMA",
@@ -5394,7 +5394,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "Elden Ring",
@@ -5542,34 +5542,7 @@
                       "name_source":  "visual",
                       "name_review":  false
                   },
-                  {
-                      "id":  "erc-171",
-                      "name":  "Fire Monk",
-                      "mana_cost":  "{1}{R}",
-                      "cmc":  2,
-                      "type_line":  "Creature — Human Warlock",
-                      "oracle_text":  "Warlock and Chariot creatures you control get +1/+0.",
-                      "flavor_text":  "\"Fire Monks gather at night in rituals and processions burning their way through Liurnia of the Lakes, accompanied by their Flame Chariots. They settle in folksy camps surroundend by their Torn Sorcerers followers \"",
-                      "colors":  [
-                                     "R"
-                                 ],
-                      "color_identity":  [
-                                             "R"
-                                         ],
-                      "rarity":  "uncommon",
-                      "set":  "ER",
-                      "collector_number":  "P",
-                      "artist":  "UNKNOWN",
-                      "power":  "2",
-                      "toughness":  "2",
-                      "image":  "/cards/Fire Monk.png",
-                      "needs_review":  false,
-                      "mana_extraction":  "visual-v19",
-                      "mana_review":  false,
-                      "name_source":  "visual",
-                      "name_review":  false
-                  },
-                  {
+                                    {
                       "id":  "erc-172",
                       "name":  "Fire Giant",
                       "mana_cost":  "{3}{R}{R}{R}",
@@ -5664,7 +5637,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ERA7",
@@ -5691,7 +5664,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ZHAOYING59",
@@ -6699,7 +6672,7 @@
                                              "B",
                                              "G"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "O\u0027LABRADAH",
@@ -6786,7 +6759,7 @@
                                              "B",
                                              "R"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "THEARKON",
@@ -7002,7 +6975,7 @@
                       "color_identity":  [
                                              "B"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -7029,7 +7002,7 @@
                       "color_identity":  [
                                              "B"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "THE VILEBLOODS",
@@ -7164,7 +7137,7 @@
                       "color_identity":  [
                                              "B"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "000SAMIO00",
@@ -8067,7 +8040,7 @@
                                              "R",
                                              "G"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "TEMMARU",
@@ -8183,7 +8156,7 @@
                                              "R",
                                              "U"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "KANKAN33333",
@@ -8270,7 +8243,7 @@
                                              "U",
                                              "B"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "USERPGNY3374",
@@ -8298,7 +8271,7 @@
                                              "B",
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "HELA(VOIDSPAWN01)",
@@ -8325,7 +8298,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "HILINWNGNNM79651",
@@ -8352,7 +8325,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ALL LEE 24",
@@ -8379,7 +8352,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "GROOMGRIM",
@@ -8406,7 +8379,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "UCHI_VS_THE_WORLD",
@@ -8433,7 +8406,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "MERKYMERX",
@@ -8460,7 +8433,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "HERHEIM731",
@@ -8488,7 +8461,7 @@
                                              "B",
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ZIYA97",
@@ -8516,7 +8489,7 @@
                                              "U",
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "RANGUT",
@@ -8543,7 +8516,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "CHANASYKINE",
@@ -8597,7 +8570,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "MADIE H21",
@@ -8624,7 +8597,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "SHIMHAQ",
@@ -8653,7 +8626,7 @@
                                              "U",
                                              "W"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "BRUSH_(BRUSH2H)",
@@ -8680,7 +8653,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "NASHIGAWA",
@@ -8707,7 +8680,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "MAOE",
@@ -8734,7 +8707,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "QURO704",
@@ -8788,7 +8761,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "TEMMARU",
@@ -8815,7 +8788,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "DSITTARO",
@@ -8848,7 +8821,7 @@
                                              "U",
                                              "W"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "EDIPTUS",
@@ -8875,7 +8848,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "RAKITA",
@@ -8902,7 +8875,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ARIZUKA(CATACOMBE)",
@@ -8929,7 +8902,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "SARA MASOUM",
@@ -8956,7 +8929,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "JPZDESU",
@@ -9144,7 +9117,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ABDULLLRAHMANHA",
@@ -9171,7 +9144,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "FANTASYARTISTRY",
@@ -9198,7 +9171,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "SUSANTE",
@@ -9225,7 +9198,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -9252,7 +9225,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "YOSHINO(CMKOTS)",
@@ -9279,7 +9252,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "KASTAWEY",
@@ -9306,7 +9279,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "NIGHTMARESYRUP",
@@ -9360,7 +9333,7 @@
                       "color_identity":  [
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "LA BO CHU SHI",
@@ -9389,7 +9362,7 @@
                                              "G",
                                              "W"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "JIN DONGYU",
@@ -9449,7 +9422,7 @@
                                              "R",
                                              "W"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "KANKAN33333",
@@ -9478,7 +9451,7 @@
                                              "R",
                                              "W"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "TEMMARU",
@@ -9507,7 +9480,7 @@
                                              "R",
                                              "W"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "MISO KATSU",
@@ -9627,7 +9600,7 @@
                                              "W",
                                              "B"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELECMEOW",
@@ -9656,7 +9629,7 @@
                                              "W",
                                              "B"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -9714,7 +9687,7 @@
                                              "W",
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "MAX58ART",
@@ -9743,7 +9716,7 @@
                                              "W",
                                              "U"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "MENTOSKOVA",
@@ -10337,7 +10310,7 @@
                       "color_identity":  [
                                              "W"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "MINEOH",
@@ -10367,7 +10340,7 @@
                       "color_identity":  [
                                              "W"
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "2III / CHRISTIAN ANGEL",
@@ -11395,7 +11368,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "rare",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "Maddoze",
@@ -11586,7 +11559,7 @@
                       "color_identity":  [
 
                                          ],
-                      "rarity":  "uncommon",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING NOT FOR SALE",
@@ -11750,7 +11723,7 @@
                       "color_identity":  [
 
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "ELDEN RING",
@@ -12081,7 +12054,7 @@
                                              "R",
                                              "W"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "mythic",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "SIYEMMM",
@@ -12108,7 +12081,7 @@
                       "color_identity":  [
                                              "G"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "DENISMAYERJR",
@@ -12162,7 +12135,7 @@
                       "color_identity":  [
                                              "R"
                                          ],
-                      "rarity":  "common",
+                      "rarity":  "uncommon",
                       "set":  "ER",
                       "collector_number":  "P",
                       "artist":  "HANEKURA BOU",
