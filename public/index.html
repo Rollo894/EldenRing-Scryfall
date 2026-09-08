@@ -2261,6 +2261,7 @@ let currentFilteredCards = []; /* ==============================================
     // Recupera SOLO il tipo della carta (escludendo il testo delle regole/abilità)
     const cardType = card.type || card.type_line || card.supertypes || "";
     const typeString = (typeof cardType === 'string' ? cardType : JSON.stringify(cardType)).toLowerCase();
+    const isToken = typeString.includes("token");
 
     /* 
      * Controllo sicuro per le TERRE BASE:
@@ -2274,7 +2275,7 @@ let currentFilteredCards = []; /* ==============================================
      * STANDARD
      * Massimo 4 copie (tranne le terre base).
      */ 
-    if ( deck.format === "standard" && currentQuantity >= 4 && !isBasicLand ) { 
+    if ( deck.format === "standard" && currentQuantity >= 4 && !isBasicLand && !isToken ) { 
         alert("In formato Standard puoi giocare massimo 4 copie della stessa carta."); 
         return; 
     } 
@@ -2283,7 +2284,7 @@ let currentFilteredCards = []; /* ==============================================
      * COMMANDER
      * Una sola copia per carta (tranne le terre base).
      */ 
-    if ( deck.format === "commander" && currentQuantity >= 1 && !isBasicLand ) { 
+    if ( deck.format === "commander" && currentQuantity >= 1 && !isBasicLand && !isToken ) {
         alert("In formato Commander puoi giocare una sola copia di ogni carta."); 
         return; 
     } 
@@ -2318,24 +2319,28 @@ let currentFilteredCards = []; /* ==============================================
 
     entries.forEach(entry => {
         const quantity = Number(entry.quantity || 0);
-        const card = entry.card;
+const card = entry.card;
 
-        mainCount += quantity;
+if (!card) {
+    return;
+}
 
-        if ( deck.format === "standard" && quantity > 4 ) {
-            tooManyCopies = true;
-        }
+const typeLine = String(card.type_line || "").toLowerCase();
+const isToken = typeLine.includes("token");
 
-        if ( deck.format === "commander" && quantity > 1 ) {
-            tooManyCopies = true;
-        }
+if (isToken) {
+    return;
+}
 
-        if (!card) {
-            return;
-        }
+mainCount += quantity;
 
-        const typeLine = String(card.type_line || "").toLowerCase();
+if ( deck.format === "standard" && quantity > 4 ) {
+    tooManyCopies = true;
+}
 
+if ( deck.format === "commander" && quantity > 1 ) {
+    tooManyCopies = true;
+}
         let recognizedType = false;
 
         if (typeLine.includes("land")) {
