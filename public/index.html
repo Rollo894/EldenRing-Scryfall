@@ -223,6 +223,17 @@ background: linear-gradient( 145deg, #242424, #141414 ); border-left: 1px solid 
     overflow-x: hidden;
 }
 .deck-panel.active { transform: translateX(0); } .deck-header { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 18px 20px; border-bottom: 1px solid #444; background: rgba(0,0,0,0.25); } .deck-header h2 { margin: 0; color: #d6b477; font-size: 19px; letter-spacing: 1px; } .deck-close { width: 36px; height: 36px; border: none; border-radius: 50%; background: #333; color: #ccc; font-size: 24px; cursor: pointer; } .deck-close:hover { background: #555; color: white; } .deck-settings { padding: 15px 20px; border-bottom: 1px solid #3d3d3d; } .deck-format-label { display: block; margin-bottom: 7px; font-size: 11px; letter-spacing: 1px; color: #888; } .deck-format { width: 100%; padding: 10px; border: 1px solid #555; border-radius: 7px; background: #1c1c1c; color: white; font-size: 14px; outline: none; } .deck-status { margin-top: 12px; padding: 12px; border: 1px solid #444; border-radius: 8px; background: #1c1c1c; } .deck-count { font-size: 17px; font-weight: bold; color: #eee; } .deck-validity { margin-top: 5px; font-size: 12px; color: #999; } .deck-validity.valid { color: #9ccc8c; } .deck-validity.invalid { color: #d89a78; }
+.deck-color-warning {
+    display: none;
+    margin-top: 8px;
+    padding: 8px 10px;
+    border: 1px solid #806b3f;
+    border-radius: 6px;
+    background: rgba(128, 107, 63, 0.12);
+    color: #d6b477;
+    font-size: 12px;
+    line-height: 1.4;
+}
 .deck-statistics {
     padding: 15px 20px;
     border-bottom: 1px solid #3d3d3d;
@@ -1902,7 +1913,10 @@ onclick="toggleDeckPanel()"
     >
         Mazzo non valido
     </div>
-
+<div
+    id="deckColorWarning"
+    class="deck-color-warning"
+></div>
 </div>
 <div class="deck-statistics">
 
@@ -2242,7 +2256,170 @@ let currentFilteredCards = []; /* ==============================================
     }
 
     return String(card.name || "");
-} /* ========================================================= QUANTITÀ CARTA NEL DECK ========================================================= */ function getDeckQuantity(card) { const key = getCardKey(card); const entry = deck.cards[key]; return entry ? Number(entry.quantity || 0) : 0; } /* ========================================================= AGGIORNA BADGE CARTE ========================================================= */ function updateCardDeckBadges() { const cards = window.currentDisplayedCards || []; const cardElements = document.querySelectorAll("#cards .card"); cardElements.forEach((cardElement, index) => { const card = cards[index]; if (!card) { return; } const quantity = getDeckQuantity(card); let badge = cardElement.querySelector(".card-deck-quantity"); if (quantity > 0) { if (!badge) { badge = document.createElement("div"); badge.className = "card-deck-quantity"; cardElement.appendChild(badge); } badge.textContent = `NEL MAZZO: ${quantity}`; } else if (badge) { badge.remove(); } }); } /* ========================================================= SALVATAGGIO DECK ========================================================= */ function saveDeck() { try { sessionStorage.setItem( DECK_STORAGE_KEY, JSON.stringify(deck) ); } catch (error) { console.error( "Errore salvataggio mazzo:", error ); } } /* ========================================================= CARICAMENTO DECK ========================================================= */ function loadDeck() { try { const saved = sessionStorage.getItem( DECK_STORAGE_KEY ); if (!saved) { updateDeckUI(); return; } const parsed = JSON.parse(saved); if ( !parsed || typeof parsed !== "object" ) { updateDeckUI(); return; } deck = { format: parsed.format === "commander" ? "commander" : "standard", cards: parsed.cards && typeof parsed.cards === "object" ? parsed.cards : {}, commander: parsed.commander || null }; document.getElementById( "deckFormat" ).value = deck.format; updateDeckUI(); } catch (error) { console.error( "Errore caricamento mazzo:", error ); deck = { format: "standard", cards: {}, commander: null }; updateDeckUI(); } } /* ========================================================= CAMBIO FORMATO ========================================================= */ function changeDeckFormat() { const newFormat = document.getElementById( "deckFormat" ).value; if ( newFormat === deck.format ) { return; } const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (hasCards) { const confirmed = confirm( "Cambiare formato svuoterà il mazzo attuale. Continuare?" ); if (!confirmed) { document.getElementById( "deckFormat" ).value = deck.format; return; } } deck = { format: newFormat, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= AGGIUNGI CARTA ========================================================= */ function addCardToDeck(card) { 
+} /* ========================================================= QUANTITÀ CARTA NEL DECK ========================================================= */ function getDeckQuantity(card) { const key = getCardKey(card); const entry = deck.cards[key]; return entry ? Number(entry.quantity || 0) : 0; }/* =========================================================
+   IDENTITÀ DI COLORE COMMANDER
+   ========================================================= */
+
+/*
+ * Estrae i colori presenti nei simboli di mana
+ * contenuti nell'Oracle Text.
+ *
+ * Riconosce anche simboli ibridi e Phyrexian.
+ *
+ * Esempi:
+ * {W}       -> W
+ * {U/B}     -> U, B
+ * {2/W}     -> W
+ * {G/P}     -> G
+ */
+function getOracleColors(oracleText) {
+
+    const colors = new Set();
+
+    if (!oracleText) {
+        return colors;
+    }
+
+    const text = String(oracleText);
+
+    const symbols = text.match(/\{([^}]+)\}/g) || [];
+
+    symbols.forEach(symbol => {
+
+        const content = symbol
+            .replace(/[{}]/g, "")
+            .toUpperCase();
+
+        ["W", "U", "B", "R", "G"].forEach(color => {
+
+            if (content.includes(color)) {
+                colors.add(color);
+            }
+
+        });
+
+    });
+
+    return colors;
+}
+
+
+/*
+ * Restituisce l'identità di colore effettiva della carta.
+ *
+ * Usa:
+ * 1. color_identity dal database
+ * 2. Oracle Text come controllo aggiuntivo
+ */
+function getCardColorIdentity(card) {
+
+    const colors = new Set();
+
+    if (!card) {
+        return colors;
+    }
+
+    /*
+     * IDENTITÀ DAL DATABASE
+     */
+    if (Array.isArray(card.color_identity)) {
+
+        card.color_identity.forEach(color => {
+
+            const c = String(color)
+                .toUpperCase()
+                .trim();
+
+            if (["W", "U", "B", "R", "G"].includes(c)) {
+                colors.add(c);
+            }
+
+        });
+
+    }
+
+    /*
+     * CONTROLLO ORACLE TEXT
+     */
+    const oracleColors = getOracleColors(card.oracle_text);
+
+    oracleColors.forEach(color => {
+        colors.add(color);
+    });
+
+    return colors;
+} /* =========================================================
+   CONTROLLO IDENTITÀ DI COLORE DEL COMMANDER
+   ========================================================= */
+
+function getCommanderColorWarnings() {
+
+    const warnings = [];
+
+    if (
+        deck.format !== "commander" ||
+        !deck.commander
+    ) {
+        return warnings;
+    }
+
+    /*
+     * Identità di colore del comandante.
+     */
+    const commanderColors =
+        getCardColorIdentity(deck.commander);
+
+    /*
+     * Controlliamo tutte le carte del mazzo principale.
+     */
+    Object.values(deck.cards).forEach(entry => {
+
+        if (!entry || !entry.card) {
+            return;
+        }
+
+        const card = entry.card;
+
+        /*
+         * I Token non vengono controllati.
+         */
+        const typeLine =
+            String(card.type_line || "").toLowerCase();
+
+        if (typeLine.includes("token")) {
+            return;
+        }
+
+        const cardColors =
+            getCardColorIdentity(card);
+
+        /*
+         * Cerchiamo colori presenti nella carta
+         * ma assenti dall'identità del comandante.
+         */
+        const outsideColors = [];
+
+        cardColors.forEach(color => {
+
+            if (!commanderColors.has(color)) {
+                outsideColors.push(color);
+            }
+
+        });
+
+        if (outsideColors.length > 0) {
+
+            warnings.push({
+                card: card,
+                colors: outsideColors
+            });
+
+        }
+
+    });
+
+    return warnings;
+}/* ========================================================= AGGIORNA BADGE CARTE ========================================================= */ function updateCardDeckBadges() { const cards = window.currentDisplayedCards || []; const cardElements = document.querySelectorAll("#cards .card"); cardElements.forEach((cardElement, index) => { const card = cards[index]; if (!card) { return; } const quantity = getDeckQuantity(card); let badge = cardElement.querySelector(".card-deck-quantity"); if (quantity > 0) { if (!badge) { badge = document.createElement("div"); badge.className = "card-deck-quantity"; cardElement.appendChild(badge); } badge.textContent = `NEL MAZZO: ${quantity}`; } else if (badge) { badge.remove(); } }); } /* ========================================================= SALVATAGGIO DECK ========================================================= */ function saveDeck() { try { sessionStorage.setItem( DECK_STORAGE_KEY, JSON.stringify(deck) ); } catch (error) { console.error( "Errore salvataggio mazzo:", error ); } } /* ========================================================= CARICAMENTO DECK ========================================================= */ function loadDeck() { try { const saved = sessionStorage.getItem( DECK_STORAGE_KEY ); if (!saved) { updateDeckUI(); return; } const parsed = JSON.parse(saved); if ( !parsed || typeof parsed !== "object" ) { updateDeckUI(); return; } deck = { format: parsed.format === "commander" ? "commander" : "standard", cards: parsed.cards && typeof parsed.cards === "object" ? parsed.cards : {}, commander: parsed.commander || null }; document.getElementById( "deckFormat" ).value = deck.format; updateDeckUI(); } catch (error) { console.error( "Errore caricamento mazzo:", error ); deck = { format: "standard", cards: {}, commander: null }; updateDeckUI(); } } /* ========================================================= CAMBIO FORMATO ========================================================= */ function changeDeckFormat() { const newFormat = document.getElementById( "deckFormat" ).value; if ( newFormat === deck.format ) { return; } const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (hasCards) { const confirmed = confirm( "Cambiare formato svuoterà il mazzo attuale. Continuare?" ); if (!confirmed) { document.getElementById( "deckFormat" ).value = deck.format; return; } } deck = { format: newFormat, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= AGGIUNGI CARTA ========================================================= */ function addCardToDeck(card) { 
     if (!card) { return; } 
     const key = getCardKey(card); 
 
@@ -2424,6 +2601,7 @@ if ( deck.format === "commander" && quantity > 1 ) {
 }
 /* ========================================================= AGGIORNA INTERFACCIA DECK ========================================================= */ function updateDeckUI() { const stats = getDeckStats();
 const typeStats = stats.typeStats;
+const colorWarnings = getCommanderColorWarnings();
 
     document.getElementById("deckStatLands").textContent = typeStats.lands;
     document.getElementById("deckStatCreatures").textContent = typeStats.creatures;
@@ -2433,7 +2611,32 @@ const typeStats = stats.typeStats;
     document.getElementById("deckStatEnchantments").textContent = typeStats.enchantments;
     document.getElementById("deckStatPlaneswalkers").textContent = typeStats.planeswalkers;
     document.getElementById("deckStatOther").textContent = typeStats.other;
- /* * Conteggio pulsante flottante. */ const totalVisible = stats.mainCount + ( deck.commander ? 1 : 0 ); const deckButtonCount = document.getElementById( "deckButtonCount" ); if (deckButtonCount) { deckButtonCount.textContent = totalVisible; } /* * Conteggio principale. */ const deckCount = document.getElementById( "deckCount" ); if ( deckCount ) { if ( deck.format === "standard" ) { deckCount.textContent = `${stats.mainCount} / 60 carte`; } else { deckCount.textContent = `${stats.mainCount} / 99 carte + ${deck.commander ? 1 : 0} comandante`; } } /* * Validità. */ const validity = document.getElementById( "deckValidity" ); if (validity) { validity.textContent = stats.message; validity.classList.remove( "valid", "invalid" ); validity.classList.add( stats.valid ? "valid" : "invalid" ); } /* * Sezione comandante. */ updateCommanderUI(); /* * Lista carte. */ updateDeckListUI(); /* * Aggiorna i badge direttamente sulle carte visibili. */ updateCardDeckBadges(); } /* ========================================================= AGGIORNA COMANDANTE ========================================================= */ function updateCommanderUI() { const container = document.getElementById( "commanderContainer" ); if (!container) { return; } if ( deck.format !== "commander" ) { container.innerHTML = ` <div class="commander-empty"> Disponibile solo in formato Commander. </div> `; return; } if ( !deck.commander ) { container.innerHTML = ` <div class="commander-empty"> Nessun comandante selezionato. <br> Usa il pulsante 👑 su una carta Legendary. </div> `; return; } const commander = deck.commander; container.innerHTML = ` <div class="commander-card"> <img class="commander-card-image" src="${commander.image || ""}" alt="${commander.name || ""}" onerror="this.style.display='none'" > <div class="commander-card-info"> <div class="commander-card-name"> ${commander.name || ""} </div> <div class="commander-card-type"> ${commander.type_line || ""} </div> </div> <button class="commander-remove" onclick="removeCommander()" title="Rimuovi comandante" > × </button> </div> `; } /* ========================================================= AGGIORNA LISTA DECK ========================================================= */ function updateDeckListUI() { const container = document.getElementById( "deckCards" ); const uniqueCount = document.getElementById( "deckUniqueCount" ); if ( !container ) { return; } const entries = Object.entries( deck.cards ); if ( uniqueCount ) { uniqueCount.textContent = `${entries.length} ${entries.length === 1 ? "carta" : "carte"}`; } if ( entries.length === 0 ) { container.innerHTML = ` <div class="deck-empty"> Il tuo mazzo è vuoto.<br> Usa il pulsante <strong>+</strong> sulle carte per aggiungerle. </div> `; return; } entries.sort( (a, b) => { const nameA = String( a[1].card.name || "" ); const nameB = String( b[1].card.name || "" ); return nameA.localeCompare( nameB, "it", { sensitivity: "base" } ); } ); container.innerHTML = entries.map( ([key, entry]) => ` <div class="deck-item"> <img class="deck-item-image" src="${entry.card.image || ""}" alt="${entry.card.name || ""}" onerror="this.style.display='none'" > <div class="deck-item-name"> ${entry.card.name || ""} </div> <div class="deck-item-controls"> <button class="deck-quantity-button" onclick="removeCardFromDeck('${escapeJsString(key)}')" > − </button> <span class="deck-quantity"> ${entry.quantity} </span> <button class="deck-quantity-button" onclick="addCardToDeckByKey('${escapeJsString(key)}')" > + </button> </div> </div> ` ).join(""); } /* ========================================================= ESCAPE CHIAVE JAVASCRIPT ========================================================= */ function escapeJsString(value) { return String(value) .replace(/\\/g, "\\\\") .replace(/'/g, "\\'"); } /* ========================================================= AGGIUNGI DA CHIAVE ========================================================= */ function addCardToDeckByKey(key) { const entry = deck.cards[key]; if (!entry) { return; } addCardToDeck( entry.card ); } /* ========================================================= SVUOTA MAZZO ========================================================= */ function clearDeck() { const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (!hasCards) { return; } const confirmed = confirm( "Vuoi davvero svuotare completamente il mazzo?" ); if (!confirmed) { return; } deck = { format: deck.format, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= APERTURA PANNELLO DECK ========================================================= */ function toggleDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.toggle( "active" ); overlay.classList.toggle( "active" ); } /* ========================================================= CHIUSURA PANNELLO DECK ========================================================= */ function closeDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.remove( "active" ); overlay.classList.remove( "active" ); } /* ========================================================= CARICAMENTO CARTE ========================================================= */ 
+ /* * Conteggio pulsante flottante. */ const totalVisible = stats.mainCount + ( deck.commander ? 1 : 0 ); const deckButtonCount = document.getElementById( "deckButtonCount" ); if (deckButtonCount) { deckButtonCount.textContent = totalVisible; } /* * Conteggio principale. */ const deckCount = document.getElementById( "deckCount" ); if ( deckCount ) { if ( deck.format === "standard" ) { deckCount.textContent = `${stats.mainCount} / 60 carte`; } else { deckCount.textContent = `${stats.mainCount} / 99 carte + ${deck.commander ? 1 : 0} comandante`; } } /* * Validità. */ const validity = document.getElementById( "deckValidity" ); if (validity) { validity.textContent = stats.message; validity.classList.remove( "valid", "invalid" ); validity.classList.add( stats.valid ? "valid" : "invalid" ); } const colorWarning = document.getElementById("deckColorWarning");
+
+if (colorWarning) {
+
+    if (
+        deck.format === "commander" &&
+        colorWarnings.length > 0
+    ) {
+
+        const names = colorWarnings.map(
+            warning => warning.card.name
+        );
+
+        colorWarning.textContent =
+            "⚠️ Possibili carte fuori dall'identità di colore: " +
+            names.join(", ");
+
+        colorWarning.style.display = "block";
+
+    } else {
+
+        colorWarning.textContent = "";
+        colorWarning.style.display = "none";
+
+    }
+}/* * Sezione comandante. */ updateCommanderUI(); /* * Lista carte. */ updateDeckListUI(); /* * Aggiorna i badge direttamente sulle carte visibili. */ updateCardDeckBadges(); } /* ========================================================= AGGIORNA COMANDANTE ========================================================= */ function updateCommanderUI() { const container = document.getElementById( "commanderContainer" ); if (!container) { return; } if ( deck.format !== "commander" ) { container.innerHTML = ` <div class="commander-empty"> Disponibile solo in formato Commander. </div> `; return; } if ( !deck.commander ) { container.innerHTML = ` <div class="commander-empty"> Nessun comandante selezionato. <br> Usa il pulsante 👑 su una carta Legendary. </div> `; return; } const commander = deck.commander; container.innerHTML = ` <div class="commander-card"> <img class="commander-card-image" src="${commander.image || ""}" alt="${commander.name || ""}" onerror="this.style.display='none'" > <div class="commander-card-info"> <div class="commander-card-name"> ${commander.name || ""} </div> <div class="commander-card-type"> ${commander.type_line || ""} </div> </div> <button class="commander-remove" onclick="removeCommander()" title="Rimuovi comandante" > × </button> </div> `; } /* ========================================================= AGGIORNA LISTA DECK ========================================================= */ function updateDeckListUI() { const container = document.getElementById( "deckCards" ); const uniqueCount = document.getElementById( "deckUniqueCount" ); if ( !container ) { return; } const entries = Object.entries( deck.cards ); if ( uniqueCount ) { uniqueCount.textContent = `${entries.length} ${entries.length === 1 ? "carta" : "carte"}`; } if ( entries.length === 0 ) { container.innerHTML = ` <div class="deck-empty"> Il tuo mazzo è vuoto.<br> Usa il pulsante <strong>+</strong> sulle carte per aggiungerle. </div> `; return; } entries.sort( (a, b) => { const nameA = String( a[1].card.name || "" ); const nameB = String( b[1].card.name || "" ); return nameA.localeCompare( nameB, "it", { sensitivity: "base" } ); } ); container.innerHTML = entries.map( ([key, entry]) => ` <div class="deck-item"> <img class="deck-item-image" src="${entry.card.image || ""}" alt="${entry.card.name || ""}" onerror="this.style.display='none'" > <div class="deck-item-name"> ${entry.card.name || ""} </div> <div class="deck-item-controls"> <button class="deck-quantity-button" onclick="removeCardFromDeck('${escapeJsString(key)}')" > − </button> <span class="deck-quantity"> ${entry.quantity} </span> <button class="deck-quantity-button" onclick="addCardToDeckByKey('${escapeJsString(key)}')" > + </button> </div> </div> ` ).join(""); } /* ========================================================= ESCAPE CHIAVE JAVASCRIPT ========================================================= */ function escapeJsString(value) { return String(value) .replace(/\\/g, "\\\\") .replace(/'/g, "\\'"); } /* ========================================================= AGGIUNGI DA CHIAVE ========================================================= */ function addCardToDeckByKey(key) { const entry = deck.cards[key]; if (!entry) { return; } addCardToDeck( entry.card ); } /* ========================================================= SVUOTA MAZZO ========================================================= */ function clearDeck() { const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (!hasCards) { return; } const confirmed = confirm( "Vuoi davvero svuotare completamente il mazzo?" ); if (!confirmed) { return; } deck = { format: deck.format, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= APERTURA PANNELLO DECK ========================================================= */ function toggleDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.toggle( "active" ); overlay.classList.toggle( "active" ); } /* ========================================================= CHIUSURA PANNELLO DECK ========================================================= */ function closeDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.remove( "active" ); overlay.classList.remove( "active" ); } /* ========================================================= CARICAMENTO CARTE ========================================================= */ 
 async function loadCards() {
 
     try {
