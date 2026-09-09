@@ -234,6 +234,69 @@ background: linear-gradient( 145deg, #242424, #141414 ); border-left: 1px solid 
     font-size: 12px;
     line-height: 1.4;
 }
+.deck-standard-warning {
+    display: none;
+    margin-top: 8px;
+    padding: 8px 10px;
+    border: 1px solid #806b3f;
+    border-radius: 6px;
+    background: rgba(128, 107, 63, 0.12);
+    color: #d6b477;
+    font-size: 12px;
+    line-height: 1.4;
+}
+.deck-mana-curve {
+    margin-top: 18px;
+}
+
+.mana-curve {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 6px;
+    height: 130px;
+    padding: 10px 4px 0;
+}
+
+.mana-curve-column {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    min-width: 0;
+}
+
+.mana-curve-value {
+    height: 18px;
+    font-size: 11px;
+    color: #d6b477;
+    line-height: 18px;
+}
+
+.mana-curve-bar-container {
+    width: 100%;
+    height: 85px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.mana-curve-bar {
+    width: 70%;
+    min-height: 0;
+    border-radius: 3px 3px 0 0;
+    background: #806b3f;
+    transition: height 0.2s ease;
+}
+
+.mana-curve-label {
+    height: 20px;
+    margin-top: 4px;
+    font-size: 11px;
+    color: #aaa;
+}
 .deck-statistics {
     padding: 15px 20px;
     border-bottom: 1px solid #3d3d3d;
@@ -1918,6 +1981,10 @@ onclick="toggleDeckPanel()"
     class="deck-color-warning"
 ></div>
 </div>
+<div
+    id="deckStandardWarning"
+    class="deck-standard-warning"
+></div>
 <div class="deck-statistics">
 
     <div class="deck-section-title">
@@ -1970,7 +2037,16 @@ onclick="toggleDeckPanel()"
 </div>
 
 </div>
+<div class="deck-mana-curve">
 
+    <div class="deck-section-title">
+        CURVA DI MANA
+    </div>
+
+    <div id="deckManaCurve" class="mana-curve">
+    </div>
+
+</div>
 <div class="deck-commander">
 
 <div class="deck-section-title">
@@ -2419,6 +2495,21 @@ function getCommanderColorWarnings() {
     });
 
     return warnings;
+}
+function getStandardERCWarnings() {
+    if (deck.format !== "standard") {
+        return [];
+    }
+
+    return Object.values(deck.cards)
+        .filter(entry => {
+            const card = entry.card;
+
+            return (
+                card &&
+                card.set === "ERC"
+            );
+        });
 }/* ========================================================= AGGIORNA BADGE CARTE ========================================================= */ function updateCardDeckBadges() { const cards = window.currentDisplayedCards || []; const cardElements = document.querySelectorAll("#cards .card"); cardElements.forEach((cardElement, index) => { const card = cards[index]; if (!card) { return; } const quantity = getDeckQuantity(card); let badge = cardElement.querySelector(".card-deck-quantity"); if (quantity > 0) { if (!badge) { badge = document.createElement("div"); badge.className = "card-deck-quantity"; cardElement.appendChild(badge); } badge.textContent = `NEL MAZZO: ${quantity}`; } else if (badge) { badge.remove(); } }); } /* ========================================================= SALVATAGGIO DECK ========================================================= */ function saveDeck() { try { sessionStorage.setItem( DECK_STORAGE_KEY, JSON.stringify(deck) ); } catch (error) { console.error( "Errore salvataggio mazzo:", error ); } } /* ========================================================= CARICAMENTO DECK ========================================================= */ function loadDeck() { try { const saved = sessionStorage.getItem( DECK_STORAGE_KEY ); if (!saved) { updateDeckUI(); return; } const parsed = JSON.parse(saved); if ( !parsed || typeof parsed !== "object" ) { updateDeckUI(); return; } deck = { format: parsed.format === "commander" ? "commander" : "standard", cards: parsed.cards && typeof parsed.cards === "object" ? parsed.cards : {}, commander: parsed.commander || null }; document.getElementById( "deckFormat" ).value = deck.format; updateDeckUI(); } catch (error) { console.error( "Errore caricamento mazzo:", error ); deck = { format: "standard", cards: {}, commander: null }; updateDeckUI(); } } /* ========================================================= CAMBIO FORMATO ========================================================= */ function changeDeckFormat() { const newFormat = document.getElementById( "deckFormat" ).value; if ( newFormat === deck.format ) { return; } const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (hasCards) { const confirmed = confirm( "Cambiare formato svuoterà il mazzo attuale. Continuare?" ); if (!confirmed) { document.getElementById( "deckFormat" ).value = deck.format; return; } } deck = { format: newFormat, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= AGGIUNGI CARTA ========================================================= */ function addCardToDeck(card) { 
     if (!card) { return; } 
     const key = getCardKey(card); 
@@ -2489,7 +2580,8 @@ function getCommanderColorWarnings() {
         artifacts: 0,
         enchantments: 0,
         planeswalkers: 0,
-        other: 0
+        other: 0,
+        manaCurve: [0, 0, 0, 0, 0, 0, 0, 0]
     };
 
     const entries = Object.values(deck.cards);
@@ -2508,7 +2600,19 @@ const isToken = typeLine.includes("token");
 if (isToken) {
     return;
 }
+const isLand = typeLine.includes("land");
 
+if (!isLand) {
+    const manaValue = Number(card.cmc ?? 0);
+
+    if (Number.isFinite(manaValue)) {
+        if (manaValue >= 7) {
+            typeStats.manaCurve[7] += quantity;
+        } else if (manaValue >= 0) {
+            typeStats.manaCurve[manaValue] += quantity;
+        }
+    }
+}
 mainCount += quantity;
 
 if ( deck.format === "standard" && quantity > 4 ) {
@@ -2599,10 +2703,50 @@ if ( deck.format === "commander" && quantity > 1 ) {
         typeStats
     };
 }
+function renderManaCurve(manaCurve) {
+    const container = document.getElementById("deckManaCurve");
+
+    if (!container) {
+        return;
+    }
+
+    const labels = ["0", "1", "2", "3", "4", "5", "6", "7+"];
+
+    const maxValue = Math.max(...manaCurve, 1);
+
+    container.innerHTML = manaCurve.map((value, index) => {
+
+        const height = value > 0
+            ? Math.max((value / maxValue) * 100, 8)
+            : 0;
+
+        return `
+            <div class="mana-curve-column">
+
+                <div class="mana-curve-value">
+                    ${value}
+                </div>
+
+                <div class="mana-curve-bar-container">
+                    <div
+                        class="mana-curve-bar"
+                        style="height: ${height}%"
+                    ></div>
+                </div>
+
+                <div class="mana-curve-label">
+                    ${labels[index]}
+                </div>
+
+            </div>
+        `;
+    }).join("");
+}
 /* ========================================================= AGGIORNA INTERFACCIA DECK ========================================================= */ function updateDeckUI() { const stats = getDeckStats();
 const typeStats = stats.typeStats;
 const colorWarnings = getCommanderColorWarnings();
-
+const standardERCWarnings = getStandardERCWarnings();
+renderManaCurve(typeStats.manaCurve);
     document.getElementById("deckStatLands").textContent = typeStats.lands;
     document.getElementById("deckStatCreatures").textContent = typeStats.creatures;
     document.getElementById("deckStatInstants").textContent = typeStats.instants;
@@ -2634,6 +2778,28 @@ if (colorWarning) {
 
         colorWarning.textContent = "";
         colorWarning.style.display = "none";
+
+    }
+}
+const standardWarning =
+    document.getElementById("deckStandardWarning");
+
+if (standardWarning) {
+
+    if (
+        deck.format === "standard" &&
+        standardERCWarnings.length > 0
+    ) {
+
+        standardWarning.textContent =
+            "⚠️ Le carte ERC non sono bilanciate per il formato Standard e potrebbero risultare troppo forti se utilizzate in più copie.";
+
+        standardWarning.style.display = "block";
+
+    } else {
+
+        standardWarning.textContent = "";
+        standardWarning.style.display = "none";
 
     }
 }/* * Sezione comandante. */ updateCommanderUI(); /* * Lista carte. */ updateDeckListUI(); /* * Aggiorna i badge direttamente sulle carte visibili. */ updateCardDeckBadges(); } /* ========================================================= AGGIORNA COMANDANTE ========================================================= */ function updateCommanderUI() { const container = document.getElementById( "commanderContainer" ); if (!container) { return; } if ( deck.format !== "commander" ) { container.innerHTML = ` <div class="commander-empty"> Disponibile solo in formato Commander. </div> `; return; } if ( !deck.commander ) { container.innerHTML = ` <div class="commander-empty"> Nessun comandante selezionato. <br> Usa il pulsante 👑 su una carta Legendary. </div> `; return; } const commander = deck.commander; container.innerHTML = ` <div class="commander-card"> <img class="commander-card-image" src="${commander.image || ""}" alt="${commander.name || ""}" onerror="this.style.display='none'" > <div class="commander-card-info"> <div class="commander-card-name"> ${commander.name || ""} </div> <div class="commander-card-type"> ${commander.type_line || ""} </div> </div> <button class="commander-remove" onclick="removeCommander()" title="Rimuovi comandante" > × </button> </div> `; } /* ========================================================= AGGIORNA LISTA DECK ========================================================= */ function updateDeckListUI() { const container = document.getElementById( "deckCards" ); const uniqueCount = document.getElementById( "deckUniqueCount" ); if ( !container ) { return; } const entries = Object.entries( deck.cards ); if ( uniqueCount ) { uniqueCount.textContent = `${entries.length} ${entries.length === 1 ? "carta" : "carte"}`; } if ( entries.length === 0 ) { container.innerHTML = ` <div class="deck-empty"> Il tuo mazzo è vuoto.<br> Usa il pulsante <strong>+</strong> sulle carte per aggiungerle. </div> `; return; } entries.sort( (a, b) => { const nameA = String( a[1].card.name || "" ); const nameB = String( b[1].card.name || "" ); return nameA.localeCompare( nameB, "it", { sensitivity: "base" } ); } ); container.innerHTML = entries.map( ([key, entry]) => ` <div class="deck-item"> <img class="deck-item-image" src="${entry.card.image || ""}" alt="${entry.card.name || ""}" onerror="this.style.display='none'" > <div class="deck-item-name"> ${entry.card.name || ""} </div> <div class="deck-item-controls"> <button class="deck-quantity-button" onclick="removeCardFromDeck('${escapeJsString(key)}')" > − </button> <span class="deck-quantity"> ${entry.quantity} </span> <button class="deck-quantity-button" onclick="addCardToDeckByKey('${escapeJsString(key)}')" > + </button> </div> </div> ` ).join(""); } /* ========================================================= ESCAPE CHIAVE JAVASCRIPT ========================================================= */ function escapeJsString(value) { return String(value) .replace(/\\/g, "\\\\") .replace(/'/g, "\\'"); } /* ========================================================= AGGIUNGI DA CHIAVE ========================================================= */ function addCardToDeckByKey(key) { const entry = deck.cards[key]; if (!entry) { return; } addCardToDeck( entry.card ); } /* ========================================================= SVUOTA MAZZO ========================================================= */ function clearDeck() { const hasCards = Object.keys(deck.cards).length > 0 || deck.commander !== null; if (!hasCards) { return; } const confirmed = confirm( "Vuoi davvero svuotare completamente il mazzo?" ); if (!confirmed) { return; } deck = { format: deck.format, cards: {}, commander: null }; saveDeck(); updateDeckUI(); } /* ========================================================= APERTURA PANNELLO DECK ========================================================= */ function toggleDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.toggle( "active" ); overlay.classList.toggle( "active" ); } /* ========================================================= CHIUSURA PANNELLO DECK ========================================================= */ function closeDeckPanel() { const panel = document.getElementById( "deckPanel" ); const overlay = document.getElementById( "deckOverlay" ); panel.classList.remove( "active" ); overlay.classList.remove( "active" ); } /* ========================================================= CARICAMENTO CARTE ========================================================= */ 
