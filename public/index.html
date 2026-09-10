@@ -2097,7 +2097,34 @@ onclick="toggleDeckPanel()"
 
 
 
-<div class="deck-footer">    <button
+<div class="deck-footer"> 
+<div style="margin-bottom: 10px;">
+
+    <label
+        for="pdfQuality"
+        style="margin-right: 8px; color: #aaa;"
+    >
+        QUALITÀ PDF:
+    </label>
+
+    <select
+        id="pdfQuality"
+        style="
+            padding: 5px 8px;
+            border-radius: 5px;
+            border: 1px solid #806b3f;
+            background: #1b1b1b;
+            color: #ddd;
+        "
+    >
+        <option value="0.50">Bassa</option>
+        <option value="0.78">Media</option>
+        <option value="0.92" selected>Alta</option>
+        <option value="1.00">Massima</option>
+    </select>
+
+</div>
+   <button
         class="clear-deck-button"
         onclick="exportDeckToPDF()"
         style="margin-bottom: 10px; background: rgba(119,180,214,0.15); border-color: #38769c; color: #8cb8c9;"
@@ -3618,6 +3645,18 @@ function updateCardModal() {
 function flipModalCard() { const cards = window.currentDisplayedCards || []; const index = window.currentModalIndex; const card = cards[index]; if (!card) { return; } /* * ===================================================== * SE STIAMO GUARDANDO IL RETRO * TORNIAMO AL FRONTE * ===================================================== */ if (window.currentModalFace === "back") { window.currentModalFace = "front"; updateCardModal(); return; } /* * ===================================================== * CERCHIAMO IL RETRO * ===================================================== */ const backId = window.doubleFacedCards && window.doubleFacedCards[card.id]; if (!backId) { return; } /* * Cerchiamo il retro dentro allCards. */ const backCard = allCards.find( c => c.id === backId ); if (!backCard) { console.warn( "Retro non trovato:", backId ); return; } /* * Salviamo fronte e retro. */ window.modalFrontCard = card; window.modalBackCard = backCard; /* * ===================================================== * MOSTRIAMO IL RETRO * ===================================================== */ document.getElementById("modalImage").src = backCard.image || ""; document.getElementById("modalImage").alt = backCard.name || ""; document.getElementById("modalName").textContent = backCard.name || ""; document.getElementById("modalMana").innerHTML = renderManaCost(backCard.mana_cost); document.getElementById("modalType").textContent = backCard.type_line || ""; document.getElementById("modalOracle").textContent = backCard.oracle_text || ""; document.getElementById("modalFlavor").textContent = backCard.flavor_text || ""; document.getElementById("modalColors").textContent = backCard.color_identity && backCard.color_identity.length ? backCard.color_identity.join(" / ") : "Colorless"; document.getElementById("modalRarity").textContent = backCard.rarity || "—"; document.getElementById("modalSet").textContent = backCard.set || "—"; document.getElementById("modalCollector").textContent = backCard.collector_number || "—"; document.getElementById("modalArtist").textContent = backCard.artist || "—"; /* * ===================================================== * REVISIONE * ===================================================== */ const reviewBox = document.getElementById("modalReview"); if (backCard.needs_review === true) { reviewBox.style.display = "block"; } else { reviewBox.style.display = "none"; } /* * ===================================================== * STATISTICHE * ===================================================== */ const stats = backCard.power != null && backCard.toughness != null ? `${backCard.power} / ${backCard.toughness}` : ""; document.getElementById("modalStats").textContent = stats; /* * ===================================================== * MEMORIZZIAMO CHE SIAMO SUL RETRO * ===================================================== */ window.currentModalFace = "back"; } /* ========================================================= NAVIGAZIONE MODALE ========================================================= */ function updateModalNavigation() { const cards = window.currentDisplayedCards || []; const index = window.currentModalIndex; const previousButton = document.getElementById( "prevCard" ); const nextButton = document.getElementById( "nextCard" ); if ( !previousButton || !nextButton ) { return; } previousButton.disabled = index <= 0; nextButton.disabled = index >= cards.length - 1; } function showPreviousCard() { if ( window.currentModalIndex > 0 ) { window.currentModalIndex--; updateCardModal(); } } function showNextCard() { const cards = window.currentDisplayedCards || []; if ( window.currentModalIndex < cards.length - 1 ) { window.currentModalIndex++; updateCardModal(); } } function closeCardModal() { document .getElementById("cardModal") .classList .remove("active"); } /* ========================================================= CHIUSURA MODALE CLICCANDO FUORI ========================================================= */ document .getElementById("cardModal").addEventListener( "click", event => { if ( event.target.id === "cardModal" ) { closeCardModal(); } } ); /* ========================================================= ORDINAMENTO ========================================================= */ function sortCards() { searchCards(); } function sortFilteredCards(cards) { const sortValue = document.getElementById( "sortSelect" ).value; return [...cards].sort( (a, b) => { if ( sortValue === "name" ) { return ( (a.name || "") .localeCompare( b.name || "", "it", { sensitivity: "base" } ) ); } if ( sortValue === "cmc" ) { return ( Number(a.cmc || 0) - Number(b.cmc || 0) ); } if ( sortValue === "type" ) { return ( (a.type_line || "") .localeCompare( b.type_line || "", "it", { sensitivity: "base" } ) ); } if ( sortValue === "power" ) { return ( Number(a.power || 0) - Number(b.power || 0) ); } if ( sortValue === "toughness" ) { return ( Number(a.toughness || 0) - Number(b.toughness || 0) ); } return 0; } ); } /* ========================================================= TASTIERA ========================================================= */ document.addEventListener( "keydown", event => { if ( event.key === "Escape" ) { closeCardModal(); closeDeckPanel(); return; } const modal = document.getElementById( "cardModal" ); if ( !modal.classList.contains( "active" ) ) { return; } if ( event.key === "ArrowLeft" ) { showPreviousCard(); } if ( event.key === "ArrowRight" ) { showNextCard(); } } ); /* ========================================================= AVVIO ========================================================= */ loadDeck(); loadCards();
 /* ========================================================= ESPORTAZIONE PDF PROXY ========================================================= */
 function exportDeckToPDF() {
+// Avviso per il browser interno di Instagram
+    const isInstagramBrowser = /Instagram/i.test(navigator.userAgent);
+
+    if (isInstagramBrowser) {
+        alert(
+            "⚠️ Il browser interno di Instagram può impedire il download del PDF.\n\n" +
+            "Apri EldenRing-Scryfall nel browser esterno (Chrome o Safari) " +
+            "per esportare il PDF."
+        );
+
+        return;
+    }
     const cardEntries = Object.values(deck.cards);
     const hasCommander = deck.commander !== null;
     
@@ -3633,6 +3672,12 @@ function exportDeckToPDF() {
     }
 
     const { jsPDF } = window.jspdf;
+// Qualità immagini PDF selezionata dall'utente
+const qualitySelect = document.getElementById("pdfQuality");
+
+const imageQuality = qualitySelect
+    ? parseFloat(qualitySelect.value)
+    : 0.92;
     // Crea un documento PDF in formato A4 verticale
     const doc = new jsPDF({
         orientation: "portrait",
@@ -3753,7 +3798,7 @@ function exportDeckToPDF() {
                 canvas.height = img.naturalHeight;
                 const ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0);
-                const imgData = canvas.toDataURL("image/jpeg", 0.95);
+                const imgData = canvas.toDataURL("image/jpeg", imageQuality);
 
                 // Calcolo della posizione nella griglia
                 const pageIndex = Math.floor(index / cardsPerPage);
@@ -3762,13 +3807,16 @@ function exportDeckToPDF() {
                 const row = Math.floor(positionOnPage / cols);
 
                 if (pageIndex > 0 && positionOnPage === 0) {
-                    doc.addPage();
-                }
+    doc.addPage();
+    drawCutGrid();
+}
 
                 const x = marginLeft + col * (cardWidth + horizontalSpacing);
                 const y = marginTop + row * (cardHeight + verticalSpacing);
 
+
                 doc.addImage(imgData, "JPEG", x, y, cardWidth, cardHeight);
+
             } catch (e) {
                 console.error("Errore durante l'aggiunta dell'immagine al PDF:", e);
             }
@@ -3783,6 +3831,83 @@ function exportDeckToPDF() {
 
         img.src = imageUrl;
     }
+
+ // =====================================================
+// GRIGLIA DI TAGLIO
+// =====================================================
+
+function drawCutGrid() {
+
+    doc.setDrawColor(220, 0, 0);
+    doc.setLineWidth(0.25);
+
+    // Linea tratteggiata
+    doc.setLineDashPattern([1.5, 1], 0);
+
+
+    // -------------------------------------------------
+    // LINEE VERTICALI
+    // -------------------------------------------------
+
+    for (let col = 0; col < cols; col++) {
+
+        const x =
+            marginLeft +
+            col * (cardWidth + horizontalSpacing);
+
+        // Bordo sinistro
+        doc.line(
+            x,
+            marginTop,
+            x,
+            marginTop + rows * (cardHeight + verticalSpacing) - verticalSpacing
+        );
+
+        // Bordo destro
+        doc.line(
+            x + cardWidth,
+            marginTop,
+            x + cardWidth,
+            marginTop + rows * (cardHeight + verticalSpacing) - verticalSpacing
+        );
+    }
+
+
+    // -------------------------------------------------
+    // LINEE ORIZZONTALI
+    // -------------------------------------------------
+
+    for (let row = 0; row < rows; row++) {
+
+        const y =
+            marginTop +
+            row * (cardHeight + verticalSpacing);
+
+        // Bordo superiore
+        doc.line(
+            marginLeft,
+            y,
+            marginLeft + cols * (cardWidth + horizontalSpacing) - horizontalSpacing,
+            y
+        );
+
+        // Bordo inferiore
+        doc.line(
+            marginLeft,
+            y + cardHeight,
+            marginLeft + cols * (cardWidth + horizontalSpacing) - horizontalSpacing,
+            y + cardHeight
+        );
+    }
+
+
+    // Ripristina linea continua
+    doc.setLineDashPattern([], 0);
+}
+
+// Disegna la griglia sulla prima pagina
+drawCutGrid();
+
 
     // Avvia il processo di generazione
     processNextCard(0);
