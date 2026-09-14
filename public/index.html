@@ -3763,6 +3763,41 @@ const imageQuality = qualitySelect
         }
     }
 });
+
+/* =========================================================
+   CARTE REGOLA PDF
+   ========================================================= */
+
+const ruleCards = [
+    {
+        name: "Regola 1",
+        image: "/rules/regola_01.png"
+    },
+    {
+        name: "Regola 2",
+        image: "/rules/regola_02.png"
+    },
+    {
+        name: "Regola 3",
+        image: "/rules/regola_03.png"
+    },
+    {
+        name: "Regola 4",
+        image: "/rules/regola_04.png"
+    },
+    {
+        name: "Regola 5",
+        image: "/rules/regola_05.png"
+    }
+];
+
+ruleCards.forEach(rule => {
+    itemsToPrint.push({
+        card: rule,
+        quantity: 1
+    });
+});
+
     // Configurazione griglia proxy (es. 3 colonne x 3 righe per pagina A4)
     const cols = 3;
     const rows = 3;
