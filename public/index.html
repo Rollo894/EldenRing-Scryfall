@@ -1480,6 +1480,40 @@ body > * {
         animation: none;
     }
 }
+
+/* =========================================================
+   LANGUAGE SWITCH
+   ========================================================= */
+
+.language-switch {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.language-switch button {
+    padding: 5px 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 5px;
+    background: rgba(255,255,255,0.06);
+    color: #aaa;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.language-switch button:hover {
+    background: rgba(255,255,255,0.12);
+    color: white;
+}
+
+.language-switch button.active {
+    background: rgba(214,180,119,0.22);
+    border-color: #d6b477;
+    color: #fff;
+}
+
 </style>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1492,8 +1526,12 @@ body > * {
 
 <h1>ELDENRING-SCRYFALL</h1>
 
-</header>
+<div class="language-switch">
+    <button id="langIT" onclick="setLanguage('it')">🇮🇹 IT</button>
+    <button id="langEN" onclick="setLanguage('en')">🇬🇧 EN</button>
+</div>
 
+</header>
 <!-- ========================================================= RICERCA ========================================================= -->
 
 <div class="search-section">
@@ -4001,7 +4039,389 @@ drawCutGrid();
     }
 
 </script>
+
+<script>
+/* =========================================================
+   LANGUAGE SWITCH — IT / EN
+   ========================================================= */
+
+const translations = {
+    it: {
+        deckBuilder: "COSTRUTTORE MAZZO",
+        format: "FORMATO",
+        deckCards: "carte",
+        invalidDeck: "Mazzo non valido",
+        deckStatistics: "STATISTICHE DEL MAZZO",
+        lands: "TERRE",
+        creatures: "CREATURE",
+        instants: "ISTANTANEI",
+        sorceries: "STREGONERIE",
+        artifacts: "ARTEFATTI",
+        enchantments: "INCANTESIMI",
+        planeswalkers: "PLANESWALKER",
+        other: "ALTRO",
+        manaCurve: "CURVA DI MANA",
+        commander: "COMANDANTE",
+        commanderOnly: "Disponibile solo in formato Commander.",
+        commanderLegendary: "Seleziona una carta leggendaria con 👑.",
+        mainDeck: "MAZZO PRINCIPALE",
+        emptyDeck: "Il tuo mazzo è vuoto.",
+        addCards: "Usa il pulsante + sulle carte per aggiungerle.",
+        pdfQuality: "QUALITÀ PDF:",
+        low: "Bassa",
+        medium: "Media",
+        high: "Alta",
+        maximum: "Massima",
+        exportPDF: "📄 ESPORTA PDF PROXY",
+        clearDeck: "🗑 SVUOTA MAZZO",
+        searchPlaceholder: "Cerca per nome, tipo, abilità...",
+        searchButton: "🔍 CERCA",
+        clearSearch: "Cancella ricerca",
+        advancedSearch: "⚙ RICERCA AVANZATA",
+        hint: "Puoi cercare liberamente oppure usare",
+        color: "COLORE",
+        type: "TIPO",
+        creature: "Creature",
+        instant: "Istantanei",
+        sorcery: "Stregonerie",
+        artifact: "Artefatti",
+        enchantment: "Incantesimi",
+        land: "Terre",
+        colors: "Colori",
+        inclusive: "Inclusivi",
+        exact: "Esatti",
+        cost: "Costo",
+        any: "Qualsiasi",
+        rarity: "Rarità",
+        common: "Comune",
+        uncommon: "Non comune",
+        rare: "Rara",
+        mythic: "Mitica",
+        sort: "Ordina",
+        none: "Nessun ordinamento",
+        name: "Nome",
+        manaCost: "Costo di mana",
+        power: "Forza",
+        toughness: "Costituzione",
+        reset: "✕ Cancella filtri",
+        close: "CHIUDI",
+        white: "Bianco",
+        blue: "Blu",
+        black: "Nero",
+        red: "Rosso",
+        green: "Verde",
+        multicolor: "Multicolore",
+        colorless: "Incolore",
+        disclaimerTitle: "DISCLAIMER",
+        disclaimer: `Eldenring-Scryfall is an unofficial, fan-made and non-commercial
+        project created purely as a creative tribute to Elden Ring and
+        Magic: The Gathering.`
+    },
+
+    en: {
+        deckBuilder: "DECK BUILDER",
+        format: "FORMAT",
+        deckCards: "cards",
+        invalidDeck: "Invalid deck",
+        deckStatistics: "DECK STATISTICS",
+        lands: "LANDS",
+        creatures: "CREATURES",
+        instants: "INSTANTS",
+        sorceries: "SORCERIES",
+        artifacts: "ARTIFACTS",
+        enchantments: "ENCHANTMENTS",
+        planeswalkers: "PLANESWALKERS",
+        other: "OTHER",
+        manaCurve: "MANA CURVE",
+        commander: "COMMANDER",
+        commanderOnly: "Available only in Commander format.",
+        commanderLegendary: "Select a legendary card with 👑.",
+        mainDeck: "MAIN DECK",
+        emptyDeck: "Your deck is empty.",
+        addCards: "Use the + button on cards to add them.",
+        pdfQuality: "PDF QUALITY:",
+        low: "Low",
+        medium: "Medium",
+        high: "High",
+        maximum: "Maximum",
+        exportPDF: "📄 EXPORT PROXY PDF",
+        clearDeck: "🗑 CLEAR DECK",
+        searchPlaceholder: "Search by name, type, ability...",
+        searchButton: "🔍 SEARCH",
+        clearSearch: "Clear search",
+        advancedSearch: "⚙ ADVANCED SEARCH",
+        hint: "You can search freely or use",
+        color: "COLOR",
+        type: "TYPE",
+        creature: "Creature",
+        instant: "Instants",
+        sorcery: "Sorceries",
+        artifact: "Artifacts",
+        enchantment: "Enchantments",
+        land: "Lands",
+        colors: "Colors",
+        inclusive: "Inclusive",
+        exact: "Exact",
+        cost: "Cost",
+        any: "Any",
+        rarity: "Rarity",
+        common: "Common",
+        uncommon: "Uncommon",
+        rare: "Rare",
+        mythic: "Mythic",
+        sort: "Sort",
+        none: "No sorting",
+        name: "Name",
+        manaCost: "Mana cost",
+        power: "Power",
+        toughness: "Toughness",
+        reset: "✕ Clear filters",
+        close: "CLOSE",
+        white: "White",
+        blue: "Blue",
+        black: "Black",
+        red: "Red",
+        green: "Green",
+        multicolor: "Multicolor",
+        colorless: "Colorless",
+        disclaimerTitle: "DISCLAIMER"
+    }
+};
+
+let currentLanguage = localStorage.getItem("eldenring-language") || "it";
+
+function setLanguage(lang) {
+
+    currentLanguage = lang;
+
+    localStorage.setItem("eldenring-language", lang);
+
+    const t = translations[lang];
+
+    /* Ricerca */
+    document.getElementById("search").placeholder = t.searchPlaceholder;
+
+    document.querySelector(".search-button").textContent = t.searchButton;
+
+    document.getElementById("clearSearch").title = t.clearSearch;
+
+    document.querySelector(".advanced-search-toggle").textContent = t.advancedSearch;
+
+    /* Titoli filtri */
+    const filterTitles = document.querySelectorAll(".filter-title");
+
+    if (filterTitles[0]) filterTitles[0].textContent = t.color;
+    if (filterTitles[1]) filterTitles[1].textContent = t.type;
+
+    /* Filtri colore */
+    const colorButtons = document.querySelectorAll(".color-filter, .multicolor-filter");
+
+    colorButtons.forEach(button => {
+
+        const icon = button.querySelector("img");
+
+        if (button.classList.contains("white")) {
+            button.title = t.white;
+        } else if (button.classList.contains("blue")) {
+            button.title = t.blue;
+        } else if (button.classList.contains("black")) {
+            button.title = t.black;
+        } else if (button.classList.contains("red")) {
+            button.title = t.red;
+        } else if (button.classList.contains("green")) {
+            button.title = t.green;
+        } else if (button.classList.contains("multicolor-filter")) {
+            button.title = t.multicolor;
+        } else if (button.classList.contains("colorless")) {
+            button.title = t.colorless;
+        }
+
+    });
+
+    /* Filtri tipo */
+    const typeButtons = document.querySelectorAll(".text-filter");
+
+    if (typeButtons[0]) typeButtons[0].textContent = t.creature;
+    if (typeButtons[1]) typeButtons[1].textContent = t.instant;
+    if (typeButtons[2]) typeButtons[2].textContent = t.sorcery;
+    if (typeButtons[3]) typeButtons[3].textContent = t.artifact;
+    if (typeButtons[4]) typeButtons[4].textContent = t.enchantment;
+    if (typeButtons[5]) typeButtons[5].textContent = t.land;
+
+    /* Toolbar */
+    const labels = document.querySelectorAll(".toolbar-group label");
+
+    if (labels[0]) labels[0].textContent = t.colors;
+    if (labels[1]) labels[1].textContent = t.cost;
+    if (labels[2]) labels[2].textContent = t.rarity;
+    if (labels[3]) labels[3].textContent = t.sort;
+
+    /* Color mode */
+    const colorMode = document.getElementById("colorMode");
+
+    if (colorMode) {
+        colorMode.options[0].textContent = t.inclusive;
+        colorMode.options[1].textContent = t.exact;
+    }
+
+    /* CMC */
+    const cmcFilter = document.getElementById("cmcFilter");
+
+    if (cmcFilter) {
+        cmcFilter.options[0].textContent = t.any;
+    }
+
+    /* Rarità */
+    const rarityFilter = document.getElementById("rarityFilter");
+
+    if (rarityFilter) {
+        rarityFilter.options[0].textContent = t.any;
+        rarityFilter.options[1].textContent = t.common;
+        rarityFilter.options[2].textContent = t.uncommon;
+        rarityFilter.options[3].textContent = t.rare;
+        rarityFilter.options[4].textContent = t.mythic;
+    }
+
+    /* Ordinamento */
+    const sortSelect = document.getElementById("sortSelect");
+
+    if (sortSelect) {
+        sortSelect.options[0].textContent = t.none;
+        sortSelect.options[1].textContent = t.name;
+        sortSelect.options[2].textContent = t.manaCost;
+        sortSelect.options[3].textContent = t.type;
+        sortSelect.options[4].textContent = t.power;
+        sortSelect.options[5].textContent = t.toughness;
+    }
+
+    /* Reset */
+    const resetButton = document.querySelector(".reset-button");
+
+    if (resetButton) {
+        resetButton.textContent = t.reset;
+    }
+
+    /* Chiusura ricerca avanzata */
+    const closeButton = document.querySelector(".advanced-search-close");
+
+    if (closeButton) {
+        closeButton.textContent = t.close;
+    }
+
+    /* Lingua attiva */
+    document.getElementById("langIT").classList.toggle("active", lang === "it");
+    document.getElementById("langEN").classList.toggle("active", lang === "en");
+
+
+/* Deck Builder */
+
+    const deckTitle = document.querySelector("#deckPanel h2");
+    if (deckTitle) deckTitle.textContent = t.deckBuilder;
+
+    const deckFormatLabel = document.querySelector(".deck-format-label");
+    if (deckFormatLabel) deckFormatLabel.textContent = t.format;
+
+    const deckValidity = document.getElementById("deckValidity");
+    if (deckValidity && deckValidity.classList.contains("invalid")) {
+        deckValidity.textContent = t.invalidDeck;
+    }
+
+    const deckSectionTitles = document.querySelectorAll(".deck-section-title");
+
+    if (deckSectionTitles[0]) {
+        deckSectionTitles[0].textContent = t.deckStatistics;
+    }
+
+    if (deckSectionTitles[1]) {
+        deckSectionTitles[1].textContent = t.manaCurve;
+    }
+
+    if (deckSectionTitles[2]) {
+        deckSectionTitles[2].textContent = t.commander;
+    }
+
+    const statLabels = document.querySelectorAll(".deck-stat-label");
+
+    if (statLabels[0]) statLabels[0].textContent = t.lands;
+    if (statLabels[1]) statLabels[1].textContent = t.creatures;
+    if (statLabels[2]) statLabels[2].textContent = t.instants;
+    if (statLabels[3]) statLabels[3].textContent = t.sorceries;
+    if (statLabels[4]) statLabels[4].textContent = t.artifacts;
+    if (statLabels[5]) statLabels[5].textContent = t.enchantments;
+    if (statLabels[6]) statLabels[6].textContent = t.planeswalkers;
+    if (statLabels[7]) statLabels[7].textContent = t.other;
+
+    const commanderEmpty = document.querySelector(".commander-empty");
+
+    if (commanderEmpty) {
+        commanderEmpty.innerHTML =
+            t.commanderOnly +
+            "<br>" +
+            t.commanderLegendary;
+    }
+
+    const deckListTitle = document.querySelector(".deck-list-title span");
+
+    if (deckListTitle) {
+        deckListTitle.textContent = t.mainDeck;
+    }
+
+    const deckEmpty = document.querySelector(".deck-empty");
+
+    if (deckEmpty) {
+        deckEmpty.innerHTML =
+            t.emptyDeck +
+            "<br>" +
+            t.addCards;
+    }
+
+    const pdfQualityLabel = document.querySelector(
+        'label[for="pdfQuality"]'
+    );
+
+    if (pdfQualityLabel) {
+        pdfQualityLabel.textContent = t.pdfQuality;
+    }
+
+    const pdfQuality = document.getElementById("pdfQuality");
+
+    if (pdfQuality) {
+        pdfQuality.options[0].textContent = t.low;
+        pdfQuality.options[1].textContent = t.medium;
+        pdfQuality.options[2].textContent = t.high;
+        pdfQuality.options[3].textContent = t.maximum;
+    }
+
+    const deckButtons = document.querySelectorAll(
+        ".deck-footer .clear-deck-button"
+    );
+
+    if (deckButtons[0]) {
+        deckButtons[0].textContent = t.exportPDF;
+    }
+
+    if (deckButtons[1]) {
+        deckButtons[1].textContent = t.clearDeck;
+    }
+
+
+
+    /* HTML */
+    document.documentElement.lang = lang;
+}
+
+/* Imposta la lingua al caricamento */
+document.addEventListener("DOMContentLoaded", function() {
+    setLanguage(currentLanguage);
+});
+
+
+</script>
+
+
 <footer class="site-footer">
+
+
     <div class="disclaimer-title">DISCLAIMER</div>
 
     <div class="disclaimer-text">
