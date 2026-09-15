@@ -1317,6 +1317,229 @@ header {
 }
 
 /* ========================================================= RISERVA MANA ========================================================= */ .mana-pool { position: fixed; bottom: 14px; right: 14px; z-index: 5000; min-width: 210px; padding: 10px 14px; background: rgba(18, 19, 18, 0.95); border: 1px solid rgba(180, 160, 100, 0.30); border-radius: 8px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.60); font-family: 'Cormorant SC', serif; } .mana-pool-title { margin-bottom: 7px; text-align: center; font-size: 11px; letter-spacing: 2px; color: #cfc29d; } .mana-pool-values { display: flex; justify-content: center; gap: 9px; font-size: 13px; color: #ddd5bd; }
+
+/* =========================================================
+   LIBRARY CARD SELECTOR
+   ========================================================= */
+
+.library-selector {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.82);
+
+    padding: 30px;
+
+    box-sizing: border-box;
+}
+
+.library-selector.hidden {
+    display: none;
+}
+
+.library-selector-panel {
+    width: min(1100px, 95vw);
+    height: min(850px, 90vh);
+
+    display: flex;
+    flex-direction: column;
+
+    background: #171717;
+    border: 1px solid #555;
+    border-radius: 10px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.8);
+
+    overflow: hidden;
+}
+
+.library-selector-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 22px;
+
+    border-bottom: 1px solid #444;
+}
+
+.library-selector-header h2 {
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.library-selector-close {
+    width: 38px;
+    height: 38px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #2b2b2b;
+    color: #fff;
+
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.library-selector-close:hover {
+    background: #444;
+}
+
+.library-selector-search {
+    padding: 14px 20px;
+
+    border-bottom: 1px solid #333;
+}
+
+#librarySearchInput {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid #555;
+    border-radius: 6px;
+
+    background: #101010;
+    color: #fff;
+
+    font-size: 16px;
+    outline: none;
+}
+
+#librarySearchInput:focus {
+    border-color: #888;
+}
+
+.library-selector-cards {
+    flex: 1;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(150px, 1fr));
+
+    gap: 16px;
+
+    padding: 20px;
+
+    overflow-y: auto;
+}
+
+.library-selector-card {
+    position: relative;
+
+    cursor: pointer;
+
+    border-radius: 8px;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.library-selector-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.7);
+}
+
+.library-selector-card img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    border-radius: 8px;
+}
+
+.library-selector-card-name {
+    margin-top: 6px;
+
+    font-size: 13px;
+    line-height: 1.25;
+
+    text-align: center;
+
+    color: #ddd;
+}
+
+.library-selector-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 20px;
+
+    border-top: 1px solid #444;
+
+    background: #121212;
+}
+
+.library-selector-footer span {
+    color: #aaa;
+    font-size: 14px;
+}
+
+.library-selector-footer button {
+    padding: 9px 16px;
+
+    border: 1px solid #555;
+    border-radius: 6px;
+
+    background: #292929;
+    color: #fff;
+
+    cursor: pointer;
+}
+
+.library-selector-footer button:hover {
+    background: #3a3a3a;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .library-selector {
+        padding: 10px;
+    }
+
+    .library-selector-panel {
+        width: 100%;
+        height: 95vh;
+    }
+
+    .library-selector-cards {
+        grid-template-columns:
+            repeat(auto-fill, minmax(110px, 1fr));
+
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .library-selector-header {
+        padding: 14px;
+    }
+
+    .library-selector-search {
+        padding: 10px;
+    }
+}
+
 </style>
 
 </head>
@@ -1730,15 +1953,79 @@ header {
 
 </main>
 
+<!-- =========================================================
+     LIBRARY CARD SELECTOR
+     ========================================================= -->
 
+<div id="librarySelector" class="library-selector hidden">
 
-<script> /* ========================================================= STATO DEL GIOCO ========================================================= */ let playerLife = 40; let opponentLife = 40; let turnNumber = 1; let currentPhase = "main1"; let library = []; let hand = []; let battlefield = []; let graveyard = []; let exile = []; let commander = null;
+    <div class="library-selector-panel">
+
+        <div class="library-selector-header">
+            <h2>Scegli una carta</h2>
+
+            <button
+                type="button"
+                class="library-selector-close"
+                onclick="closeLibrarySelector()"
+            >
+                ✕
+            </button>
+        </div>
+
+        <div class="library-selector-search">
+
+            <input
+                type="text"
+                id="librarySearchInput"
+                placeholder="Cerca nella library..."
+                autocomplete="off"
+            >
+
+        </div>
+
+        <div
+            id="librarySelectorCards"
+            class="library-selector-cards"
+        >
+        </div>
+
+        <div class="library-selector-footer">
+
+            <span id="librarySelectorCount">
+                0 carte
+            </span>
+
+            <button
+                type="button"
+                onclick="closeLibrarySelector()"
+            >
+                Annulla
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script> /* ========================================================= STATO DEL GIOCO ========================================================= */ let playerLife = 40;
+let opponentLife = 40;
+let turnNumber = 1;
+let currentPhase = "main1";
+let library = [];
+let hand = []; 
+let battlefield = []; 
+let graveyard = []; 
+let exile = [];
+let stack = [];
+let commander = null;
 let opponentBattlefield = [];
 let opponentGraveyard = [];
 let opponentExile = [];
 let opponentCommander = null;
- let deck = null;
- let allCards = [];
+let deck = null;
+let allCards = [];
 let landPlayedThisTurn = false;
 let attackingCreatures = [];
 let attackDeclared = false;
@@ -2202,7 +2489,417 @@ function parseManaCost(manaCost) { const result = { generic: 0, W: 0, U: 0, B: 0
 /* ========================================================= CONTROLLO COSTO MANA ========================================================= */function canPayManaCost(card) { if (!card) { return false; } const cost = parseManaCost( card.mana_cost ); /* * ================================================= * COPIA TEMPORANEA DELLA RISERVA * ================================================= * * Non modifichiamo ancora manaPool. */ const available = { W: manaPool.W, U: manaPool.U, B: manaPool.B, R: manaPool.R, G: manaPool.G, C: manaPool.C }; /* * ================================================= * MANA COLORATO NORMALE * ================================================= */ const colors = [ "W", "U", "B", "R", "G", "C" ]; for ( const color of colors ) { if ( available[color] < cost[color] ) { return false; } available[color] -= cost[color]; } /* * ================================================= * MANA IBRIDO * ================================================= * * Ogni simbolo deve essere pagato scegliendo * una delle alternative disponibili. * * Esempio: * * {G/W} * * può usare G oppure W. */ for ( const options of cost.hybrid ) { let paid = false; /* * Cerchiamo la prima alternativa * disponibile. */ for ( const color of options ) { if ( available[color] > 0 ) { available[color]--; paid = true; break; } } /* * Nessuna delle alternative * era disponibile. */ if (!paid) { return false; } } /* * ================================================= * MANA GENERICO * ================================================= * * Tutto il mana rimasto può pagare * il costo generico. */ let remainingGeneric = cost.generic; for ( const color of colors ) { if ( remainingGeneric <= 0 ) { break; } const used = Math.min( available[color], remainingGeneric ); available[color] -= used; remainingGeneric -= used; } /* * Se abbiamo ancora mana generico * da pagare, il costo non è sostenibile. */ if ( remainingGeneric > 0 ) { return false; } return true; }
 /* ========================================================= PAGA COSTO MANA ========================================================= */ function payManaCost(card) { if (!card) { return false; } const cost = parseManaCost(card.mana_cost); if (!canPayManaCost(card)) { console.log( "Mana insufficiente:", card.name ); return false; } const colors = [ "W", "U", "B", "R", "G", "C" ]; for (const color of colors) { manaPool[color] -= cost[color]; } for (const options of cost.hybrid) { let paid = false; for (const color of options) { if (manaPool[color] > 0) { manaPool[color]--; paid = true; console.log( "Mana ibrido pagato:", color, "per", `{${options.join("/")}}` ); break; } } if (!paid) { console.error( "Errore durante il pagamento del mana ibrido:", options ); return false; } } let genericRemaining = cost.generic; for (const color of colors) { if (genericRemaining <= 0) { break; } const available = manaPool[color]; const used = Math.min( available, genericRemaining ); manaPool[color] -= used; genericRemaining -= used; } renderManaPool(); console.log( "Costo pagato:", card.name, card.mana_cost ); return true; } /* * ================================================= * CONTROLLO PREVENTIVO * ================================================= */
 
+/* =========================================================
+ * STACK
+ * ========================================================= */
 
+function addToStack(card) {
+    if (!card) {
+        return;
+    }
+
+    stack.push({
+        card: card
+    });
+
+    console.log(
+        "STACK: carta aggiunta:",
+        card.name
+    );
+
+    console.log(
+        "STACK:",
+        stack
+    );
+}
+
+
+/* =========================================================
+ * RISOLUZIONE STACK
+ * ========================================================= */
+
+function resolveTopOfStack() {
+
+    if (stack.length === 0) {
+
+        console.log(
+            "STACK vuoto."
+        );
+
+        return;
+    }
+
+    const item = stack.pop();
+
+    if (!item || !item.card) {
+
+        console.warn(
+            "Elemento STACK non valido."
+        );
+
+        return;
+    }
+
+    const card = item.card;
+
+    console.log(
+        "STACK: risoluzione:",
+        card.name
+    );
+
+    resolveSpellEffect(card);
+
+    graveyard.push(card);
+
+    renderGraveyard();
+
+    console.log(
+        "STACK: carta risolta e mandata al cimitero:",
+        card.name
+    );
+
+    console.log(
+        "STACK:",
+        stack
+    );
+}
+
+
+
+
+
+/* =========================================================
+ * LIBRARY CARD SELECTOR
+ * ========================================================= */
+
+let librarySelectorCallback = null;
+
+function openLibrarySelector(callback) {
+    const selector = document.getElementById(
+        "librarySelector"
+    );
+
+    const cardsContainer = document.getElementById(
+        "librarySelectorCards"
+    );
+
+    const searchInput = document.getElementById(
+        "librarySearchInput"
+    );
+
+    const countElement = document.getElementById(
+        "librarySelectorCount"
+    );
+
+    if (!selector || !cardsContainer) {
+        console.error(
+            "Library Selector: elementi HTML non trovati."
+        );
+        return;
+    }
+
+    librarySelectorCallback = callback;
+
+    selector.classList.remove("hidden");
+
+    if (searchInput) {
+        searchInput.value = "";
+    }
+
+    renderLibrarySelector();
+
+    if (searchInput) {
+        setTimeout(() => {
+            searchInput.focus();
+        }, 50);
+    }
+}
+
+
+function closeLibrarySelector() {
+
+    const selector = document.getElementById(
+        "librarySelector"
+    );
+
+    if (!selector) {
+        return;
+    }
+
+    selector.classList.add("hidden");
+
+    librarySelectorCallback = null;
+}
+
+
+function renderLibrarySelector() {
+
+    const cardsContainer = document.getElementById(
+        "librarySelectorCards"
+    );
+
+    const searchInput = document.getElementById(
+        "librarySearchInput"
+    );
+
+    const countElement = document.getElementById(
+        "librarySelectorCount"
+    );
+
+    if (!cardsContainer) {
+        return;
+    }
+
+    const searchTerm = String(
+        searchInput?.value || ""
+    )
+        .trim()
+        .toLowerCase();
+
+    const filteredCards = library.filter(card => {
+
+        if (!searchTerm) {
+            return true;
+        }
+
+        const name = String(
+            card.name || ""
+        ).toLowerCase();
+
+        const typeLine = String(
+            card.type_line || ""
+        ).toLowerCase();
+
+        const oracleText = String(
+            card.oracle_text || ""
+        ).toLowerCase();
+
+        return (
+            name.includes(searchTerm) ||
+            typeLine.includes(searchTerm) ||
+            oracleText.includes(searchTerm)
+        );
+    });
+
+    cardsContainer.innerHTML = "";
+
+    filteredCards.forEach(card => {
+
+        const cardElement =
+            document.createElement("div");
+
+        cardElement.className =
+            "library-selector-card";
+
+        const image = document.createElement("img");
+
+        image.src = getWebpPath(card.image);
+
+        image.alt = card.name || "Carta";
+
+        image.loading = "lazy";
+
+        const name = document.createElement("div");
+
+        name.className =
+            "library-selector-card-name";
+
+        name.textContent =
+            card.name || "Carta senza nome";
+
+        cardElement.appendChild(image);
+
+        cardElement.appendChild(name);
+
+        cardElement.addEventListener(
+            "click",
+            () => {
+
+                if (typeof librarySelectorCallback === "function") {
+
+                    const callback =
+                        librarySelectorCallback;
+
+                    closeLibrarySelector();
+
+                    callback(card);
+
+                } else {
+
+                    closeLibrarySelector();
+
+                }
+            }
+        );
+
+        cardsContainer.appendChild(
+            cardElement
+        );
+    });
+
+    if (countElement) {
+
+        countElement.textContent =
+            filteredCards.length +
+            (
+                filteredCards.length === 1
+                    ? " carta"
+                    : " carte"
+            );
+    }
+}
+
+
+const librarySearchInput =
+    document.getElementById(
+        "librarySearchInput"
+    );
+
+if (librarySearchInput) {
+
+    librarySearchInput.addEventListener(
+        "input",
+        renderLibrarySelector
+    );
+}
+
+
+function resolveSpellEffect(card) {
+    if (!card) {
+        return;
+    }
+
+    console.log(
+        "RISOLUZIONE EFFETTO:",
+        card.name
+    );
+
+    /* =================================================
+     * TRUTH SEEKING
+     * ================================================= */
+
+    if (card.name === "Truth Seeking") {
+
+    console.log(
+        "Truth Seeking: apertura selettore library."
+    );
+
+    if (library.length === 0) {
+        console.log(
+            "Truth Seeking: library vuota."
+        );
+        return;
+    }
+
+    openLibrarySelector((searchedCard) => {
+
+        if (!searchedCard) {
+            console.log(
+                "Truth Seeking: nessuna carta selezionata."
+            );
+            return;
+        }
+
+        const libraryIndex =
+            library.indexOf(searchedCard);
+
+        if (libraryIndex === -1) {
+            console.warn(
+                "Truth Seeking: carta non trovata nella library."
+            );
+            return;
+        }
+
+        /* =================================================
+         * RIMUOVI DALLA LIBRARY
+         * ================================================= */
+
+        library.splice(libraryIndex, 1);
+
+        console.log(
+            "Truth Seeking: carta scelta:",
+            searchedCard.name
+        );
+
+        /* =================================================
+         * ESILIO FACE DOWN
+         * ================================================= */
+
+        searchedCard.faceDown = true;
+
+        exile.push(searchedCard);
+
+        console.log(
+            "Truth Seeking: carta esiliata face down:",
+            searchedCard.name
+        );
+
+        /* =================================================
+         * RIVELA?
+         * ================================================= */
+
+        const reveal = confirm(
+            "Vuoi rivelare " +
+            searchedCard.name +
+            "?"
+        );
+
+        if (reveal) {
+
+            searchedCard.faceDown = false;
+
+            const exileIndex =
+                exile.indexOf(searchedCard);
+
+            if (exileIndex !== -1) {
+                exile.splice(exileIndex, 1);
+            }
+
+            hand.push(searchedCard);
+
+            console.log(
+                "Truth Seeking: carta rivelata e messa in mano:",
+                searchedCard.name
+            );
+
+        } else {
+
+            searchedCard.faceDown = false;
+
+            const exileIndex =
+                exile.indexOf(searchedCard);
+
+            if (exileIndex !== -1) {
+                exile.splice(exileIndex, 1);
+            }
+
+            library.unshift(searchedCard);
+
+            console.log(
+                "Truth Seeking: carta non rivelata."
+            );
+
+            console.log(
+                "Truth Seeking: carta messa in cima alla library:",
+                searchedCard.name
+            );
+        }
+
+        
+
+        renderHand();
+        renderExile();
+        renderBattlefield();
+
+        console.log(
+            "Truth Seeking completata."
+        );
+
+    });
+
+    return;
+  }
+}
 
 /* ========================================================= GIOCA CARTA ========================================================= */
 
@@ -2354,20 +3051,17 @@ function playCard(index) {
      * =================================================
      */
 
-    else if (
-        typeLine.includes("instant") ||
-        typeLine.includes("sorcery")
-    ) {
+     else if (
+    typeLine.includes("instant") ||
+    typeLine.includes("sorcery")
+) {
+    addToStack(card);
 
-        graveyard.push(
-            card
-        );
-
-        console.log(
-            "Carta mandata al cimitero:",
-            card.name
-        );
-    }
+    console.log(
+        "Instant/Sorcery aggiunta allo Stack:",
+        card.name
+    );
+}
 
 
     /*
